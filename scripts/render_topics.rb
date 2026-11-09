@@ -181,13 +181,26 @@ class CloudFoundryRenderer
       @renderer.send(:render_partial, name, @current_file)
     end
 
-    # Middleman's image_tag has a single use in the topic corpus.  Emit normal
-    # HTML, retaining all supplied attributes, which mdBook passes through.
+    # Middleman's image_tag resolves a bare file name from the images directory.
+    # Preserve explicit relative/absolute paths and external URLs unchanged.
     def image_tag(source, attributes = {})
+      source = source.to_s
+      source = "images/#{source}" if bare_image_filename?(source)
+
       attributes = attributes.transform_keys(&:to_s)
       attributes["src"] = source
-      rendered = attributes.map { |key, value| %(#{key}="#{ERB::Util.html_escape(value)}") }.join(" ")
+      rendered = attributes.map do |key, value|
+        %(#{key}="#{ERB::Util.html_escape(value)}")
+      end.join(" ")
       "<img #{rendered}>"
+    end
+
+    private
+
+    def bare_image_filename?(source)
+      !source.start_with?("/", "./", "../", "#") &&
+        !source.match?(%r{\A[a-z][a-z0-9+.-]*:}i) &&
+        !source.include?("/")
     end
 
     # Translate Middleman's Mermaid helper to the syntax accepted by mdBook
