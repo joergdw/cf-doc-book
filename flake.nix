@@ -16,7 +16,8 @@
         in {
            packages = {
               rubyEnv = nixpkgs.ruby.withPackages (rubyPkgs: with rubyPkgs; [
-                 solargraph
+                 nokogiri
+                 solargraph # for local development
               ]);
            };
 

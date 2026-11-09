@@ -9,6 +9,7 @@
 
 require "erb"
 require "fileutils"
+require "nokogiri"
 require "optparse"
 require "pathname"
 require "yaml"
@@ -24,6 +25,7 @@ class CloudFoundryRenderer
     @variables = load_variables
     @section_directories = load_section_directories
     @repositories_by_section = @section_directories.invert
+    @subnav_file = @variables_file.dirname.parent.join("master_middleman/source/subnavs/_cf-subnav.erb")
     @verbose = verbose
     @partial_stack = []
   end
@@ -42,6 +44,8 @@ class CloudFoundryRenderer
       File.write(destination, render_file(source))
       warn "render #{relative} -> #{destination.relative_path_from(@destination_root)}" if @verbose
     end
+
+    write_summary
   end
 
   private
@@ -74,6 +78,83 @@ class CloudFoundryRenderer
       directory = section["directory"]
       mapping[repository] = directory if repository && directory
     end
+  end
+
+  # Bookbinder's _cf-subnav.erb is the curated table of contents used by the
+  # published documentation. Reuse its list hierarchy rather than deriving a
+  # navigation from file names. Links to external sites or absent topics cannot
+  # be mdBook chapters and are omitted (with a warning).
+  def write_summary
+    unless @subnav_file.file?
+      warn "No Bookbinder subnavigation at #{@subnav_file}; SUMMARY.md was not generated"
+      return
+    end
+
+    document = Nokogiri::HTML::DocumentFragment.parse(File.read(@subnav_file))
+    root_list = document.at_css("#sub-nav .nav-content > ul")
+    unless root_list
+      warn "Could not find the Bookbinder navigation list in #{@subnav_file}; SUMMARY.md was not generated"
+      return
+    end
+
+    @summary_paths = {}
+    lines = ["# Summary", ""]
+    append_summary_items(root_list, lines, 0)
+    FileUtils.mkdir_p(@destination_root)
+    File.write(@destination_root.join("SUMMARY.md"), lines.join("\n") + "\n")
+    warn "write SUMMARY.md" if @verbose
+  end
+
+  def append_summary_items(list, lines, depth)
+    list.xpath("./li").each do |item|
+      title, href = summary_item_label(item)
+      children = item.at_xpath("./ul")
+      target = summary_target(href)
+
+      # A chapter must only appear once in mdBook. Keep its first, canonical
+      # Bookbinder location, but retain descendants as an unlinked group.
+      if target && @summary_paths.key?(target)
+        warn "SUMMARY duplicate omitted: #{target} (#{title})"
+        target = nil
+      elsif target
+        @summary_paths[target] = true
+      end
+
+      if target
+        lines << "#{'  ' * depth}- [#{title}](#{target})"
+      elsif title && children
+        lines << "#{'  ' * depth}- #{title}"
+      elsif title && href
+        warn "SUMMARY link omitted (not rendered): #{href} (#{title})"
+      end
+
+      append_summary_items(children, lines, depth + 1) if children
+    end
+  end
+
+  def summary_item_label(item)
+    link = item.at_xpath("./a")
+    return [normalized_text(link), link["href"]] if link
+
+    label = item.at_xpath("./strong|./span[not(.//hr)]")
+    [label && normalized_text(label), nil]
+  end
+
+  def normalized_text(node)
+    node.text.gsub(/\s+/, " ").strip
+  end
+
+  def summary_target(href)
+    return nil unless href&.start_with?("/")
+
+    path = href.split(/[?#]/, 2).first
+    path = "#{path}index.html" if path.end_with?("/")
+    return nil unless path.end_with?(".html")
+
+    target = Pathname.new(path.delete_prefix("/")).sub_ext(".md")
+    return nil unless @destination_root.join(target).file?
+
+    target.to_s
   end
 
   def render_file(path)
