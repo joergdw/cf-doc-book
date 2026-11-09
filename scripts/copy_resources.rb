@@ -8,6 +8,7 @@
 require "fileutils"
 require "optparse"
 require "pathname"
+require "yaml"
 
 ASSET_EXTENSIONS = %w[
   .png .jpg .jpeg .gif .svg .webp .ico .pdf .mp4 .webm .ogg .mp3 .wav
@@ -24,6 +25,20 @@ end.parse!
 
 source_root = Pathname(options[:source_root]).realpath
 destination_root = Pathname(options[:destination_root]).expand_path
+
+# Keep asset locations aligned with the Markdown locations emitted by
+# render_topics.rb: Bookbinder maps checkout names to public directories.
+config_file = source_root.join("docs-book-cloudfoundry", "config.yml")
+sections = if config_file.file?
+             (YAML.safe_load_file(config_file, aliases: true) || {}).fetch("sections", [])
+           else
+             []
+           end
+section_directories = sections.each_with_object({}) do |section, mapping|
+  repository = section.dig("repository", "name")&.split("/")&.last
+  directory = section["directory"]
+  mapping[repository] = directory if repository && directory
+end
 copied = 0
 
 Dir.glob(source_root.join("**", "*").to_s).sort.each do |filename|
@@ -32,11 +47,13 @@ Dir.glob(source_root.join("**", "*").to_s).sort.each do |filename|
   next unless ASSET_EXTENSIONS.include?(source.extname.downcase)
 
   relative = source.relative_path_from(source_root)
+  repository, *path = relative.each_filename.map(&:to_s)
   # Assets belonging to the overview repository's Middleman site shell are not
-  # topic resources.  A future mdBook theme migration can copy them explicitly.
-  next if relative.each_filename.first.to_s == "docs-book-cloudfoundry"
+  # topic resources. A future mdBook theme migration can copy them explicitly.
+  next if repository == "docs-book-cloudfoundry"
 
-  destination = destination_root.join(relative)
+  section = section_directories.fetch(repository, repository)
+  destination = destination_root.join(section, *path)
   FileUtils.mkdir_p(destination.dirname)
   FileUtils.cp(source, destination, preserve: true)
   copied += 1

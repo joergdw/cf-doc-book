@@ -13,16 +13,15 @@ all: build
 # Always rebuild; this Makefile intentionally does not track file changes.
 build: render resources
 
-render:
-	rm -rf $(BUILD_ROOT)
-	mkdir -p $(BUILD_ROOT)
+render: clean
+	mkdir --parents $(BUILD_ROOT)
 	ruby $(RENDERER) --source $(SOURCE_ROOT) --output $(BUILD_ROOT)
 
-resources:
+resources: render
 	ruby $(RESOURCE_COPIER) --source $(SOURCE_ROOT) --output $(BUILD_ROOT)
 
 clean:
-	rm -rf $(BUILD_ROOT)
+	rm --recursive --force $(BUILD_ROOT)
 
 help:
 	@printf '%s\n' \

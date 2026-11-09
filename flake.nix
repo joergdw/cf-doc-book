@@ -25,6 +25,8 @@
                  packages = with nixpkgs; [
                     gnumake
                     mdbook
+                    uutils-coreutils-noprefix
+
                     self.packages.${system}.rubyEnv # for erb-preprocessing
                  ];
               };
