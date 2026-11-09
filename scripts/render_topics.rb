@@ -97,7 +97,9 @@ class CloudFoundryRenderer
       return
     end
 
+    FileUtils.mkdir_p(@destination_root)
     @summary_paths = {}
+    @summary_group_count = 0
     lines = ["# Summary", ""]
     append_summary_items(root_list, lines, 0)
     FileUtils.mkdir_p(@destination_root)
@@ -122,13 +124,18 @@ class CloudFoundryRenderer
 
       if target
         lines << "#{'  ' * depth}- [#{title}](#{target})"
+        append_summary_items(children, lines, depth + 1) if children
       elsif title && children
-        lines << "#{'  ' * depth}- #{title}"
+        # Every mdBook chapter-list item must be a hyperlink.  Bookbinder also
+        # has label-only groups, so materialize those as small placeholder
+        # chapters, regardless of their nesting level.
+        @summary_group_count += 1
+        lines << "#{'  ' * depth}- [#{title}](group-#{@summary_group_count}.md)"
+        write_summary_group_page(@summary_group_count, title)
+        append_summary_items(children, lines, depth + 1)
       elsif title && href
         warn "SUMMARY link omitted (not rendered): #{href} (#{title})"
       end
-
-      append_summary_items(children, lines, depth + 1) if children
     end
   end
 
@@ -138,6 +145,11 @@ class CloudFoundryRenderer
 
     label = item.at_xpath("./strong|./span[not(.//hr)]")
     [label && normalized_text(label), nil]
+  end
+
+  def write_summary_group_page(number, title)
+    filename = @destination_root.join("group-#{number}.md")
+    File.write(filename, "# #{title}\n")
   end
 
   def normalized_text(node)
