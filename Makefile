@@ -1,0 +1,32 @@
+# Command runner for the Cloud Foundry documentation preprocessors.
+SHELL := /bin/sh
+
+SOURCE_ROOT := src/doc
+BUILD_ROOT := build
+RENDERER := scripts/render_topics.rb
+RESOURCE_COPIER := scripts/copy_resources.rb
+
+.PHONY: all build render resources clean help
+
+all: build
+
+# Always rebuild; this Makefile intentionally does not track file changes.
+build: render resources
+
+render:
+	rm -rf $(BUILD_ROOT)
+	mkdir -p $(BUILD_ROOT)
+	ruby $(RENDERER) --source $(SOURCE_ROOT) --output $(BUILD_ROOT)
+
+resources:
+	ruby $(RESOURCE_COPIER) --source $(SOURCE_ROOT) --output $(BUILD_ROOT)
+
+clean:
+	rm -rf $(BUILD_ROOT)
+
+help:
+	@printf '%s\n' \
+		'make build      Render topics and copy resources into build/.' \
+		'make render     Recreate build/ and render Markdown topics only.' \
+		'make resources  Copy resources into the existing build/ tree.' \
+		'make clean      Remove generated build/.'

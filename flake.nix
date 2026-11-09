@@ -17,7 +17,9 @@
            devShells = {
               default = nixpkgs.mkShellNoCC {
                  packages = with nixpkgs; [
+                    gnumake
                     mdbook
+                    ruby # for erb-preprocessing
                  ];
               };
            };
