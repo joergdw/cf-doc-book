@@ -22,6 +22,8 @@ class CloudFoundryRenderer
     @destination_root = Pathname(destination_root).expand_path
     @variables_file = Pathname(variables_file).realpath
     @variables = load_variables
+    @section_directories = load_section_directories
+    @repositories_by_section = @section_directories.invert
     @verbose = verbose
     @partial_stack = []
   end
@@ -57,7 +59,21 @@ class CloudFoundryRenderer
   end
 
   def output_relative_path(relative)
-    relative.sub_ext("").sub_ext("").sub_ext(".md")
+    repository, *path = relative.each_filename.map(&:to_s)
+    section = @section_directories.fetch(repository, repository)
+    Pathname.new(File.join(section, *path)).sub_ext("").sub_ext("").sub_ext(".md")
+  end
+
+  def load_section_directories
+    config = @variables_file.dirname.parent.join("config.yml")
+    return {} unless config.file?
+
+    sections = (YAML.safe_load_file(config, aliases: true) || {}).fetch("sections", [])
+    sections.each_with_object({}) do |section, mapping|
+      repository = section.dig("repository", "name")&.split("/")&.last
+      directory = section["directory"]
+      mapping[repository] = directory if repository && directory
+    end
   end
 
   def render_file(path)
@@ -82,10 +98,24 @@ class CloudFoundryRenderer
 
   def partial_candidates(name, current_file)
     name = name.to_s.sub(%r{\A/}, "")
-    base = name.start_with?(".") ? current_file.dirname.join(name) : current_file.dirname.join(name)
-    dirname = base.dirname
+    candidates = candidates_for(current_file.dirname.join(name))
+
+    # Partial references follow public Bookbinder paths (for example
+    # ../adminguide/foo); source checkouts use docs-cf-admin instead.
+    relative = current_file.relative_path_from(@source_root)
+    repository = relative.each_filename.first.to_s
+    section = @section_directories.fetch(repository, repository)
+    public_base = Pathname.new(section).join(*relative.each_filename.drop(1).map(&:to_s)).dirname.join(name).cleanpath
+    public_parts = public_base.each_filename.map(&:to_s)
+    source_repository = @repositories_by_section.fetch(public_parts.first, public_parts.first)
+    candidates.concat(candidates_for(@source_root.join(source_repository, *public_parts.drop(1))))
+    candidates.uniq
+  end
+
+  def candidates_for(base)
     stem = base.basename.to_s
     stem = "_#{stem}" unless stem.start_with?("_")
+    dirname = base.dirname
     [dirname.join("#{stem}#{PARTIAL_SUFFIX}"), dirname.join("#{stem}.md.erb"), dirname.join("#{stem}.erb")]
   end
 
@@ -95,13 +125,16 @@ class CloudFoundryRenderer
     end
 
     def method_missing(name, *arguments)
-      return super unless arguments.empty? && @values.key?(name.to_s)
+      return super unless arguments.empty?
 
+      # The shared template_variables.yml intentionally leaves a number of
+      # legacy variables undefined.  Middleman renders these as empty values;
+      # do the same instead of aborting the complete conversion.
       @values[name.to_s]
     end
 
     def respond_to_missing?(name, include_private = false)
-      @values.key?(name.to_s) || super
+      true
     end
   end
 
@@ -113,6 +146,31 @@ class CloudFoundryRenderer
 
     def get_binding
       binding
+    end
+
+    # Middleman metadata assignments occur in some topics. Their front matter
+    # remains in the rendered Markdown, so this writable no-op is sufficient.
+    def current_page
+      @current_page ||= Page.new
+    end
+
+    class Page
+      def data
+        @data ||= Data.new
+      end
+    end
+
+    class Data
+      def method_missing(_name, *arguments)
+        return nil if arguments.empty?
+        return arguments.first if arguments.length == 1
+
+        super
+      end
+
+      def respond_to_missing?(_name, _include_private = false)
+        true
+      end
     end
 
     def vars

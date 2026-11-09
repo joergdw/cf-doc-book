@@ -14,3 +14,8 @@ insert_final_newline = true
 [*.nix]
 indent_size = 3
 indent_style = space
+
+
+[*.ruby]
+indent_size = 2
+indent_style = space

@@ -14,12 +14,18 @@
            nixpkgsLib = nixpkgs-repo.lib;
            nixpkgs = nixpkgs-repo.legacyPackages.${system};
         in {
+           packages = {
+              rubyEnv = nixpkgs.ruby.withPackages (rubyPkgs: with rubyPkgs; [
+                 solargraph
+              ]);
+           };
+
            devShells = {
               default = nixpkgs.mkShellNoCC {
                  packages = with nixpkgs; [
                     gnumake
                     mdbook
-                    ruby # for erb-preprocessing
+                    self.packages.${system}.rubyEnv # for erb-preprocessing
                  ];
               };
            };
