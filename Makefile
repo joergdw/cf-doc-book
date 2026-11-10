@@ -6,7 +6,7 @@ BUILD_ROOT := build
 RENDERER := scripts/render_topics.rb
 RESOURCE_COPIER := scripts/copy_resources.rb
 
-.PHONY: all build mdbook render resources clean help
+.PHONY: all build mdbook render resources clean clean_preprocessed clean_mdbook help
 
 all: build
 
@@ -24,8 +24,14 @@ render: clean
 resources: render
 	ruby $(RESOURCE_COPIER) --source $(SOURCE_ROOT) --output $(BUILD_ROOT)
 
-clean:
+clean: clean_preprocessed clean_mdbook
+
+clean_preprocessed:
 	rm --recursive --force $(BUILD_ROOT)
+
+clean_mdbook:
+	find book -mindepth 1 -maxdepth 1 -not -name .git -print0 \
+		| xargs --null rm --recursive --force
 
 help:
 	@printf '%s\n' \
