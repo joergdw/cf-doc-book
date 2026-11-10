@@ -1,0 +1,761 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Configuring a hardware security module - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-using-hardware-security-modules-with-credhub-owner-credhub"><a class="header" href="#title-using-hardware-security-modules-with-credhub-owner-credhub">title: Using hardware security modules with CredHub
+owner: CredHub</a></h2>
+<p>You can configure <a href="https://aws.amazon.com/cloudhsm">AWS CloudHSM</a> devices to work with CredHub.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If you use a <a href="https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/safenet-network-hsm/">Luna SafeNet HSM</a>,
+rather than AWS, skip over the device allocation portion of the documentation, and start with
+<a href="#initialize-and-configure">Initialize and Configure New HSMs</a>.
+</p>
+
+<p>If you store critical data in CredHub, configuring at least two Hardware Security Modules (HSMs) replicates your keys and provides redundancy and security in the event of an HSM failure. With a single HSM, device failure renders your CredHub data inaccessible.</p>
+<h2 id="preparation-checklist"><a class="header" href="#preparation-checklist"><a id="checklist"></a> Preparation checklist</a></h2>
+<p>As you follow these procedures, you can collect or create these resources:</p>
+<ul>
+<li>
+<p>The name of your encryption key.</p>
+</li>
+<li>
+<p>Your HSM certificate.</p>
+</li>
+<li>
+<p>Your HSM partition name and password.</p>
+</li>
+<li>
+<p>Your client certificate and private key.</p>
+</li>
+<li>
+<p>Your HSM partition serial numbers.</p>
+</li>
+</ul>
+<h2 id="creating-new-aws-cloudhsms"><a class="header" href="#creating-new-aws-cloudhsms"><a id="create-new-aws"></a> Creating new AWS CloudHSMs</a></h2>
+<p>The following sections tell you how to create new AWS CloudHSMs:</p>
+<h3 id="aws-environment-prerequisites"><a class="header" href="#aws-environment-prerequisites"><a id="aws-env-prereq"></a> AWS environment prerequisites</a></h3>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+For high availability (HA), use at least two HSM instances. AWS documentation recommends that you also use a subnet for a publicly available Control Instance, but for this product that is unnecessary. CredHub acts as a Control Instance.
+</p>
+
+<p>Before you create new AWS CloudHSMs, you must have:</p>
+<ul>
+<li>
+<p>A Virtual Private Cloud (VPC).</p>
+</li>
+<li>
+<p><strong>For each HSM instance:</strong> One private subnet in its own Availability Zone (AZ).</p>
+</li>
+<li>
+<p>An IAM role for the HSM with a policy equivalent to <code>AWSCloudHSMRole</code> policy.</p>
+</li>
+<li>
+<p>The Security Group must allow traffic from the CredHub security group on ports 22 (SSH) and 1792 (HSM).</p>
+</li>
+</ul>
+<h3 id="creating-new-devices"><a class="header" href="#creating-new-devices"><a id="create-new-devices"></a> Creating new devices</a></h3>
+<p>To create new AWS CloudHSMs:</p>
+<ol>
+<li>
+<p>Install the AWS CLI from <a href="https://docs.aws.amazon.com/cloudhsm/latest/userguide/command-line-tools.html">AWS CloudHSM Command Line Tools</a> in the AWS documentation.</p>
+</li>
+<li>
+<p>Create SSH key pairs for all planned HSMs by running:</p>
+<pre><code class="language-console">ssh-keygen -b 4096 -t rsa -N PASSWORD -f PATH-TO-SSH-KEY.pem
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>PASSWORD</code> is the password you create for the SSH key.</li>
+
+   
+<li><code>PATH-TO-SSH-KEY</code> is the filepath of your SSH key PEM file.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Create the <code>cloudhsm.conf</code> file with these values:</p>
+<pre><code class="language-console">aws_access_key_id=ACCESS-KEY-ID
+aws_secret_access_key=SECRET-ACCESS-KEY
+aws_region=AWS-REGION
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ACCESS-KEY-ID</code> is your AWS access key ID.</li>
+
+   
+<li><code>SECRET-ACCESS-KEY</code> is your AWS secret access key.</li>
+
+   
+<li><code>AWS-REGION</code> is your AWS region.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>To create each HSM and place it in the appropriate subnet, run:</p>
+<pre><code class="language-console">cloudhsm create-hsm \
+  --conf_file PATH-TO-CLOUDHSM.conf \
+  --subnet-id SUBNET-ID \
+  --ssh-public-key-file PATH-TO-SSH-KEY.pem.pub \
+  --iam-role-arn IAM-HSN-ROLE-ARN
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>PATH-TO-CLOUDHSM</code> is the filepath to your <code>cloudhsm.conf</code> file.</li>
+
+   
+<li><code>SUBNET-ID</code> is the ID of the subnet in which you want to place your HSM.</li>
+
+   
+<li><code>PATH-TO-SSH-KEY</code> is the filepath to your public SSH key PEM key.</li>
+
+   
+<li><code>IAM-HSM-ROLE-ARN</code> is the Amazon Resource Name (ARN) of your HSM's IAM role. For more information, see <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns">IAM ARNs</a> in <em>IAM Identifiers</em> in the AWS documentation.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Assign the security group to each HSM:</p>
+<ol>
+<li>
+<p>Retrieve the Elastic Network Interface ID <code>EniID</code> of the HSM by running:</p>
+<pre><code class="language-console">cloudhsm describe-hsm -H HSM-ARN -r AWS-REGION
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>HSM-ARN</code> is the ARN of your HSM.</li>
+
+   
+<li><code>AWS-REGION</code> is the AWS region of your HSM.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Edit the network interface to assign the security group by running:</p>
+<pre><code class="language-console">aws ec2 modify-network-interface-attribute \
+  --network-interface-id ENI-ID \
+  --groups SECURITY-GROUP-ID
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ENI-ID</code> is the <code>EniID</code> you retrieved in the previous step.</li>
+
+   
+<li><code>SECURITY-GROUP-ID</code> is the ID of the security group you want to assign to this HSM.</li>
+
+ </ul>
+
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="initializing-and-configuring-new-hsms"><a class="header" href="#initializing-and-configuring-new-hsms"><a id="initialize-and-configure"></a> Initializing and configuring new HSMs</a></h2>
+<p>The following sections describe the steps to initialize and configure your HSMs, whether they are Luna HSMs or AWS CloudHSMs. You must follow this procedure for each HSM you created.</p>
+<h3 id="ssh-onto-hsm"><a class="header" href="#ssh-onto-hsm"><a id="ssh"></a> SSH onto HSM</a></h3>
+<p>To SSH onto HSM you want to initialize and configure using these steps:</p>
+<ol>
+<li>
+<p>Retrieve the IP address of your HSM by running:</p>
+<pre><code class="language-console">cloudhsm describe-hsm -H HSM-ARN -r AWS-REGION
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>HSM-ARN</code> is the ARN of your HSM.</li>
+
+   
+<li><code>AWS-REGION</code> is the AWS region of your HSM.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>SSH onto the HSM by running:</p>
+<pre><code class="language-console">ssh -i path/to/ssh-key.pem manager@HSM-IP
+</code></pre>
+<p>Where <code>HSM-IP</code> is the IP address you retrieved in the previous step.</p>
+</li>
+</ol>
+<h3 id="initializing-and-setting-policies"><a class="header" href="#initializing-and-setting-policies"><a id="initialize-and-set-policies"></a> Initializing and setting policies</a></h3>
+<p>To initialize your HSM and set its’ policies:</p>
+<ol>
+<li>
+<p>Initialize the HSM and create an admin password when you are prompted by running:</p>
+<pre><code class="language-console">lunash:&gt; hsm init -label LABEL
+</code></pre>
+</li>
+</ol>
+<p>Where <code>LABEL</code> is the label you want to give the HSM.
+<br>
+<br>
+Initialize all HSMs into the same cloning domain to guarantee high availability for your Cloud Foundry deployment.</p>
+<ol>
+<li>
+<p>Log in to the HSM using the password you just created by running:</p>
+<pre><code class="language-console">lunash:&gt; hsm login
+</code></pre>
+</li>
+<li>
+<p>Confirm that only FIPS algorithms are enabled. Run:</p>
+<pre><code class="language-console">lunash:&gt; hsm changePolicy -policy 12 -value 0
+</code></pre>
+</li>
+<li>
+<p>To confirm that <code>Allow cloning</code> and <code>Allow network replication</code> policy values are set to <code>On</code> on the HSM, run:</p>
+<pre><code>hsm showPolicies
+</code></pre>
+<p>If these values are not set to <code>On</code>, change them by running:</p>
+<pre><code>lunash:&gt; hsm changePolicy -policy POLICY-CODE -value 1
+</code></pre>
+<p>Where <code>POLICY-CODE</code> is the numerical code of the <code>Allow cloning</code> or <code>Allow network replication</code> policy.</p>
+</li>
+<li>
+<p>Validate that the <code>SO can reset partition PIN</code> is correctly set. If it’s set to <code>Off</code>, consecutive failed log in attempts permanently erase the partition once the failure count hits the configured threshold. If it’s set to <code>On</code>, the partition locks once the threshold is met. An HSM admin must unlock the partition, but no data is lost.</p>
+<p>To set the policy to <code>On</code>, run:</p>
+<pre><code>lunash:&gt; hsm changePolicy -policy 15 -value 1
+</code></pre>
+</li>
+</ol>
+<h3 id="retrieving-the-hsm-certificate"><a class="header" href="#retrieving-the-hsm-certificate"><a id="retrieve-hsm-certificate"></a> Retrieving the HSM certificate</a></h3>
+<p>To retrieve your HSM certificate:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>scp -i path/to/ssh-key.pem \
+  manager@HSM-IP-ADDRESS:server.pem \
+  HSM-IP-ADDRESS.pem
+</code></pre>
+<p>Where <code>HSM-IP-ADDRESS</code> is the IP address of your HSM.</p>
+</li>
+</ol>
+<p>BOSH CredHub uses this certificate to validate the identity of the HSM when it connects to it.</p>
+<h3 id="creating-the-hsm-partition"><a class="header" href="#creating-the-hsm-partition"><a id="create-hsm-partition"></a> Creating the HSM partition</a></h3>
+<p>To create an HSM partition to hold the encryption keys:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code class="language-console">lunash:&gt; partition create -partition PARTITION-NAME -domain CLONING-DOMAIN
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>PARTITION-NAME</code> is the name you give the partition.</li>
+
+   
+<li><code>CLONING-DOMAIN</code> is the cloning domain of the HSM.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Create a password for the partition. The partition password must be the same for all partitions in the highly available partition group.</p>
+</li>
+<li>
+<p>To retrieve the partition serial number, run:</p>
+<pre><code class="language-console">lunash:&gt; partition show -partition PARTITION-NAME
+</code></pre>
+<p>Where <code>PARTITION-NAME</code> is the name of the partition you created.</p>
+</li>
+<li>
+<p>Record the <code>Partition SN</code> shown in the output of the command you ran in the previous step.</p>
+</li>
+</ol>
+<h2 id="creating-and-registering-hsm-clients"><a class="header" href="#creating-and-registering-hsm-clients"><a id="create-register-hsm"></a> Creating and registering HSM clients</a></h2>
+<p>Clients that communicate with the HSM must provide a client certificate to establish a client authenticated session. You must set up each client certificate on the HSM and assign access rights for your partition.</p>
+<h3 id="establishing-a-network-trust-link-between-client-and-hsms"><a class="header" href="#establishing-a-network-trust-link-between-client-and-hsms"><a id="network-trust-link"></a> Establishing a network trust link between client and HSMs</a></h3>
+<p>To establish a network trust link between a client and your HSMs:</p>
+<ol>
+<li>
+<p>Create a certificate for the client by running:</p>
+<pre><code>openssl req \
+  -x509   \
+  -newkey rsa:4096 \
+  -days   NUMBER-OF-DAYS \
+  -sha256 \
+  -nodes  \
+  -subj   "/CN=CLIENT-HOSTNAME-OR-IP" \
+  -keyout CLIENT-HOSTNAME-OR-IP.pem \
+  -out    CLIENT-HOSTNAME-OR-IP.pem
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>NUMBER-OF-DAYS</code> is the number of days you want the network trust link to be valid.</li>
+
+   
+<li><code>CLIENT-HOSTNAME-OR-IP</code> is the hostname or IP address of the client.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Copy the client certificate to your HSM by running:</p>
+<pre><code class="language-console">scp -i path/to/ssh-key.pem \
+  CLIENT-HOSTNAME-OR-IP.pem \
+  manager@HSM-IP:CLIENT-HOSTNAME-OR-IP.pem
+</code></pre>
+<p>Where <code>CLIENT-HOSTNAME-OR-IP</code> is the hostname or IP address of the client.</p>
+</li>
+</ol>
+<h3 id="registering-hsm-client-host-and-partitions"><a class="header" href="#registering-hsm-client-host-and-partitions"><a id="register"></a> Registering HSM client host and partitions</a></h3>
+<p>To register a client host and partitions for your HSM:</p>
+<ol>
+<li>
+<p>Create a client by running:</p>
+<pre><code class="language-console">lunash:&gt; client register -client CLIENT-NAME -hostname CLIENT-HOSTNAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>CLIENT-NAME</code> is the name of the client.</li>
+
+   
+<li><code>CLIENT-HOSTNAME</code> is the hostname of your planned CredHub instances.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>(Optional) If you are only planning to run one CredHub instance, you can also register a client with the planned CredHub IP address by running:</p>
+<pre><code class="language-console">lunash:&gt; client register -client CLIENT-NAME -ip CLIENT-IP-ADDRESS
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>CLIENT-NAME</code> is the name of the client.</li>
+
+   
+<li><code>CLIENT-IP-ADDRESS</code> is the IP address of your planned CredHub instance.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Assign the partition that you created in the previous section to the client by running:</p>
+<pre><code class="language-console">lunash:&gt; client assignPartition -client CLIENT-NAME -partition PARTITION-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>CLIENT-NAME</code> is the name of the client.</li>
+
+   
+<li><code>PARTITION-NAME</code> is the name of the partition you created.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h2 id="setting-hsm-encryption-keys"><a class="header" href="#setting-hsm-encryption-keys"><a id="hsm-encryption-keys"></a> Setting HSM encryption keys</a></h2>
+<p>You can set which key is used for encryption operations by defining the encryption key name in the deployment manifest file. By default, a key that exists on the HSM is used for encryption operations. If a key does not exist on the HSM, CredHub creates it automatically in the referenced partition.</p>
+<p>When you generate a new key, review the list of keys on each HSM to validate that key replication is occurring. If new keys do not propagate among the HSMs, you can get locked out of the HSMs.</p>
+<p>To review stored keys on a partition:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code class="language-console">lunash:&gt; partition showContents -partition PARTITION-NAME
+</code></pre>
+<p>Where <code>PARTITION-NAME</code> is the name of the partition on which your keys are stored.</p>
+</li>
+</ol>
+<h2 id="getting-ready-for-deployment"><a class="header" href="#getting-ready-for-deployment"><a id="ready-deployment"></a> Getting ready for deployment</a></h2>
+<p>Now you can deploy CredHub with your new HSMs.</p>
+<p>Edit your manifest file as shown here:</p>
+<pre><code class="language-console">credhub:
+  properties:
+    encryption:
+      keys:
+        - provider_name: primary
+          encryption_key_name: ENCRYPTION-KEY-NAME
+          active: true
+      providers:
+        - name: primary
+          type: hsm
+          partition: PARTITION-NAME
+          partition_password: PARTITION-PASSWORD
+          client_certificate: CLIENT-CERTIFICATE
+          client_key: CLIENT-PRIVATE-KEY
+          servers:
+          - host: 10.0.0.1
+            port: 1792
+            certificate: HSM-CERTIFICATE
+            partition_serial_number: PARTITION-SERIAL-NUMBER
+          - host: 10.0.0.10
+            port: 1792
+            certificate: HSM-CERTIFICATE
+            partition_serial_number: PARTITION-SERIAL-NUMBER
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code>ENCRYPTION-KEY-NAME</code> is the encryption key you set in <a href="#hsm-encryption-keys">Setting HSM encryption keys</a>.</p>
+</li>
+<li>
+<p><code>PARTITION-NAME</code> is the name of the partition you created in <a href="#create-hsm-partition">Creating the HSM partition</a>.</p>
+</li>
+<li>
+<p><code>PARTITION-PASSWORD</code> is the password of the partition you created in <a href="#create-hsm-partition">Creating the HSM Partition</a>.</p>
+</li>
+<li>
+<p><code>CLIENT-CERTIFICATE</code> is the client certificate you created in <a href="#establish-network-trust-link">Establishing a network trust link between client and HSMs</a>.</p>
+</li>
+<li>
+<p><code>CLIENT-PRIVATE-KEY</code> is the private key you created in <a href="#establish-network-trust-link">Establishing a network trust link between client and HSMs</a>.</p>
+</li>
+<li>
+<p><code>HSM-CERTIFICATE</code> is one of the HSM certificates you retrieved in <a href="#retrieve-hsm-certificate">Retrieving the HSM certificate</a>.</p>
+</li>
+<li>
+<p><code>PARTITION-SERIAL-NUMBER</code> is the partition serial number you retrieved in <a href="#create-hsm-partition">Creating the HSM partition</a>.</p>
+</li>
+</ul>
+<h2 id="renewing-or-rotating-a-client-certificate"><a class="header" href="#renewing-or-rotating-a-client-certificate"><a id="renew-rotate"></a> Renewing or rotating a client certificate</a></h2>
+<p>The generated client certificate has a fixed expiration date. After expiration the HSM no longer accepts it.</p>
+<p>To rotate or renew this certificate at any time:</p>
+<ol>
+<li>
+<p>Generate a new certificate for the client by running:</p>
+<pre><code class="language-console">openssl req \
+  -x509   \
+  -newkey rsa:4096 \
+  -days   NUMBER-OF-DAYS \
+  -sha256 \
+  -nodes  \
+  -subj   "/CN=CLIENT-HOSTNAME-OR-IP" \
+  -keyout CLIENT-HOSTNAME-OR-IPKey.pem \
+  -out    CLIENT-HOSTNAME-OR-IP.pem
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>NUMBER-OF-DAYS</code> is the number of days you want the network trust link to be valid.</li>
+
+   
+<li><code>CLIENT-HOSTNAME-OR-IP</code> is the hostname or IP address of the client.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Copy the client certificate to each HSM by running:</p>
+<pre><code class="language-console">scp -i path/to/ssh-key.pem \
+  CLIENT-HOSTNAME-OR-IP.pem \
+  manager@HSM-IP:CLIENT-HOSTNAME-OR-IP.pem
+</code></pre>
+<p>Where <code>CLIENT-HOSTNAME-OR-IP</code> is the hostname or IP address of the client.</p>
+</li>
+<li>
+<p>(Optional) Review the client’s partition assignments by running:</p>
+<pre><code class="language-console">lunash:&gt; client show -client CLIENT-NAME
+</code></pre>
+<p>Where <code>CLIENT-NAME</code> is the name of the client.</p>
+</li>
+<li>
+<p>Remove the existing client by running:</p>
+<pre><code class="language-console">lunash:&gt; client delete -client CLIENT-NAME
+</code></pre>
+<p>Where <code>CLIENT-NAME</code> is the name of the client.</p>
+ 
+<p class="note important">
+ <span class="note__title"><strong>Important</strong></span>
+ When you remove the existing client, all partition assignments are deleted.
+ </p>
+
+</li>
+<li>
+<p>Register the client again by running:</p>
+<pre><code>lunash:&gt; client register -client CLIENT-NAME -ip CLIENT-IP
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>CLIENT-NAME</code> is the name of the client.</li>
+
+   
+<li><code>CLIENT-IP</code> is the IP address of the client.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Assign the partition assignments again by running:</p>
+<pre><code>lunash:&gt; client assignPartition -client CLIENT-NAME -partition PARTITION-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>CLIENT-NAME</code> is the name of the client.</li>
+
+   
+<li><code>PARTITION-NAME</code> is the name of the partition to which the client is assigned.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>(Optional) Validate the new certificate fingerprint by running:</p>
+<pre><code>lunash:&gt; client fingerprint -client CLIENT-NAME
+</code></pre>
+<p>Where <code>CLIENT-NAME</code> is the name of the client.
+<br>
+<br>
+If you need to, you can compare the fingerprint to your locally stored certificate by running:</p>
+<pre><code>openssl x509 -in clientcert.pem -outform DER | md5sum
+</code></pre>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../credhub/setup-credhub-bosh.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../credhub/kms-plugin.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../credhub/setup-credhub-bosh.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../credhub/kms-plugin.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

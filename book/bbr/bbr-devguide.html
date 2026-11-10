@@ -1,0 +1,723 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>BBR developer&#x27;s guide - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-bosh-backup-and-restore-developers-guide-owner-bosh-backup--restore-team"><a class="header" href="#title-bosh-backup-and-restore-developers-guide-owner-bosh-backup--restore-team">title: BOSH Backup and Restore Developer’s Guide
+owner: BOSH Backup &amp; Restore Team</a></h2>
+<p>This guide describes the framework for release authors to add backup and restore functionality to their release by using BOSH Backup and Restore (BBR).</p>
+<p>BBR is a framework for backing up and restoring BOSH deployments and BOSH Directors. BBR triggers the backup or restore process on the deployment or BOSH Director and transfers the backup artifacts to and from the deployment or BOSH Director.</p>
+<p>The BBR framework consists of a command line interface (CLI) and a set of hooks, which call out to scripts. The framework uses BOSH to orchestrate the execution of backup and restore scripts. BBR allows release authors fine-grained control over how their release is backed up.</p>
+<h2 id="backup-mechanism"><a class="header" href="#backup-mechanism"><a id="mechanism"></a> Backup mechanism</a></h2>
+<p>Different systems require different strategies for backup and restore.
+To help release authors make consistent backups of their systems, the BBR framework provides hooks to
+lock scripts that bring a job to a consistent state before backup begins.</p>
+<p>The following diagram illustrates an example BBR script execution sequence.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="images/script-execution-order.png" alt="This diagram is described in detail immediately below."><span class="img-wrapper"><img src="images/script-execution-order.png" alt="This diagram is described in detail immediately below."></span></label></p>
+<p>The diagram shows a deployment that has two instance groups.
+Group foo contains instance foo/0, which contains jobs 1 and 2.
+Group bar contains instances bar/0 and bar/1, each of which contains job 1.</p>
+<ul>
+<li>Stage 1 starts: all pre-backup-lock scripts run for all jobs in all instance groups. Stage 1 ends.</li>
+<li>Stage 2 starts: all backup scripts run for all jobs in all instance groups. Stage 2 ends.</li>
+<li>Stage 3 starts: all post-backup-lock scripts run for all jobs in all instance groups. Stage 3 ends.</li>
+</ul>
+<p>There is no fixed order in which BBR calls the scripts within each stage.</p>
+<p>Because the framework is focused on the interface, hooks, backup destination, and intra-deployment
+orchestration, it is mechanism-agnostic.
+Release authors can back up their release however they want to, as long as the scripts they write
+have the correct name and directory structure.</p>
+<p>To ensure that backup and restore scripts do not get out of sync with the releases themselves,
+release authors are responsible for naming, creating, testing, and troubleshooting their own backup
+and restore scripts.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+For all releases, these backup and restore jobs might be co-located with
+those of other releases. Therefore, release authors must give these jobs unique and descriptive
+names to avoid name collisions.
+</p>
+
+<h2 id="script-organization"><a class="header" href="#script-organization"><a id="script-implementation"></a>Script organization</a></h2>
+<p>BBR sets out a contract with release authors to call designated backup and restore
+scripts under the <code>/var/vcap/jobs/JOB-NAME/bin/bbr/SCRIPT-NAME</code> directory:</p>
+<ul>
+<li>Backup script names
+<ul>
+<li><code>pre-backup-lock</code></li>
+<li><code>backup</code></li>
+<li><code>post-backup-unlock</code></li>
+</ul>
+</li>
+<li>Restore script names
+<ul>
+<li><code>pre-restore-lock</code></li>
+<li><code>restore</code></li>
+<li><code>post-restore-unlock</code></li>
+</ul>
+</li>
+<li>Metadata script name (if needed)
+<ul>
+<li><code>metadata</code></li>
+</ul>
+</li>
+</ul>
+<p>For example, the directory structure of a templated BBR job looks like the below:</p>
+<ul>
+<li><code>/var/vcap/jobs/bbr-uaadb/bin/bbr/backup</code></li>
+<li><code>/var/vcap/jobs/bbr-uaadb/bin/bbr/post-restore-unlock</code></li>
+</ul>
+<p>Release authors must implement scripts as part of the BBR contract.
+Package and distribute the scripts as part of your BOSH release.
+The <a href="https://github.com/cloudfoundry-incubator/exemplar-backup-and-restore-release">Exemplar Backup and Restore Release</a> in GitHub provides examples
+of how release authors can structure their jobs to implement the contract with BBR.</p>
+<p>The BBR CLI can remotely locate and run the scripts, even if they are located on different VMs.
+For example, the lock/unlock scripts can be located on release VMs
+while, due to disk-space constraints, the backup/restore scripts are co-located on a separate backup-restore VM.</p>
+<p>Scripts are executed in a specific order.
+For the backup workflow, the order is <code>pre-backup-lock</code>, <code>backup</code>, and then <code>post-backup-unlock</code>.
+For the restore workflow, the order is <code>pre-restore-lock</code>, <code>restore</code>, and then <code>post-restore-unlock</code>.</p>
+<p>All scripts should be executable scripts.
+ERB tags can be used for templating.</p>
+<p>These scripts are executed similarly to other release job scripts, such as <code>start</code>, <code>stop</code>, or <code>drain</code>, and you can use the job’s package dependencies.</p>
+<p>BBR checks exit codes of the scripts when orchestrating.
+Exit code <code>0</code> indicates success, and any other exit code indicates a failure.</p>
+<h3 id="directory-structure-of-a-bosh-release-with-bbr-scripts"><a class="header" href="#directory-structure-of-a-bosh-release-with-bbr-scripts"><a id="directory"></a> Directory structure of a BOSH release with BBR scripts</a></h3>
+<p>The following is an example directory structure of a BOSH release that includes BBR scripts.</p>
+<pre><code>acme-release
+├── README.md
+├── config
+│   ├── blobs.yml
+│   └── final.yml
+├── jobs
+│   ├── bbr-acmedb
+│   │   ├── monit
+│   │   ├── spec
+│   │   └── templates
+│   │       ├── backup.sh.erb
+│   │       ├── config.json.erb
+│   │       └── restore.sh.erb
+│   └── bbr-lock-unlock-acme
+│       ├── monit
+│       ├── spec
+│       └── templates
+│           ├── post-backup-unlock.sh.erb
+│           ├── pre-backup-lock.sh.erb
+│           └── metadata.sh.erb (optional)
+├── packages
+└── src
+</code></pre>
+<h3 id="script-ordering-across-jobs"><a class="header" href="#script-ordering-across-jobs"><a id="script-ordering"></a>Script ordering across jobs</a></h3>
+<p>During the backup workflow, all <code>pre-backup-lock</code> scripts are invoked before the <code>backup</code> scripts on all of the jobs in the deployment.
+All <code>backup</code> scripts are invoked before the <code>post-backup-unlock</code> scripts on all of the jobs in the deployment.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Both the <code>pre-backup-lock</code> and <code>post-backup-unlock</code> are called in parallel while respecting the locking order constraints.
+</p>
+
+<p>During the restore workflow, all <code>pre-restore-lock</code> scripts are invoked before the <code>restore</code> scripts on all of the jobs in the deployment.
+All <code>restore</code> scripts are invoked before the <code>post-restore-unlock</code> scripts on all of the jobs in the deployment.</p>
+<p>By default <code>pre-backup-lock</code> and <code>pre-restore-lock</code> scripts from different jobs are invoked in an arbitrary order.
+You can specify an order for lock scripts from specific jobs in the metadata script.</p>
+<p>The <code>post-backup-unlock</code> and <code>post-restore-unlock</code> scripts from different jobs are invoked in an arbitrary order
+when no locking dependency is specified, or the opposite order of lock scripts as stated in metadata scripts.
+When a job specifies locking dependency to a job that does not exist in the current deployment, BBR ignores that dependency.</p>
+<p>For more information, see <a href="#metadata">Metadata script</a> below.</p>
+<h3 id="logs"><a class="header" href="#logs"><a id="logs"></a> Logs</a></h3>
+<p>The <code>stdout</code> and <code>stderr</code> streams are captured and sent to the operator who invokes the backup and restore.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Release authors should avoid printing sensitive information to <code>stdout</code> or <code>stderr</code>.
+BBR prints any output from the scripts in case of failure. Ensure your script does not print any sensitive data, such as credentials.
+In particular, if you are using <code>set -x</code> in your script, add <code>set +x</code> before you use any credentials.
+</p>
+
+<h2 id="backup-workflow"><a class="header" href="#backup-workflow"><a id="backup-workflow"></a>Backup workflow</a></h2>
+<h3 id="pre-backup-lock"><a class="header" href="#pre-backup-lock"><a id="pre-backup-lock"></a>pre-backup-lock</a></h3>
+<p>The release job can have a <code>pre-backup-lock</code> script that stops any processes that could make changes to the components being backed up.
+This script must allow the job to lock so that backups are consistent across a cluster.</p>
+<p>For example, in a Cloud Foundry deployment, the <code>pre-backup-lock</code> script stops Cloud Controller processes
+that might make changes to its blobstore and database. This ensures the blobstore and the Cloud Controller database are consistent with each other.</p>
+<h4 id="job-configuration"><a class="header" href="#job-configuration">Job configuration</a></h4>
+<p>To add a <code>pre-backup-lock</code> script to a job:</p>
+<ol>
+<li>
+Create a script with any name in the templates directory of your job.
+</li>
+
+<li>
+In the templates section of the release job spec file, add the script name and <code>bin/bbr/pre-backup-lock</code> as a key-value pair. For example:
+<pre class="terminal">
+---
+name: lock-unlock-acme
+templates:
+  pre-backup-lock.sh.erb: bin/bbr/pre-backup-lock
+</pre>
+
+</li>
+
+<li>
+If you want your <code>bin/bbr/pre-backup-lock</code> scripts to run in a specific order, define that order using the optional metadata script. In the sample directory structure illustrated above, this script is called <code>metadata.sh.erb</code>.<br><br>
+<pre><code>a. The metadata script specifies that the current job must be locked before some other job(s) in the deployment.
+   When run, this script must print a YAML file to stdout. For example:
+</code></pre>
+<pre class="terminal">
+#!/usr/bin/env bash
+
+echo "---
+backup_should_be_locked_before:
+- job_name: lock-unlock-acme
+  release: acme-release" </pre>
+
+<pre><code>b. Add an entry to the templates section of the release job spec file:
+</code></pre>
+<pre class="terminal">
+templates:
+  ...
+  metadata.sh.erb: bin/bbr/metadata
+
+
+</pre>
+
+<p>See <a href="#metadata">Metadata script</a> below for information about the properties you can use in this script.</p>
+
+<h3 id="backup"><a class="header" href="#backup"><a id="backup"></a>Backup</a></h3>
+<p>The release job can have a backup script that dumps the backup of the job’s database to the directory specified by <code>$BBR_ARTIFACT_DIRECTORY</code>. For example, when backing up MySQL, this script can invoke the <code>mysqldump</code> binary for the MySQL adapter.</p>
+<p>There must be at least one job in the deployment providing a backup script. If there is no backup script, calling <code>backup</code> or <code>pre-backup-check</code> for the deployment fails.</p>
+<h4 id="job-configuration-1"><a class="header" href="#job-configuration-1">Job configuration</a></h4>
+<p>To add a <code>backup</code> script to a release job:</p>
+<ol>
+<li>
+<p>Create a script with any name in the templates directory of a release job.</p>
+</li>
+<li>
+<p>In the templates section of the release job spec file, add the script name and <code>bin/bbr/backup</code> as a key-value pair. For example:</p>
+<pre><code>---
+name: backup-restore-acme
+templates:
+  backup.erb: bin/bbr/backup
+</code></pre>
+</li>
+</ol>
+<h3 id="post-backup-unlock"><a class="header" href="#post-backup-unlock"><a id="post-backup-unlock"></a>post-backup-unlock</a></h3>
+<p>The backup and restore job can have a <code>post-backup-unlock</code> script that undoes the operations performed by <code>pre-backup-lock</code>.</p>
+<h4 id="job-configuration-2"><a class="header" href="#job-configuration-2">Job configuration</a></h4>
+<p>To add a <code>post-backup-unlock</code> script to a release job:</p>
+<ol>
+<li>
+<p>Create a script with any name in the templates directory of a release job.</p>
+</li>
+<li>
+<p>In the templates section of the release job spec file, add the script name and <code>bin/bbr/post-backup-unlock</code> as a key-value pair. For example:</p>
+<pre><code>---
+name: lock-unlock-acme
+templates:
+  post-backup-unlock.erb: bin/bbr/post-backup-unlock
+</code></pre>
+</li>
+</ol>
+<h3 id="error-handling-during-backup"><a class="header" href="#error-handling-during-backup"><a id="error-handling"></a>Error handling during backup</a></h3>
+<p>If errors occur during the backup workflow, cleanup tasks are executed to put the system back in a working state.</p>
+<p>A normal workflow for backing up a deployment does the below:</p>
+<p>graph TB
+start(Start) –&gt; check-deployment(Check that the deployment exists)
+check-deployment – Yes –&gt; make-local-artifact(Make a local artifact dir)
+check-deployment – No –&gt; exit(Exit)
+make-local-artifact – Success –&gt; pre-backup(Run pre-backup lock scripts)
+make-local-artifact – Failure –&gt; exit
+pre-backup – Success –&gt; backup(Run backup scripts)
+pre-backup – Failure –&gt; post-backup(Run post-backup-unlock scripts)
+backup –&gt; post-backup
+post-backup – backup was successful –&gt; drain(Drains artifact from instance)
+post-backup – backup failed –&gt; cleanup(Removes backup from the instance)
+drain –&gt; cleanup
+cleanup –&gt; exit</p>
+<h2 id="restore-workflow"><a class="header" href="#restore-workflow"><a id="restore-workflow"></a>Restore workflow</a></h2>
+<h3 id="pre-restore-lock"><a class="header" href="#pre-restore-lock"><a id="pre-restore-lock"></a>pre-restore-lock</a></h3>
+<p>The release job can have a <code>pre-restore-lock</code> script that stops any processes that could make changes to the components being restored. This script must allow the job to lock so that restorations are consistent across a cluster.</p>
+<h4 id="job-configuration-3"><a class="header" href="#job-configuration-3">Job configuration</a></h4>
+<p>To add a <code>pre-restore-lock</code> script to a job:</p>
+<ol>
+<li>
+<p>Create a script with any name in the templates directory of your job.</p>
+</li>
+<li>
+<p>In the templates section of the release job spec file, add the script name and <code>bin/bbr/pre-restore-lock</code> as a key-value pair. For example:</p>
+<pre><code>---
+name: lock-unlock-acme
+templates:
+  pre-restore-lock.sh.erb: bin/bbr/pre-restore-lock
+</code></pre>
+</li>
+<li>
+<p>If you want your <code>bin/bbr/pre-restore-lock</code> scripts to run in a specific order, define that order using the optional metadata script. In the sample directory structure illustrated above, this script is called <code>metadata.sh.erb</code>.<br><br>
+The <code>pre-restore-lock</code> scripts are called before any <code>restore</code> scripts have been called. Success indicates the job is ready to be restored.<br><br></p>
+<p>a. The metadata script specifies that the current job must be locked before some other job(s) in the deployment. When run, this script must print a YAML file to stdout. For example:</p>
+   
+<pre class="terminal">
+   #!/usr/bin/env bash
+   echo "---
+   restore\_should\_be\_locked\_before:
+     job_name: lock-unlock-acme
+     release: acme-release"
+   </pre>
+
+<p>b. Add an entry to the templates section of the release job spec file:</p>
+<pre><code>templates:
+  ...
+  metadata.sh.erb: bin/bbr/metadata
+</code></pre>
+<p>See <a href="#metadata">Metadata script</a> below for information about the properties you can use in this script.</p>
+</li>
+</ol>
+<h3 id="restore"><a class="header" href="#restore"><a id="restore"></a>Restore</a></h3>
+<p>If a release has a <code>backup</code> script, it should also have a <code>restore</code> script. The <code>restore</code> script expects a backup artifact to be provided in <code>$BBR_ARTIFACT_DIRECTORY</code>. For example, when restoring MySQL, the script invokes <code>mysql</code> to restore from a mysqldump file.</p>
+<h4 id="job-configuration-4"><a class="header" href="#job-configuration-4">Job configuration</a></h4>
+<p>To add a <code>restore</code> script to a release job:</p>
+<ol>
+<li>
+<p>Create a script with any name in the templates directory of a release job.</p>
+</li>
+<li>
+<p>In the templates section of the release job spec file, add the script name and <code>bin/bbr/restore</code> as a key-value pair. For example:</p>
+<pre><code class="language-yaml">---
+name: backup-restore-acme
+templates:
+  restore.erb: bin/bbr/restore
+</code></pre>
+</li>
+</ol>
+<h3 id="post-restore-unlock"><a class="header" href="#post-restore-unlock"><a id="post-restore-unlock"></a>post-restore-unlock</a></h3>
+<p>The release job can have a <code>post-restore-unlock</code> script that resumes normal service operation. <code>post-restore-unlock</code> should be idempotent because it can be called multiple times even if <code>pre-restore-lock</code> has not been not called.</p>
+<h4 id="job-configuration-5"><a class="header" href="#job-configuration-5">Job configuration</a></h4>
+<p>To add a <code>post-restore-unlock</code> script to a release:</p>
+<ol>
+<li>
+<p>Create a script with any name in the templates directory of your job.</p>
+</li>
+<li>
+<p>In the templates section of the release job spec file, add the script name and <code>bin/bbr/post-restore-unlock</code> as a key-value pair. For example:</p>
+<pre><code>---
+name: lock-unlock-acme
+templates:
+  post-restore-unlock.sh.erb: bin/bbr/post-restore-unlock
+</code></pre>
+</li>
+</ol>
+<h3 id="error-handling-during-restore"><a class="header" href="#error-handling-during-restore"><a id="error-handling-restore"></a>Error handling during restore</a></h3>
+<p>If errors occur during the restore workflow, cleanup tasks are executed to put the system back in a working state.</p>
+<p>A normal workflow for restoring a deployment does the below:</p>
+<p>graph TB
+start(Start) –&gt; validate-artifact(Check that the artifact is present and the checksums match)
+validate-artifact –&gt; check-deployment-exists(Check that the deployment exists)
+check-deployment-exists – Yes –&gt; check-deployment-matches-backup(Check the structure of the backup matches the destination deployment)
+check-deployment-exists – No –&gt; exit(Exit)
+check-deployment-matches-backup – Yes –&gt; copy-to-remote(Copy the backup artifacts to the relevant VMs)
+check-deployment-matches-backup – No –&gt; cleanup(Cleanup, close ssh connections)
+copy-to-remote – Success –&gt; pre-restore-lock(Run pre-restore-lock scripts)
+copy-to-remote – Failure –&gt; cleanup
+pre-restore-lock – Success –&gt; restore(Run restore scripts)
+pre-restore-lock – Failure –&gt; post-restore-unlock(Run post-restore-unlock scripts)
+restore –&gt; post-restore-unlock
+post-restore-unlock –&gt; cleanup
+cleanup –&gt; exit</p>
+<h2 id="optional-metadata-script"><a class="header" href="#optional-metadata-script"><a id="metadata"></a>(Optional) Metadata script</a></h2>
+<p>The <code>metadata</code> script is an optional script that <code>bbr</code> executes before
+any other scripts to get more information about the jobs, for example,
+locking dependencies and whether the BBR job is enabled or not.
+The script is expected to print a <code>yaml</code> on standard out with more information
+about the job for backup and restore.</p>
+<h3 id="job-configuration-6"><a class="header" href="#job-configuration-6">Job configuration</a></h3>
+<p>To add a <code>metadata</code> script to a release job:</p>
+<ol>
+<li>
+<p>Create a script with any name in the templates directory of a release job.</p>
+</li>
+<li>
+<p>In the templates section of the release job spec file, add the script name and <code>bin/bbr/metadata</code> as a key-value pair. For example:</p>
+<pre><code class="language-yaml">---
+name: backup-restore-acme
+templates:
+  metadata.erb: bin/bbr/metadata
+</code></pre>
+</li>
+</ol>
+<h3 id="optional-properties"><a class="header" href="#optional-properties">(Optional) Properties</a></h3>
+<h4 id="backup_should_be_locked_before"><a class="header" href="#backup_should_be_locked_before">backup_should_be_locked_before</a></h4>
+<p>Use this property to specify the locking dependencies for the current job during backup.
+The jobs are specified as an array with their release names.</p>
+<p>For example:</p>
+<pre class="terminal">
+#!/usr/bin/env bash
+echo "---
+backup_should_be_locked_before:
+- job_name: lock-unlock-acme
+  release: acme-release" </pre>
+
+<h4 id="restore_should_be_locked_before"><a class="header" href="#restore_should_be_locked_before">restore_should_be_locked_before</a></h4>
+<p>If you want your <code>bin/bbr/pre-restore-lock</code> scripts to run in a
+specific order, define that order using the metadata script, as above, but with
+the <code>restore_should_be_locked_before</code> key.</p>
+<p>For example:</p>
+<pre class="terminal">
+#!/usr/bin/env bash
+echo "---
+restore_should_be_locked_before:
+- job_name: lock-unlock-acme
+  release: acme-release" </pre>
+
+<h4 id="skip_bbr_scripts"><a class="header" href="#skip_bbr_scripts">skip_bbr_scripts</a></h4>
+<p>Use this property to disable a BBR job.
+When the metadata script is templated with this property set to true, the BBR CLI
+does not run the BBR scripts in this job.</p>
+<p>For example:</p>
+<pre class="terminal">
+#!/usr/bin/env bash
+echo "---
+skip_bbr_scripts: true" </pre>
+
+<h2 id="testing"><a class="header" href="#testing"><a id="testing"></a>Testing</a></h2>
+<p>The functional testing pattern recommended for BBR scripts is:</p>
+<ol>
+<li>
+Create data for which the release is responsible.
+</li>
+
+<li>
+Back up the release.
+</li>
+
+<li>
+Delete data.
+</li>
+
+<li>
+Restore the release.
+</li>
+
+<li>
+Validate that restored data are correct.
+</li>
+
+</ol>
+
+<p>Where scripts are implemented for releases that are part of larger deployments, you should perform end-to-end testing that validates consistency across releases.</p>
+<h2 id="backup-and-restore-utilities"><a class="header" href="#backup-and-restore-utilities"><a id="bbr-utilities"></a>Backup and restore utilities</a></h2>
+<p>If your release stores state in a Postgres or MySQL database, deploy the <code>database-backup-restorer</code> job from the <a href="https://github.com/cloudfoundry-incubator/backup-and-restore-sdk-release">backup-and-restore-sdk-release</a> GitHub repository.</p>
+<p>Ensure your job templates a <code>config.json</code> as follows:</p>
+<pre><code class="language-json">{
+  "username": "db user",
+  "password": "db password",
+  "host": "db host",
+  "port": "db port",
+  "adapter": "bbr supported adapter (e.g. mysql or postgres)",
+  "database": "database name"
+}
+</code></pre>
+<p>Ensure your <code>backup</code> and <code>restore</code> scripts call the appropriate <code>database-backup-restorer</code> binaries as follows:</p>
+<p><strong>Backup</strong></p>
+<pre><code class="language-bash">/var/vcap/jobs/database-backup-restorer/bin/backup /path/to/config.json
+
+cp &lt;output_file&gt; $ARTIFACT_DIRECTORY
+</code></pre>
+<p><strong>Restore</strong></p>
+<pre><code class="language-bash">cp $ARTIFACT_DIRECTORY &lt;output_file&gt;
+
+/var/vcap/jobs/database-backup-restorer/bin/restore /path/to/config.json
+</code></pre>
+<h2 id="bbr-and-cloud-foundry-databases"><a class="header" href="#bbr-and-cloud-foundry-databases"><a id="bbr-cf"></a>BBR and Cloud Foundry databases</a></h2>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+Release authors must ensure the following.
+<br><strong>For CF Releases</strong>, Your scripts must respect the <code>release_level_backup</code> job property so the scripts run if set to <code>true</code>, but do nothing if set to <code>false</code>.
+</p>
+
+<p>BBR provides a pattern for Cloud Foundry release authors that ensures their scripts abide by the BBR Framework contract.</p>
+<p>A Cloud Foundry operator adds a <code>backup-restore</code> instance to their Cloud Foundry deployment. By default, release-specific database <code>backup</code> and <code>restore</code> job scripts are co-located on this instance along with the <code>database-backup-restorer</code> job from the <a href="https://github.com/cloudfoundry-incubator/backup-and-restore-sdk-release">backup-and-restore-sdk-release</a> GitHub repository.</p>
+<p>If your release requires that you stop your component’s processes during backup and restore, you also need to provide <code>unlock</code> and <code>lock</code> scripts. You can co-locate these scripts on either the <code>backup-restore</code> instance or your component’s instance. You should co-locate these scripts on the component’s instance if you want to interact directly with <code>monit</code> or your running job.
+More information about <a href="#post-backup-unlock"><code>unlock</code></a> and <a href="#pre-backup-lock"><code>lock</code></a> scripts are below.</p>
+<h3 id="naming-recommendations"><a class="header" href="#naming-recommendations">Naming recommendations</a></h3>
+<p>When Cloud Foundry is deployed, multiple backup and restore scripts are co-located on the
+<code>backup-restore</code> instance, separated by job name.
+For this reason, the job names for each release should have a consistent format
+so that there is no confusion between BBR jobs.</p>
+<p>The recommendations for job names are as follows:</p>
+<ul>
+<li>Use the prefix <code>bbr-</code> to show that the job is bbr-related</li>
+<li>Include the name of the component that is being backed up</li>
+</ul>
+<p>For example, you have a release named <code>acme-release</code> that has a
+database (db) that must be backed up.
+The recommended BBR job name for this database is <code>bbr-acmedb</code>.
+This follows the format <code>bbr-RELEASE-NAMEdb</code>.</p>
+<h3 id="example"><a class="header" href="#example"><a id="bbr-cf-example"></a>Example</a></h3>
+<p>Acme Release is a Cloud Foundry component that has no persistent disk on its component VM.
+The release is an API that stores its data in a MySQL database deployed on a different
+instance group in this CF deployment.</p>
+<p>The release authors have chosen to create two new jobs to be incorporated into
+their existing release; one job includes the <code>backup</code> and <code>restore</code> scripts in
+its templates directory, and the other job includes the <code>pre-backup-lock</code> and
+<code>post-backup-unlock</code> scripts.
+This is because the operator co-locates the former job on the <code>backup-restore</code>
+VM and the latter job on the Acme Release VM.</p>
+<p>Here is how the backup and restore job should be placed:</p>
+<p>graph LR
+subgraph Backup Restore VM
+database-backup-restorer
+bbr-acmedb
+end
+subgraph Acme VM
+acme
+bbr-lock-unlock-acme
+end
+subgraph Acme Release
+jobs/acme-job–&gt;acme
+jobs/bbr-lock-unlock-acme–&gt;bbr-lock-unlock-acme
+jobs/bbr-acmedb–&gt;bbr-acmedb
+end
+subgraph BBR SDK Release
+jobs/database-backup-restorer–&gt;database-backup-restorer
+end</p>
+<p>classDef lavender fill:#8ca5ce,stroke:#333
+classDef turquoise fill:#8bc1ce,stroke:#333
+class jobs/acme-job lavender
+class jobs/bbr-lock-unlock-acme lavender
+class jobs/bbr-acmedb lavender
+class jobs/database-backup-restorer turquoise</p>
+<h2 id="acceptance-tests"><a class="header" href="#acceptance-tests"><a id="drats"></a>Acceptance tests</a></h2>
+<p>The Disaster Recovery Acceptance Test Suite (DRATs) runs against a Cloud
+Foundry deployment to ensure that backup and restore works as expected.</p>
+<p>For more information and instructions for how to run DRATs, see
+<a href="https://github.com/cloudfoundry-incubator/disaster-recovery-acceptance-tests">disaster-recovery-acceptance-tests</a>
+in GitHub.</p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../bbr/experimental-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../devguide/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../bbr/experimental-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../devguide/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

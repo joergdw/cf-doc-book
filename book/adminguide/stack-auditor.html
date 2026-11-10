@@ -1,0 +1,474 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Using Stack Auditor - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-using-stack-auditor-in-cloud-foundry-owner-buildpacks"><a class="header" href="#title-using-stack-auditor-in-cloud-foundry-owner-buildpacks">title: Using Stack Auditor in Cloud Foundry
+owner: Buildpacks</a></h2>
+<p>Stack Auditor is a cf CLI plug-in that allows you to list apps and their stacks, migrate apps to a new stack, and delete a stack. Learn how to use it on this page.</p>
+<p>A typical use for Stack Auditor is migrating a large number of apps to a new stack.
+This includes moving apps from <code>cflinuxfs3</code> to <code>cflinuxfs4</code> in preparation to upgrade your deployment
+to a version that does not contain <code>cflinuxfs3</code>.
+The following table describes the workflow you can use:</p>
+<table class="table">
+	
+<thead>
+	
+<tr>
+		<th>Stage</th>
+		<th>Description</th>
+	</tr>
+
+	</thead>
+
+	
+<tr>
+		<td>1</td>
+		<td>Operator audits stack usage to determine which apps need to be migrated. See <a href="#list-stacks">List Apps and Their Stacks</a>.</td>
+	</tr>
+
+	
+<tr>
+		<td>2</td>
+		<td>Operator communicates with developers that they must migrate their existing apps to a new stack and begin pushing all new apps to the new stack.</td>
+	</tr>
+
+	
+<tr>
+		<td>3</td>
+		<td>Developers migrate their apps to the new stack. See <a href="#change-stacks">Change Stacks</a>.</td>
+	</tr>
+
+	
+<tr>
+		<td>4</td>
+		<td>Operator confirms apps have been migrated.</td>
+	</tr>
+
+	
+<tr>
+		<td>5</td>
+		<td>Operator deletes buildpacks associated with the old stack.</td>
+	</tr>
+
+	
+<tr>
+		<td>6</td>
+		<td>Operator deletes the old stack. See <a href="#delete-stacks">Delete a Stack</a>.
+		<br>If you upgrade your deployment to a version that contains the stack you deleted, the stack returns on upgrade.</td>
+	</tr>
+
+	
+<tr>
+		<td>7</td>
+		<td>If applicable, operator upgrades the deployment to the version that does not contain the old stack.</td>
+	</tr>
+
+</table>
+
+<h2 id="install-stack-auditor"><a class="header" href="#install-stack-auditor"><a id="install"></a> Install Stack Auditor</a></h2>
+<p>To install Stack Auditor:</p>
+<ol>
+<li>
+<p>Download the Stack Auditor binary for your OS from <a href="https://github.com/cloudfoundry/stack-auditor/releases">Releases</a> in the Stack Auditor repository on GitHub.</p>
+</li>
+<li>
+<p>Install the plug-in with the cf CLI:</p>
+<pre><code>cf install-plugin PATH-TO-BINARY
+</code></pre>
+<p>Or install from the community repo by running:</p>
+<pre><code>cf install-plugin StackAuditor
+</code></pre>
+</li>
+</ol>
+<h2 id="using-stack-auditor"><a class="header" href="#using-stack-auditor"><a id="use"></a> Using Stack Auditor</a></h2>
+<p>The following sections describe how to use Stack Auditor.</p>
+<h3 id="list-apps-and-their-stacks"><a class="header" href="#list-apps-and-their-stacks"><a id="list-stacks"></a> List apps and their stacks</a></h3>
+<p>With Stack Auditor, you can get a list of the apps in each org and space and see what stack they are using.</p>
+<p>To see which apps are using which stack, run the following command. The output lists apps for each org you have access to. To see all the apps in your deployment, be sure to log in to the cf CLI as a user who can access all orgs.</p>
+<pre><code>cf audit-stack
+</code></pre>
+<p>Here is example output:</p>
+  
+<pre class="terminal">
+  $ cf audit-stack
+  first-org/development/first-app cflinuxfs3
+  first-org/staging/first-app cflinuxfs3
+  first-org/production/first-app cflinuxfs3
+  second-org/development/second-app cflinuxfs4
+  second-org/staging/second-app cflinuxfs4
+  second-org/production/second-app cflinuxfs4
+  ...
+  </pre>
+
+<h3 id="change-stacks-for-a-single-app"><a class="header" href="#change-stacks-for-a-single-app"><a id="change-stacks"></a> Change stacks for a single app</a></h3>
+<p>Stack Auditor allows you to change the stack that an app uses. Stack Auditor rebuilds the app onto the new stack without a change in the source code of the app. If you want to move the app to a new stack with updated source code, follow the procedure in <a href="../devguide/deploy-apps/stacks.html">Changing Stacks</a>.</p>
+<p>To change the stack an app uses:</p>
+<ol>
+<li>
+<p>Target the org and space of the app:</p>
+<pre><code>cf target -o ORG -s SPACE
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ORG</code> is the org the app is in.</li>
+
+   
+<li><code>SPACE</code> is the space the app is in.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Run the following command:</p>
+<pre><code>cf change-stack APP-NAME STACK-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>APP-NAME</code> is the app that you want to move to a new stack.</li>
+
+   
+<li><code>STACK-NAME</code> is the stack you want to move the app to.</li>
+
+ </ul>
+
+<p>Here is example output:</p>
+ 
+<pre class="terminal">
+ $ cf change-stack my-app cflinuxfs4
+ Attempting to change stack to cflinuxfs4 for my-app...
+ Starting app my-app in org pivotal-pubtools / space pivotalcf-staging as ljarzynski@pivotal.io...
+ Downloading staticfile_buildpack...
+
+ . . .
+
+ requested state: started
+ instances: 1/1
+ usage: 64M x 1 instance
+ urls: example.com
+ last uploaded: Wed 17 Jul 22:57:04 UTC 2024
+ stack: cflinuxfs4
+ buildpack: staticfile_buildpack
+
+      state     since                  cpu    memory        disk           logging         cpu entitlement   details
+ #0   running   2024-07-17T22:57:22Z   0.3%   8.2M of 64M   130.2M of 1G   0B/s of 16K/s   2.4%
+
+
+ Application my-app was successfully changed to Stack cflinuxfs4
+ </pre>
+
+</li>
+</ol>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If the app is in a <code>stopped</code> state, it remains stopped after changing stacks. Also, when attempting to change stacks, your app is stopped. If the app fails on <code>cflinuxfs4</code>, Stack Auditor attempts to restage your app on <code>cflinuxfs3</code>.
+</p>
+
+<h3 id="change-stacks-for-all-apps-in-a-space"><a class="header" href="#change-stacks-for-all-apps-in-a-space"><a id="change-stacks-all-apps"></a> Change stacks for all apps in a space</a></h3>
+<p>Stack Auditor also allows you to migrate all apps in a space to a new stack. For example, using jq you can write a script to find all apps in a space and migrate them to cflinuxfs4:</p>
+<pre><code class="language-jq">cf audit-stack --json | jq -r 'map(select(.stack == "cflinuxfs3")) | .[] |"cf target -o \(.org) -s \(.space) &amp;&amp; cf change-stack \(.name) cflinuxfs4"' | xargs -i{} bash -c {}
+</code></pre>
+<h3 id="delete-a-stack"><a class="header" href="#delete-a-stack"><a id="delete-stacks"></a> Delete a stack</a></h3>
+<p>Stack Auditor allows you to delete a stack from your deployment. You must be an admin user to delete a stack.</p>
+<ol>
+<li>
+<p>To delete a stack, run the following command. This action cannot be undone, with the following exception: If you upgrade your deployment to a version that contains the stack you deleted, the stack returns on upgrade.</p>
+<pre><code>cf delete-stack STACK-NAME
+</code></pre>
+<p>Where <code>STACK-NAME</code> is the name of the stack you want to delete.</p>
+<p>Here is example output:</p>
+ 
+<pre class="terminal">
+ $ cf delete-stack cflinuxfs3
+ Are you sure you want to remove the cflinuxfs3 stack? If so, type the name of the stack [cflinuxfs3]
+ &gt;cflinuxfs3
+ Deleting stack cflinuxfs3...
+ Stack cflinuxfs3 has been deleted.
+ </pre>
+
+<p>If you have any apps still running on <code>cflinuxfs3</code>, the command returns the following error:</p>
+ 
+<pre class="terminal">
+ Failed to delete stack cflinuxfs3 with error: Please delete the app associations for your stack.
+ </pre>
+
+</li>
+</ol>
+<h3 id="contacting-users-of-apps"><a class="header" href="#contacting-users-of-apps"><a id="contact-users"></a> Contacting users of apps</a></h3>
+<p>If you are having problems with an app and need help, you can use the cf CLI to get a list of email addresses of users in a space. For example, run:</p>
+<pre><code>cf space-users ORG-NAME SPACE-NAME
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>ORG-NAME</code> is the org the app is in.</li>
+<li><code>SPACE-NAME</code> is the space the app is in.</li>
+</ul>
+<h2 id="known-issues"><a class="header" href="#known-issues"><a id="known-issues"></a> Known issues</a></h2>
+<p>The following are known issues with changing stacks from cflinuxfs3 to cflinuxfs4.</p>
+<h3 id="openssl11-is-not-included-in-cflinuxfs4"><a class="header" href="#openssl11-is-not-included-in-cflinuxfs4"><a id="openssl1.1"></a> OpenSSL1.1 is not included in cflinuxfs4</a></h3>
+<p>cflinuxfs4 does not include OpenSSL1.1. If your application depends on OpenSSL1.1, for example, a static file buildpack containing an executable but using the system libraries for SSL, it will fail to run. Ensure that your application can be rebuilt against OpenSSL3 or include the OpenSSL1.1 libraries with your application.</p>
+<h3 id="net-6-and-gss-requires-legacy-provider"><a class="header" href="#net-6-and-gss-requires-legacy-provider"><a id="dotnet-gss"></a> .NET 6 and GSS requires legacy provider</a></h3>
+<p>If your application is .NET 6 and uses GSS, you may see the following error message:</p>
+<pre class="terminal">
+GSSAPI operation failed with error - Unspecified GSS failure. Minor code may provide more information (Crypto routine failure).
+</pre>
+
+<p>There is an existing .NET issue about this failure, which is related to legacy usage of OpenSSL3. For more information, see <a href="https://github.com/dotnet/runtime/issues/67353">GSS failures in System.Net.Http.Functional.Tests on Ubuntu 22.04</a> on GitHub. The workaround is listed <a href="https://github.com/dotnet/runtime/issues/67353#issuecomment-1085003764">on the same page</a> and involves explicitly loading the legacy provider.</p>
+<h3 id="net-core-apps-and-ldap"><a class="header" href="#net-core-apps-and-ldap"><a id="dotnet-ldap"></a> .NET Core apps and LDAP</a></h3>
+<p>If your application is .NET Core and using LDAP connectivity, you may see the following error message if you are using cflinuxfs4 prior to v1.45.0:</p>
+<pre class="terminal">
+"ThreadName": ".NET ThreadPool Worker", "Message": "#414 Failed to establish connection to domain: [{\"Domain\":\"myldap-domain.com\",\"Host\":\"dc=emea,dc=org,dc=com\",\"Base\":\"emea\",\"Name\":\"EUROPE\"}] exception: The type initializer for 'Ldap' threw an exception.", "Description": "#414 Failed to establish connection to domain: [{\"Domain\":\"myldap-domain.com\",\"Host\":\"dc=emea,dc=org,dc=com\",\"Base\":\"emea\",\"Name\":\"EUROPE\"}] exception: The type initializer for 'Ldap' threw an exception.", "Environment": "ge4-sit", "Exception": " ", "RequestHandler": "Controller: Action:", "CallStack": "Org.DSA.Shared.Logger.ApiLogger.Log" }
+</pre>
+
+<p>The issue is related to a stack-level LDAP package that wasn’t available in cflinuxfs4 until v1.45.0 and its interaction with the <code>System.DirectoryServices.Protocols</code> package.</p>
+<p>To resolve the problem:</p>
+<ul>
+<li>Upgrade the cflinuxfs4 stack.</li>
+<li>Upgrade the <code>System.DirectoryServices</code> NuGet package to version 8.0.0 or higher. You can do this in the application using the following command:</li>
+</ul>
+<pre class="terminal">
+&lt;PackageReference Include="System.DirectoryServices.Protocols" Version="8.0.0" /&gt;
+</pre>
+
+<h3 id="ruby-31-or-later-is-required"><a class="header" href="#ruby-31-or-later-is-required"><a id="ruby-buildpack"></a> Ruby 3.1 or later is required</a></h3>
+<p>Ruby 3.1, introduced in Ruby buildpack v1.8.51, or later is required for the Ruby buildpack running on cflinuxfs4. Upgrade your application to work with Ruby 3.1 or later by specifying it in your application’s Gemfile and working through any issues that result. If an application specifies a version of Ruby in its Gemfile not included in the buildpack, it results in the following error message:</p>
+<pre class="terminal">
+**ERROR** Unable to determine ruby: Unable to determine ruby version: Running ruby: No Matching versions, ruby = 2.7.6 not found in this buildpack                                                                ·······
+Failed to compile droplet: Failed to run all supply scripts: exit status 15
+</pre>
+
+<p>This happens because Ruby v2.7 and v3.0 are incompatible with OpenSSL3, which is the version of OpenSSL in cflinuxfs4.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../adminguide/managing-apps-stacks-index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../adminguide/managing-stacks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../adminguide/managing-apps-stacks-index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../adminguide/managing-stacks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

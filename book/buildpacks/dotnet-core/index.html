@@ -1,0 +1,586 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>.NET Core buildpack - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-net-core-buildpack-owner-buildpacks"><a class="header" href="#title-net-core-buildpack-owner-buildpacks">title: .NET Core buildpack
+owner: Buildpacks</a></h2>
+<p>You can push Cloud Foundry apps to Linux Diego Cells using the .NET Core buildpack.
+To find supported ASP.NET Core versions, see <a href="https://github.com/cloudfoundry/dotnet-core-buildpack/releases">.NET Core buildpack release notes</a>.</p>
+<p>The .NET Core buildpack can only be used to deploy apps to Linux Diego Cells.</p>
+<p>To deploy .NET Core apps to Windows Diego Cells, use the Binary buildpack.
+For more information about the Binary buildpack, see <a href="../binary/index.html">Binary Buildpack</a>.</p>
+<p>Buildpacks provide needed dependencies to Cloud Foundry apps.
+Cloud Foundry automatically uses the .NET Core buildpack when one or more of the following conditions are met:</p>
+<ul>
+<li>The pushed app contains one or more <code>*.csproj</code> or <code>*.fsproj</code> files.</li>
+<li>The app is pushed from the output directory of the <code>dotnet publish</code> command.</li>
+</ul>
+<p>For information about deploying different types of .NET apps, follow the links in the following table:</p>
+<table class="table">
+  
+<thead>
+  
+<tr>
+    <th>Type of .NET App</th>
+    <th>Buildpack</th>
+  </tr>
+
+  </thead>
+
+  
+<tr>
+    <td>
+        ASP.NET MVC<br>
+        ASP.NET Web Forms<br>
+        ASP.NET WebAPI Apps<br>
+        Windows Communication Foundation (WCF)
+    </td>
+    <td><a href="../hwc/index.html">HWC</a></td>
+  </tr>
+
+  
+<tr>
+    <td>.NET Console</td>
+    <td><a href="../binary/index.html">Binary</a></td>
+  </tr>
+
+  
+<tr>
+    <td>.NET Core pushed to Windows stack</td>
+    <td><a href="../binary/index.html">Binary</a></td>
+  </tr>
+
+</table>
+
+<h2 id="push-a-net-core-app"><a class="header" href="#push-a-net-core-app"><a id="pushing-apps"></a> Push a .NET Core app</a></h2>
+<p>To push a .NET Core app to a Linux Diego Cell:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code class="language-bash">cf push APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name you want to give your app.
+<br>
+<br>
+If your Cloud Foundry deployment does not have the .NET Core buildpack installed or the installed version is out of date,
+run the same command with the <code>-b</code> option to specify the buildpack:</p>
+<pre><code class="language-bash">cf push APP-NAME -b https://github.com/cloudfoundry/dotnet-core-buildpack.git
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name you want to give your app.</p>
+</li>
+<li>
+<p>Find the URL of your app in the output of the <code>cf push</code> command.</p>
+</li>
+<li>
+<p>Open a browser and navigate to the URL to see your app running.</p>
+</li>
+</ol>
+<p>For a basic sample app, see <a href="https://github.com/IBM-Bluemix/aspnet-core-helloworld">ASP.NET Core Getting Started App</a> in GitHub.</p>
+<h2 id="source-based-non-published-deployments"><a class="header" href="#source-based-non-published-deployments"><a id="source-based"></a> Source-based, non-published deployments</a></h2>
+<p>For a source-based, non-published deployment, you push your app’s source code, not the output directory of the <code>dotnet publish</code> command.</p>
+<p>The source-based, non-published workflow ensures the buildpack can keep all your dependencies in sync and up to date. See the following sections.</p>
+<p>The source-based deployment workflow also uses the <code>cf push</code> command to push source-based apps to Cloud Foundry.</p>
+<h3 id="deploying-apps-with-multiple-projects"><a class="header" href="#deploying-apps-with-multiple-projects"><a id="multiple-projects"></a> Deploying apps with multiple projects</a></h3>
+<p>If you are deploying an app containing multiple projects, you must specify which of the app’s projects is the main project.</p>
+<p>To specify the main project in a multi-project deployment:</p>
+<ol>
+<li>
+<p>Create a <code>.deployment</code> file in your app’s root folder and open the new file in a text editor.</p>
+</li>
+<li>
+<p>Designate the main project’s path by configuring the file, using the following format:</p>
+<pre><code class="language-text">[config]
+project = PATH-TO-YOUR-MAIN-PROJECT
+</code></pre>
+<p>Where <code>PATH-TO-YOUR-MAIN-PROJECT</code> is the location of your main project’s <code>*.csproj</code> or <code>*.fsproj</code> file.
+<br>
+For example:</p>
+<pre><code class="language-text">[config]
+project = src/MyApp.Web/MyApp.Web.csproj
+</code></pre>
+<p>In this example, by pointing to the <code>MyApp.Web</code> <code>*.csproj</code> file, <code>MyApp.Web</code> is configured as the main project.</p>
+</li>
+<li>
+<p>Save the revised <code>.deployment</code> file.</p>
+</li>
+</ol>
+<p>When deployed, the buildpack attempts to run the main project using the <code>dotnet run</code> command, <code>dotnet run -p PATH-TO-YOUR-MAIN-PROJECT</code>, and automatically compiles all projects listed as dependencies in the main project’s <code>*.csproj</code> or <code>*.fsproj</code> file.</p>
+<p>For example: Suppose your <code>.deployment</code> file is configured as previously noted and you have an app <code>src</code> folder containing three projects: <code>MyApp.Web</code>, <code>MyApp.DAL</code> and <code>MyApp.Services</code>. If your <code>MyApp.Web.csproj</code> file lists the <code>MyApp.DAL</code> and <code>MyApp.Services</code> projects as dependencies, the two additional projects are compiled by the buildpack.</p>
+<h3 id="use-non-default-package-sources"><a class="header" href="#use-non-default-package-sources"><a id="non-default-package-sources"></a> Use non-Default package sources</a></h3>
+<p>If you want to deploy an app that uses non-default package sources, you must specify those package sources in the <code>NuGet.Config</code> file. For information about <code>NuGet.Config</code>, see <a href="https://learn.microsoft.com/nuget/reference/nuget-config-file">nuget.config reference</a> in the Microsoft documentation.</p>
+<h3 id="deactivating-and-clearing-your-nuget-package-cache"><a class="header" href="#deactivating-and-clearing-your-nuget-package-cache"><a id="disabling-nuget"></a> Deactivating and clearing your NuGet package cache</a></h3>
+<p>You might need to deactivate NuGet package caching or clear NuGet packages cached in the staging environment in one of the following scenarios:</p>
+<ul>
+<li>
+<p>Your app fails to stage because it runs out of space, exceeding the maximum allowable disk quota.</p>
+</li>
+<li>
+<p>You have added pre-release packages to test a new feature and then decided to revert back to the main NuGet feed. You might need to remove the packages you changed from the cache to avoid conflicts.</p>
+</li>
+</ul>
+<p>Deactivating  NuGet caching clears any existing NuGet dependencies from the staging cache and prevents the buildpack from adding NuGet dependencies to the staging cache.</p>
+<p>NuGet package caching is deactivated by default. If the default is not explicitly overridden, no additional NuGet caching configuration is required.</p>
+<p>To deactivate NuGet package caching:</p>
+<ol>
+<li>
+<p>Confirm the <code>CACHE_NUGET_PACKAGES</code> environment variable is not set to <code>true</code> in your app manifest by locating the <code>manifest.yml</code> file and confirming <code>CACHE_NUGET_PACKAGES</code> is not set to <code>true</code>.</p>
+</li>
+<li>
+<p>If needed, set <code>CACHE_NUGET_PACKAGES</code> to <code>false</code> in the <code>manifest.yml</code> file by setting the <code>CACHE_NUGET_PACKAGES</code> environment variable to <code>false</code>.
+<br>
+For example:</p>
+<pre><code class="language-console">---
+applications:
+- name: sample-aspnetcore-app
+  memory: 512M
+  env:
+    CACHE_NUGET_PACKAGES: false
+</code></pre>
+</li>
+<li>
+<p>To alternatively configure the setting to <code>false</code> in the environment variables settings, run the following command:</p>
+<pre><code class="language-console">cf set-env APP-NAME CACHE_NUGET_PACKAGES false
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+</ol>
+<p>For more information, see <a href="../../devguide/deploy-apps/manifest.html#env-block">Environment Variables</a> in <em>Deploying with App Manifests</em>.</p>
+<h2 id="framework-dependent-deployments"><a class="header" href="#framework-dependent-deployments"><a id="framework-dependent"></a> Framework dependent deployments</a></h2>
+<p>For a framework-dependent deployment (FDD), you deploy only your app and third-party dependencies. Cloud Foundry recommends using this workflow if you deploy an app in an offline setting.</p>
+<p>For information about deploying FDDs, see <a href="https://learn.microsoft.com/dotnet/core/deploying/#framework-dependent-deployments-fdd">Framework-dependent deployments (FDD)</a> in the Microsoft documentation.</p>
+<p>Deploy a FDD using the buildpack:</p>
+<ol>
+<li>
+<p>Publish the app by running:</p>
+<pre><code class="language-console">dotnet publish [-f FRAMEWORK-NAME] [-c Release]
+</code></pre>
+<p>Where <code>FRAMEWORK-NAME</code> is your target framework.</p>
+</li>
+<li>
+<p>Prepare to push your app with one of these methods:</p>
+<ul>
+<li>If your app uses a <code>manifest.yml</code>, specify a path to the output folder of <code>dotnet publish</code>. This allows you to push your app from any directory.</li>
+<li>If not, go to <code>bin/Debug|Release/FRAMEWORK-NAME/RUNTIME-NAME/publish</code> directory, where <code>FRAMEWORK-NAME</code> is your target framework, and <code>RUNTIME-NAME</code> is the runtime you are using to push your app.</li>
+</ul>
+</li>
+<li>
+<p>Push your app.</p>
+</li>
+</ol>
+<h2 id="self-contained-deployments"><a class="header" href="#self-contained-deployments"><a id="self-contained"></a> Self contained deployments</a></h2>
+<p>For a self-contained deployment (SCD), you deploy your app, third-party dependencies, and the version of .NET Core that you used to build your app.</p>
+<p>For information about SCDs, see <a href="https://learn.microsoft.com/dotnet/core/deploying/#self-contained-deployments-scd">Self-contained deployments (SCD)</a> in the Microsoft documentation.</p>
+<p>Note that
+Cloud Foundry does not recommend using the SCD workflow. The buildpack is unable to keep
+dependencies in sync and up to date for workflows that deploy a pre-published binary.</p>
+<p>When using the SCD workflow for deploying your app, you must:</p>
+<ul>
+<li>
+<p>Specify a runtime in the <code>dotnet publish</code> command. For example:</p>
+<pre><code class="language-console">dotnet publish -r ubuntu14.04-x64
+</code></pre>
+</li>
+<li>
+<p>Include the specified runtime in the <code>RuntimeIdentifiers</code> section of the project file.</p>
+</li>
+</ul>
+<h2 id="specify-net-core-sdks"><a class="header" href="#specify-net-core-sdks"><a id="dotnet-sdk"></a> Specify .NET Core SDKs</a></h2>
+<p>To pin the .NET Core SDK to a specific version or version line, create a <code>buildpack.yml</code> file at the app root and add your SDK version in one of the following formats:</p>
+<pre><code class="language-yaml">dotnet-core:
+  sdk: 2.1.201
+</code></pre>
+<pre><code class="language-yaml">dotnet-core:
+  sdk: 2.1.x
+</code></pre>
+<pre><code class="language-yaml">dotnet-core:
+  sdk: 2.x
+</code></pre>
+<p>The buildpack chooses what SDK to install based on the files present at the app root in the following order of precedence:</p>
+<ol>
+<li><code>buildpack.yml</code></li>
+<li><code>global.json</code></li>
+<li><code>*.fsproj</code></li>
+</ol>
+<p>The app respects the SDK version specified in <code>global.json</code> at runtime. If you provide versions in
+both <code>global.json</code> and <code>buildpack.yml</code> files, make sure you specify the same versions in both files.</p>
+<h2 id="specify-net-runtime-versions"><a class="header" href="#specify-net-runtime-versions"><a id="dotnet-runtime"></a> Specify .NET Runtime versions</a></h2>
+<p>This section explains how to specify a .NET Runtime version for source-based and framework-dependent apps.</p>
+<h3 id="source-based-apps"><a class="header" href="#source-based-apps"><a id="dotnet-runtime-source-based"></a> Source-based apps</a></h3>
+<p>If you want to lock the .NET Runtime version, configure your <code>.csproj</code> or <code>.fsproj</code> file to lock your app to the desired version.</p>
+<p>For example, the following configuration locks the runtime to 2.1:</p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+  &lt;TargetFramework&gt;netcoreapp2.1&lt;/TargetFramework&gt;
+  &lt;RuntimeFrameworkVersion&gt;2.1.*&lt;/RuntimeFrameworkVersion&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<p>For source-based apps, specify a minor version of the .NET Runtime. Do not specify a patch version, because buildpacks contain only
+the two most recent patch versions of each minor version.</p>
+<h3 id="framework-dependent-apps"><a class="header" href="#framework-dependent-apps"><a id="dotnet-runtime-fdd"></a> Framework-dependent apps</a></h3>
+<p>Your app is configured to use the latest .NET Runtime patch version by default.</p>
+<p>If you want your app to maintain a specific .NET Runtime version, you must modify your app’s <code>.runtimeconfig.json</code> file to include the <code>applyPatches</code> property and set the property to <code>false</code>.</p>
+<p>For example:</p>
+<pre><code class="language-json">{
+  "runtimeOptions": {
+    "tfm": "netcoreapp2.0",
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "2.0.0"
+    },
+    "applyPatches": false
+  }
+}
+</code></pre>
+<p>Set <code>applyPatches: false</code> in  <code>*.runtimeconfig.json</code> only if you want to pin your .NET Framework to a specific version. This prevents your
+app from receiving updates to the runtime version and assemblies.</p>
+<h2 id="push-an-app-in-a-disconnected-environment"><a class="header" href="#push-an-app-in-a-disconnected-environment"><a id="offline"></a> Push an app in a disconnected environment</a></h2>
+<p>For offline environments, Cloud Foundry recommends using the Framework-Dependent Deployment workflow. This workflow enables the deployed app to use the latest runtime provided by the offline buildpack.  For more information, see <a href="#framework-dependent">Framework-Dependent Deployments</a> above.</p>
+<h2 id="maintain-aspnet-core-assemblies"><a class="header" href="#maintain-aspnet-core-assemblies"><a id="runtime-store"></a> Maintain ASP.NET Core assemblies</a></h2>
+<p>This section applies only to source-based and framework-dependent deployments.</p>
+<p>For maintaining ASP.NET Core assemblies, Cloud Foundry recommends one of these methods:</p>
+<ul>
+<li>
+<p>Configure your app as a fully vendored app requiring fewer buildpack updates. Add the following to your <code>.csproj</code> file:</p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+  &lt;PublishWithAspNetCoreTargetManifest&gt;false&lt;/PublishWithAspNetCoreTargetManifest&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+</li>
+<li>
+<p>Keep your SDK up to date, by setting <code>buildpack.yml</code> to the .NET SDK line you want to use. For example:</p>
+<pre><code class="language-yaml">---
+dotnet-core:
+ sdk: 2.0.x
+</code></pre>
+</li>
+</ul>
+<p><code>2.0.x</code> ASP.NET Core assemblies are released in the <code>2.1.200</code>-<code>2.1.299</code> SDK versions, and <code>2.1.x</code> assemblies are
+released in the <code>2.1.300</code> and higher SDK versions.</p>
+<h2 id="configuring-the-listen-port"><a class="header" href="#configuring-the-listen-port"><a id="port"></a> Configuring the listen port</a></h2>
+<p>Cloud Foundry sets the <code>$PORT</code> environment variable automatically.
+For your .NET Core app to work on Cloud Foundry, you must configure the app to listen on the environment’s specified port.</p>
+<p>For C# apps, the following modifications activate the buildpack to pass the correct port from <code>$PORT</code> environment variable to the app when you run the initial startup command:</p>
+<ol>
+<li>
+<p>Open the file that contains your <code>Main</code> method.</p>
+</li>
+<li>
+<p>Add a <code>using</code> statement to the top of the file:</p>
+<pre><code class="language-csharp">using Microsoft.Extensions.Configuration;
+</code></pre>
+</li>
+<li>
+<p>Add the following lines before the line <code>var host = new WebHostBuilder()</code>:</p>
+<pre><code class="language-csharp">var config = new ConfigurationBuilder()
+    .AddCommandLine(args)
+    .Build();
+</code></pre>
+</li>
+<li>
+<p>Add the following line after <code>.UseKestrel()</code>:</p>
+<pre><code class="language-csharp">.UseConfiguration(config)
+</code></pre>
+<p>The <code>Main</code> method resembles the following example:</p>
+<pre><code class="language-csharp">public static void Main(string[] args)
+{
+    var config = new ConfigurationBuilder()
+        .AddCommandLine(args)
+        .Build();
+    var host = new WebHostBuilder()
+        .UseKestrel()
+        .UseConfiguration(config)
+        .UseContentRoot(Directory.GetCurrentDirectory())
+        .UseStartup&lt;Startup&gt;()
+        .Build();
+    host.Run();
+}
+</code></pre>
+</li>
+<li>
+<p>Save your changes.</p>
+</li>
+<li>
+<p>Add <code>Microsoft.Extensions.Configuration.CommandLine</code> as a dependency in <code>*.csproj</code>:</p>
+<pre><code class="language-xml">&lt;PackageReference Include="Microsoft.Extensions.Configuration.CommandLine"&gt;
+  &lt;Version&gt;VERSION&lt;/Version&gt;
+&lt;/PackageReference&gt;
+</code></pre>
+<p>Where <code>VERSION</code> is the version of the package to use. For a list of valid versions, navigate to <a href="https://www.nuget.org">https://www.nuget.org</a>.</p>
+</li>
+<li>
+<p>If your app requires any other files at runtime, such as JSON configuration files, add them to the <code>include</code> section of <code>copyToOutput</code>.</p>
+</li>
+<li>
+<p>Save your changes.</p>
+</li>
+</ol>
+<p>With these changes, the <code>dotnet run</code> command copies your app <code>Views</code> to the build output where the .NET CLI can find them.</p>
+<h2 id="add-custom-libraries"><a class="header" href="#add-custom-libraries"><a id="custom-libraries"></a>Add custom libraries</a></h2>
+<p>If your app requires external shared libraries that are not provided by the rootfs or the buildpack, you must place the libraries in an <code>ld_library_path</code> directory at the app root.</p>
+<p>You must keep these libraries up to date. They do not update automatically.</p>
+<p>The .NET Core buildpack adds the directory <code>APP-ROOT/ld_library_path</code> to <code>LD_LIBRARY_PATH</code>, where <code>APP-ROOT</code> is the app root, so your app can access these libraries at runtime.</p>
+<h2 id="known-issue-workaround-ntlm-authentication-failures-on-cflinuxfs4"><a class="header" href="#known-issue-workaround-ntlm-authentication-failures-on-cflinuxfs4"><a id="ntlm-cflinuxfs4"></a> Known issue workaround: NTLM authentication failures on cflinuxfs4</a></h2>
+<p>There is a <a href="https://github.com/dotnet/runtime/issues/67353">known issue</a> in .NET Core related to NTLM authentication on Ubuntu 22.04, which can affect builds using the .NET Core buildpack on the Ubuntu 22.04-based <code>cflinuxfs4</code> stack. The issue is related to incompatibilities between OpenSSL 3.0 and the older cryptographic algorithms involved in NTLM authentication.</p>
+<p>In general, the best practice and recommended option is to upgrade to an authentication protocol in the application that does not rely on using widely-discouraged legacy cryptographic algorithms.</p>
+<p>If you are affected by this issue, you might see failures with your .NET Core application running on the <code>cflinuxfs4</code> stack related to GSSAPI/NTLM, such as:</p>
+<pre><code class="language-text">GSSAPI operation failed with error - Unspecified GSS failure. Minor code may provide more information (Crypto routine failure).
+</code></pre>
+<p>If you cannot upgrade to a different authentication protocol, the only workaround in the buildpack at this time is to load and activate the legacy provider in OpenSSL 3.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+Use of the legacy provider is not considered secure, because it enables deprecated or outdated algorithms. You should be aware of the risk involved in leveraging this workaround.
+</p>
+
+<p>To enable the workaround:</p>
+<ol>
+<li>
+<p>Ensure that the .NET Core buildpack version is v2.4.24 or later</p>
+</li>
+<li>
+<p>Set the <code>BP_OPENSSL_ACTIVATE_LEGACY_PROVIDER</code> environment variable to <code>true</code> in the <code>manifest.yml</code> or using <code>cf set-env</code></p>
+</li>
+<li>
+<p>Push the application</p>
+</li>
+</ol>
+<p>These steps add an <code>openssl.cnf</code> file to your application directory during the build. This file contains the following lines, which load and activate the legacy SSL provider in OpenSSL 3 on the base image:</p>
+<pre><code class="language-text">[provider_sect]
+default = default_sect
+legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../buildpacks/java/java-client.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../buildpacks/nginx/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../buildpacks/java/java-client.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../buildpacks/nginx/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

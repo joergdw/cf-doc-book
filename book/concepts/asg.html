@@ -1,0 +1,701 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>App Security Groups in Cloud Foundry - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-app-security-groups-in-cloud-foundry-owner-security"><a class="header" href="#title-app-security-groups-in-cloud-foundry-owner-security">title: App security groups in Cloud Foundry
+owner: Security</a></h2>
+<p>App Security Groups (ASGs) are a collection of egress rules that enable you to specify the protocols,
+ports, and IP address ranges where app or task instances send traffic.</p>
+<p>ASGs define <strong>allow</strong> rules, and their order of evaluation is unimportant when multiple ASGs apply to the same space or deployment. The platform sets up rules to filter and log outbound network traffic
+from app and task instances. ASGs apply to both buildpack-based and Docker-based apps and tasks. Since capi-release v1.212.0, IPv6 is supported in ASGs.</p>
+<h2 id="staging-and-running-asgs"><a class="header" href="#staging-and-running-asgs"><a id="staging-running"></a> Staging and running ASGs</a></h2>
+<p>Admins can define a <code>staging</code> ASG for app and task staging, and a <code>running</code> ASG for app and task runtime.</p>
+<p>When apps or tasks begin staging, they require traffic rules permissive enough to allow
+them to pull resources from the network. A running app or task no longer needs to pull resources,
+so traffic rules can be more restrictive and secure.
+To distinguish between these two security requirements, you can define a <code>staging</code> ASG for app and task
+staging with more permissive rules, and a <code>running</code> ASG for app and task runtime with less permissive rules.</p>
+<h3 id="platform-wide-and-space-scoped-asgs"><a class="header" href="#platform-wide-and-space-scoped-asgs"><a id="types"></a> Platform wide and space scoped ASGs</a></h3>
+<p>To provide granular control when securing a deployment, you can assign platform-wide ASGs that apply
+to all app and task instances for the entire deployment, or space-scoped ASGs that apply only to apps and tasks in a particular space.</p>
+<p>In environments with both platform-wide and space-specific ASGs, the ASGs for a particular space are combined with the platform ASGs to determine the effective rules for that space. Any of the
+permitted traffic in the set of applicable ASGs is then effectively permitted for that app.</p>
+<h3 id="dynamic-asgs"><a class="header" href="#dynamic-asgs"><a id="dynamic-asgs"></a> Dynamic ASGs</a></h3>
+<p>Dynamic ASGs allow ASGs to be applied to apps without the need for an application restart. Containers using the <a href="https://github.com/cloudfoundry/silk-release">Silk CNI</a> or NSX-T update their ASGs dynamically; Windows apps and apps using other CNIs do not support Dynamic ASGs at this time.</p>
+<p>Dynamic ASGs are enabled with cf deployment v20.0.0 and higher through <a href="https://github.com/cloudfoundry/cf-networking-release/releases/tag/3.0.0">cf-networking-release 3.0.0</a>. It is recommended to use Dynamic ASGs with capi-release v1.126.0 or later for improved
+performance on the /v3/security_groups APIs.</p>
+<p>To deactivate Dynamic ASGs: use the ops file <code>operations/disable-dynamic-asgs.yml</code> from <a href="https://github.com/cloudfoundry/cf-deployment/releases/tag/v20.0.0">cf-deployment v20.0.0</a> or higher.</p>
+<h3 id="simplifying-asgs-with-a-services-subnet"><a class="header" href="#simplifying-asgs-with-a-services-subnet"><a id="simplifying"></a> Simplifying ASGs with a services subnet</a></h3>
+<p>ASGs can be complicated to configure correctly, especially when the specific IP addresses listed in a group change.</p>
+<p>To simplify securing a deployment while still allowing apps reach external services, operators can deploy the services into a subnet that is separate from their Cloud Foundry deployment, then create ASGs
+for the apps that allow those service subnets, while denying access to any VM hosting other apps.</p>
+<p>For examples of typical ASGs, see <a href="#typical-groups">Typical ASGs</a>.</p>
+<h3 id="default-asgs"><a class="header" href="#default-asgs"><a id="default-asg"></a> Default ASGs</a></h3>
+<p>Cloud Foundry preconfigures two ASGs: <code>public_networks</code> and <code>dns</code>.</p>
+<p>Unless you modify these before your initial deployment, these ASGs are applied by default to all containers in your deployment.</p>
+<ul>
+<li>
+<p><code>public_networks</code>: This group allows access to public networks, and blocks access to private networks and link local addresses. Cloud
+Foundry blocks outgoing traffic to the following IP address ranges by specifically allowing traffic to all other addresses:</p>
+<ul>
+<li>10.0.0.0 - 10.255.255.255</li>
+<li>169.254.0.0 - 169.254.255.255</li>
+<li>172.16.0.0 - 172.31.255.255</li>
+<li>192.168.0.0 - 192.168.255.255</li>
+</ul>
+</li>
+<li>
+<p><code>dns</code>: This group allows access to DNS on port 53 for any IP address. The default ASGs are defined in the <code>cf-deployment.yml</code> file as follows:</p>
+<pre><code>  security_group_definitions:
+  - name: public_networks
+    rules:
+    - destination: 0.0.0.0-9.255.255.255
+      protocol: all
+    - destination: 11.0.0.0-169.253.255.255
+      protocol: all
+    - destination: 169.255.0.0-172.15.255.255
+      protocol: all
+    - destination: 172.32.0.0-192.167.255.255
+      protocol: all
+    - destination: 192.169.0.0-255.255.255.255
+      protocol: all
+  - name: dns
+    rules:
+    - destination: 0.0.0.0/0
+      ports: '53'
+      protocol: tcp
+    - destination: 0.0.0.0/0
+      ports: '53'
+      protocol: udp
+</code></pre>
+<p>Modify the default ASGs to block outbound traffic as necessary for your installation. To see how the ASGs are defined by
+default, see the <a href="https://github.com/cloudfoundry/cf-deployment/blob/main/cf-deployment.yml#L604-L627">cf-deployment.yml</a> file on GitHub.</p>
+</li>
+</ul>
+<h3 id="asg-sets"><a class="header" href="#asg-sets"><a id="asg-sets"></a> ASG sets</a></h3>
+<p>ASGs are applied by configuring ASG sets differentiated by <em>scope</em>, platform-wide or space specific, and <em>lifecycle</em>, staging or running.</p>
+<p>Currently, the following ASG sets exist in Cloud Foundry:</p>
+<ul>
+<li>Platform-wide staging ASG set, also called “default-staging”</li>
+<li>Platform-wide running ASG set, also called “default-running”</li>
+<li>Space-scoped staging ASG set</li>
+<li>Space-scoped running ASG set</li>
+</ul>
+<p>In environments with both platform-wide and space-specific ASG sets, combine the ASG sets for a
+particular space with the platform ASG sets to determine the rules for that space.</p>
+<p>The following table indicates the differences between the four sets:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>When an ASG is bound to the…</th><th>the ASG rules are applied to…</th></tr>
+</thead>
+<tbody>
+<tr><td>Platform-wide staging ASG set</td><td>the staging lifecycle for all apps and tasks.</td></tr>
+<tr><td>Platform-wide running ASG set</td><td>the running lifecycle for all app and task instances.</td></tr>
+<tr><td>Space-scoped staging ASG set</td><td>the staging lifecycle for apps and tasks in a particular space.</td></tr>
+<tr><td>Space-scoped running ASG set</td><td>the running lifecycle for app and task instances in a particular space.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Typically, ASGs applied during the staging lifecycle are more permissive than the ASGs applied during the running lifecycle. This is because staging often requires access to different resources, such as dependencies.</p>
+<p>You use different commands to apply an ASG to each of the four sets.</p>
+<p>For more information, see <a href="#procedures">Managing ASGs with the cf CLI</a>.</p>
+<h3 id="structure-and-attributes-of-asgs"><a class="header" href="#structure-and-attributes-of-asgs"><a id="creating-groups"></a> Structure and attributes of ASGs</a></h3>
+<p>ASG rules are specified as a JSON array of ASG objects. An ASG object has the following attributes:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Attribute</th><th>Description</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td><code>protocol</code></td><td><code>tcp</code>, <code>udp</code>, <code>icmp</code>, <code>icmpv6</code> or <code>all</code></td><td>Required</td></tr>
+<tr><td><code>destination</code></td><td>A comma deliminated list of single IP addresses, IP address ranges like <code>192.0.2.0-192.0.2.50</code>, or CIDR blocks that can receive traffic</td><td>Destination lists became available in capi-release 1.180.0 and can be enabled by setting the <code>cc.security_groups.enable_comma_delimited_destinations</code> bosh property to true. IPv6 addresses, ranges and CIDR blocks are enabled if <code>cc.enable_ipv6</code> is true. For <code>icmp</code> you can only use IPv4 addresses and for <code>icmpv6</code> only IPv6 addresses.</td></tr>
+<tr><td><code>ports</code></td><td>A single port, multiple comma-separated ports, or a single range of ports that can receive traffic. Examples: <code>443</code>, <code>80,8080,8081</code>, <code>8080-8081</code></td><td>Only possible if <code>protocol</code> is <code>tcp</code> or <code>udp</code>.</td></tr>
+<tr><td><code>code</code></td><td>ICMP code</td><td>Required when <code>protocol</code> is <code>icmp</code> or <code>icmpv6</code>. A value of <code>-1</code> allows all codes.</td></tr>
+<tr><td><code>type</code></td><td>ICMP</td><td>Required when <code>protocol</code> is <code>icmp</code> or <code>icmpv6</code>. A value of <code>-1</code> allows all types.</td></tr>
+<tr><td><code>log</code></td><td>Set to <code>true</code> to enable logging. For more information about how to configure system logs to be sent to a syslog drain, see <a href="../devguide/services/log-management.html">Using Log Management Services</a>.</td><td>Logging is only supported with protocol type <code>tcp</code>.</td></tr>
+<tr><td><code>description</code></td><td>An optional field for operators managing ASG rules</td><td></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="managing-asgs"><a class="header" href="#managing-asgs"><a id="process"></a> Managing ASGs</a></h2>
+<p>The following table outlines the flow of tasks that you implement over the lifecycle of ASGs.</p>
+<p>For information about procedures for each of these tasks, see <a href="#procedures">Managing ASGs with cf CLI</a>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th> </th><th>Task</th><th>For more information, see:</th></tr>
+</thead>
+<tbody>
+<tr><td>1.</td><td>Review the existing ASGs. If this is a new deployment, these consist of only the default ASGs.</td><td><a href="#viewing">View ASGs</a></td></tr>
+<tr><td>2.</td><td>Create new ASGs.</td><td><a href="#asg-individual">Create ASGs</a></td></tr>
+<tr><td>3.</td><td>Update the existing ASGs.</td><td><a href="#updating-groups">Update ASGs</a></td></tr>
+<tr><td>4.</td><td>Bind ASGs to an ASG set.</td><td><a href="#binding-groups">Bind ASGs</a></td></tr>
+<tr><td>5.</td><td>If you need to delete an ASG, first unbind it, then delete it.</td><td><a href="#unbinding-asgs">Unbind ASGs</a> and <a href="#deleting-groups">Delete ASGs</a></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="managing-asgs-with-cf-cli"><a class="header" href="#managing-asgs-with-cf-cli"><a id="procedures"></a> Managing ASGs with cf CLI</a></h2>
+<p>Learn about the commands you need to create and manage ASGs.</p>
+<p>Many of the following procedures require the Cloud Foundry Command Line Interface (cf CLI).
+To download the cf CLI, see <a href="../cf-cli/install-go-cli.html">Installing the cf CLI</a>.</p>
+<h3 id="viewing-asgs"><a class="header" href="#viewing-asgs"><a id="viewing"></a> Viewing ASGs</a></h3>
+<p>To view information about existing ASGs, run the following commands:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Command</th><th>Output</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cf security-groups</code></td><td>All ASGs</td></tr>
+<tr><td><code>cf staging-security-groups</code></td><td>All ASGs applied to the platform-wide staging ASG set</td></tr>
+<tr><td><code>cf running-security-groups</code></td><td>All ASGs applied to the platform-wide running ASG set</td></tr>
+<tr><td><code>cf security-group ASG</code></td><td>All rules in the specified ASG, where <code>ASG</code> is the name of the ASG</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="creating-asgs"><a class="header" href="#creating-asgs"><a id="asg-individual"></a> Creating ASGs</a></h3>
+<p>To create an ASG:</p>
+<ol>
+<li>
+<p>Create a rules file: a JSON-formatted single array containing objects that describe the rules. See the
+following example, which allows ICMP traffic of code <code>1</code> and type <code>0</code> to all destinations, and TCP traffic to <code>10.0.11.0/24</code> on ports <code>80</code> and <code>443</code>. For more information, see <a href="#creating-groups">The Structure and Attributes of ASGs</a>.</p>
+<pre><code>[
+  {
+    "protocol": "icmp",
+    "destination": "0.0.0.0/0",
+    "type": 0,
+    "code": 1
+  },
+  {
+    "protocol": "icmpv6",
+    "destination": "::/0",
+    "type": 0,
+    "code": 1
+  },
+  {
+    "protocol": "tcp",
+    "destination": "10.0.11.0/24,8.8.8.8",
+    "ports": "80,443",
+    "log": true,
+    "description": "Allow http and https traffic to ZoneA"
+  }
+]
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf create-security-group ASG PATH-TO-RULES-FILE.json
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ASG</code> is the name of your ASG.</li>
+
+   
+<li><code>PATH-TO-RULES-FILE.json</code> is the absolute or relative path to a rules file.</li>
+
+ </ul>
+
+<p>In the following example, <code>EXAMPLE-ASG</code> is the name of an ASG, and <code>~/workspace/example-asg.json</code> is the path to a rules file:</p>
+ 
+<pre class="terminal">
+ cf create-security-group EXAMPLE-ASG ~/workspace/example-asg.json
+ </pre>
+
+</li>
+</ol>
+<p>After the ASG is created, you must bind it to an ASG set before it takes effect. For more information, see <a href="#binding-groups">Bind ASGs</a>.</p>
+<h3 id="binding-asgs"><a class="header" href="#binding-asgs"><a id="binding-groups"></a> Binding ASGs</a></h3>
+<p>Binding an ASG does not affect started apps unless you have <a href="#dynamic-asgs">Dynamic ASGs</a>
+enabled. If deactivated, you need to run <code>cf restart</code> for each app. To restart all of the apps in an org or a space, use
+the <a href="https://github.com/cloudfoundry-incubator/app-restarter">app-restarter</a> cf CLI plug-in.</p>
+<p>To apply an ASG, you must bind it to an ASG set.</p>
+<h4 id="platform-wide-staging-asg-set"><a class="header" href="#platform-wide-staging-asg-set">Platform-wide staging ASG set</a></h4>
+<p>To bind an ASG to the platform wide staging ASG set:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf bind-staging-security-group ASG
+</code></pre>
+<p>Where <code>ASG</code> is the name of your ASG.</p>
+</li>
+</ol>
+<h4 id="platform-wide-running-asg-set"><a class="header" href="#platform-wide-running-asg-set">Platform-wide running ASG set</a></h4>
+<p>To bind an ASG to the platform-wide running ASG set:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf bind-running-security-group ASG
+</code></pre>
+<p>Where <code>ASG</code> is the name of your ASG.</p>
+</li>
+</ol>
+<h4 id="space-scoped-running-asg-set"><a class="header" href="#space-scoped-running-asg-set">Space-scoped running ASG set</a></h4>
+<p>To bind an ASG to a space-scoped running ASG set:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf bind-security-group ASG ORG --space SPACE
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ASG</code> is the name of your ASG.</li>
+
+   
+<li><code>ORG</code> is the name of the org where you want to bind the ASG set.</li>
+
+   
+<li><code>SPACE</code> is the name of the space where you want to bind the ASG set.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h4 id="space-scoped-staging-asg-set"><a class="header" href="#space-scoped-staging-asg-set">Space-scoped staging ASG set</a></h4>
+<p>To bind an ASG to a space scoped staging ASG set:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf bind-security-group ASG ORG --space SPACE --lifecycle staging
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ASG</code> is the name of your ASG.</li>
+
+   
+<li><code>ORG</code> is the name of the org where you want to bind the ASG set.</li>
+
+   
+<li><code>SPACE</code> is the name of the space where you want to bind the ASG set.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="update-asgs"><a class="header" href="#update-asgs"><a id="updating-groups"></a> Update ASGs</a></h3>
+<p>Updating an ASG does not affect started apps unless you have <a href="#dynamic-asgs">Dynamic ASGs</a>
+activated. If deactivated, you need to restart the apps. To restart all of the apps in an org or a space,
+use the <a href="https://github.com/cloudfoundry-incubator/app-restarter">app-restarter</a> cf CLI plug-in.</p>
+<p>To update an existing ASG:</p>
+<ol>
+<li>
+<p>Edit the ASG rules in the JSON file you created in <a href="#asg-individual">Create ASGs</a>.</p>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf update-security-group ASG PATH-TO-RULES-FILE.json
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ASG</code> is name of the existing ASG you want to change.</li>
+
+   
+<li><code>PATH-TO-RULES-FILE.json</code> is the absolute or relative path to a rules file.</li>
+
+ </ul>
+
+<p>In the following example, <code>example-asg</code> is the name of an ASG, and <code>~/workspace/example-asg-v2.json</code> is the path to a rules file:</p>
+<pre><code>cf update-security-group example-asg ~/workspace/example-asg-v2.json
+</code></pre>
+</li>
+</ol>
+<h3 id="unbind-asgs"><a class="header" href="#unbind-asgs"><a id="unbinding-groups"></a> Unbind ASGs</a></h3>
+<p>Unbinding an ASG does not affect started apps unless you have <a href="#dynamic-asgs">Dynamic ASGs</a>
+enabled. If deactivated, you need to restart the apps. To restart all of the apps in an org or a space,
+use the <a href="https://github.com/cloudfoundry-incubator/app-restarter">app-restarter</a> cf CLI plug-in.</p>
+<h4 id="platform-wide-staging-asg-set-1"><a class="header" href="#platform-wide-staging-asg-set-1">Platform-wide staging ASG set</a></h4>
+<p>To unbind an ASG from the platform-wide staging ASG set:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf unbind-staging-security-group ASG
+</code></pre>
+<p>Where <code>ASG</code> is the name of your ASG.</p>
+</li>
+</ol>
+<h4 id="platform-wide-running-asg-set-1"><a class="header" href="#platform-wide-running-asg-set-1">Platform-wide running ASG set</a></h4>
+<p>To unbind an ASG from the platform-wide running ASG set:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf unbind-running-security-group ASG
+</code></pre>
+<p>Where <code>ASG</code> is the name of your ASG.</p>
+</li>
+</ol>
+<h4 id="space-scoped-asg-set"><a class="header" href="#space-scoped-asg-set">Space-scoped ASG set</a></h4>
+<p>To unbind an ASG from a specific space:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf unbind-security-group ASG ORG --space SPACE --lifecycle running
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ASG</code> is the name of your ASG.</li>
+
+   
+<li><code>ORG</code> is the org where you want to unbind the ASG set.</li>
+
+   
+<li><code>SPACE</code> is the space where you want to unbind the ASG set.</li>
+
+   
+<li>To unbind from the staging ASG set, replace <code>running</code> with <code>staging</code>.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="delete-asgs"><a class="header" href="#delete-asgs"><a id="deleting-groups"></a> Delete ASGs</a></h3>
+<p>You can only delete unbound ASGs. To unbind ASGs, see <a href="#unbinding-groups">Unbind ASGs</a>.</p>
+<p>To delete an ASG:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf delete-security-group ASG
+</code></pre>
+<p>Where <code>ASG</code> is the name of your ASG.</p>
+</li>
+</ol>
+<h2 id="typical-asgs"><a class="header" href="#typical-asgs"><a id="typical-groups"></a> Typical ASGs</a></h2>
+<p>The following table describes examples of typical ASGs. Configure your ASGs in accordance with your organization’s network access policy for untrusted apps.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>ASG</th><th>For access to:</th></tr>
+</thead>
+<tbody>
+<tr><td><code>dns</code></td><td>DNS, either public or private</td></tr>
+<tr><td><code>public-networks</code></td><td>Public networks, excluding IaaS metadata endpoints</td></tr>
+<tr><td><code>private-networks</code></td><td>Private networks in accordance with <a href="https://tools.ietf.org/html/rfc1918#section-3">RFC-1918</a></td></tr>
+<tr><td><code>load-balancers</code></td><td>The internal Cloud Foundry load balancer and others</td></tr>
+<tr><td><code>internal-proxies</code></td><td>Internal proxies</td></tr>
+<tr><td><code>internal-databases</code></td><td>Internal databases</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="dns"><a class="header" href="#dns"><a id="dns-example"></a> DNS</a></h3>
+<p>To resolve hostnames to IP addresses, apps require DNS server connectivity, which typically use port 53. Admins must create or update a <code>dns</code> ASG with appropriate rules. Admins can further restrict the DNS servers to specific IP addresses or ranges of IP addresses.</p>
+<p>The following is an example <code>dns</code> ASG:</p>
+<pre><code>[
+  {
+    "protocol": "tcp",
+    "destination": "0.0.0.0/0",
+    "ports": "53"
+  },
+  {
+    "protocol": "udp",
+    "destination": "0.0.0.0/0",
+    "ports": "53"
+  }
+]
+</code></pre>
+<h3 id="public-networks"><a class="header" href="#public-networks"><a id="public-networks-example"></a> Public networks</a></h3>
+<p>Apps often require public network connectivity to retrieve app dependencies, or to integrate with services available on public networks. Example app dependencies include public Maven repositories, NPM, RubyGems, and Docker registries.</p>
+<p>You must exclude IaaS metadata endpoints. For example, <code>169.254.169.254</code>, because the
+metadata endpoint can expose sensitive environment information to untrusted apps. The following <code>public_networks</code> example accounts for this recommendation.</p>
+<p>The following is an example <code>public_networks</code> ASG:</p>
+<pre><code>[
+  {
+    "destination": "0.0.0.0-9.255.255.255",
+    "protocol": "all"
+  },
+  {
+    "destination": "11.0.0.0-169.253.255.255",
+    "protocol": "all"
+  },
+  {
+    "destination": "169.255.0.0-172.15.255.255",
+    "protocol": "all"
+  },
+  {
+    "destination": "172.32.0.0-192.167.255.255",
+    "protocol": "all"
+  },
+  {
+    "destination": "192.169.0.0-255.255.255.255",
+    "protocol": "all"
+  },
+  {
+    "destination": "::/0",
+    "protocol": "all"
+  }
+]
+</code></pre>
+<h3 id="private-networks"><a class="header" href="#private-networks"><a id="private-networks-example"></a> Private networks</a></h3>
+<p>Network connections that are commonly allowable in private networks include endpoints such as proxy servers, Docker registries, load balancers, databases, messaging servers, directory servers, and file servers. Configure appropriate private network ASGs as appropriate. You might find it helpful to use a naming convention with <code>private_networks</code> as part of the ASG name, such as <code>private_networks_databases</code>.</p>
+<p>You must exclude any private networks and IP addresses that app and task instances must not have access to.</p>
+<p>The following is an example <code>private_networks</code> ASG:</p>
+<pre><code>[
+  {
+    "protocol": "tcp",
+    "destination": "10.0.0.0-10.255.255.255",
+    "ports": "443"
+  },
+  {
+    "protocol": "tcp",
+    "destination": "172.16.0.0-172.31.255.255",
+    "ports": "443"
+  },
+  {
+    "protocol": "tcp",
+    "destination": "192.168.0.0-192.168.255.255",
+    "ports": "443"
+  }
+]
+</code></pre>
+<h3 id="asgs-and-performance-on-windows"><a class="header" href="#asgs-and-performance-on-windows"><a id="marketplace-services"></a> ASGs and Performance on Windows</a></h3>
+<p>Each ASG bound to an app results in one or more network policy created on the
+Host, depending on the number of destinations (ranges and CIDRs count as one
+destination each). Windows apps with ASGs to many destinations will experience
+increased latency when the app is starting. Windows apps with ASGs to more than
+1000 destinations may fail to start.</p>
+<h3 id="marketplace-services"><a class="header" href="#marketplace-services"><a id="marketplace-services"></a> Marketplace Services</a></h3>
+<p>Each installed Marketplace Service requires its own set of ASG rules to function properly. To determine which
+ASG rules it requires, see the installation instructions for each installed Marketplace Service. For more information about how to provision and integrate services, see <a href="../devguide/services/index.html">Services Overview</a>.</p>
+<h2 id="about-the-asg-creator-tool"><a class="header" href="#about-the-asg-creator-tool"><a id="asg-baseline"></a> About the ASG Creator tool</a></h2>
+<p>The ASG Creator is a command line tool that you can use to create JSON rules files. The ASG Creator lets you specify IP addresses, CIDRs, and IP address ranges that you want to disallow traffic to, as well as the addresses that you want to allow traffic to. Based on these disallow/allow (exclude/include) lists that you provide as input, the ASG Creator formulates a JSON file of allow rules.</p>
+<p>In turn, the JSON file is the input for the <code>cf create-security-group</code> command that creates an ASG.</p>
+<p>To download the latest release of the ASG Creator, see the <a href="https://github.com/cloudfoundry-incubator/asg-creator/releases/latest">Cloud Foundry Incubator</a> repository on GitHub.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/orgs-and-spaces.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../concepts/diego/ssh-conceptual.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/orgs-and-spaces.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../concepts/diego/ssh-conceptual.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

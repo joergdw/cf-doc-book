@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Managing isolation segments - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-managing-isolation-segments-in-cloud-foundry-owner-capi"><a class="header" href="#title-managing-isolation-segments-in-cloud-foundry-owner-capi">title: Managing Isolation Segments in Cloud Foundry
+owner: CAPI</a></h2>
+<p>With Cloud Foundry, you can isolate deployment workloads into dedicated resource pools called isolation segments.</p>
+<h2 id="isolation-segments-overview"><a class="header" href="#isolation-segments-overview"><a id="overview"></a> Isolation Segments overview</a></h2>
+<p>To enable isolation segments, an admin can pass in a custom operations file with the BOSH CLI. For the example file used in this topic,
+see the <a href="https://github.com/cloudfoundry/cf-deployment/blob/master/operations/add-persistent-isolation-segment-diego-cell.yml">cf-deployment</a> repository in GitHub.</p>
+<p>After an admin creates a new isolation segment, the admin can then create and manage relationships between the orgs and spaces
+of a Cloud Foundry deployment and the new isolation segment.</p>
+<h2 id="requirements"><a class="header" href="#requirements"><a id="requirements"></a> Requirements</a></h2>
+<p>Target the API endpoint of your deployment with <code>cf api</code> and log in with <code>cf login</code> before performing the procedures in this topic. For more information, see Identifying your Cloud Foundry API Endpoint and Version in your platform documentation.</p>
+<h2 id="add-an-isolation-segment-to-your-deployment-manifest"><a class="header" href="#add-an-isolation-segment-to-your-deployment-manifest"><a id="segment-manifest"></a> Add an Isolation Segment to your deployment manifest</a></h2>
+<p>To add an isolation segment to your deployment manifest:</p>
+<ol>
+<li>
+<p>Write a custom operations file. The operations file defines an instance group that supports isolation segments.
+For a working example, see the <a href="https://github.com/cloudfoundry/cf-deployment/blob/master/operations/add-persistent-isolation-segment-diego-cell.yml">cf-deployment</a> repository in GitHub. The example sets the following instance group properties:</p>
+<ul>
+<li>Name as <code>isolated-diego-cell</code></li>
+<li>Placement tag as <code>persistent_isolation_segment</code>
+<br> When you use the cf CLI, the name of the isolation segment corresponds to the placement tag you
+specify in the operations file. The commands throughout this topic use <code>SEGMENT-NAME</code> as an example isolation segment name.</li>
+</ul>
+</li>
+<li>
+<p>Apply the custom operations file when you deploy Cloud Foundry by running:</p>
+<pre><code>bosh -e BOSH-ENVIRONMENT -d cf deploy cf-deployment/cf-deployment.yml \
+-v system_domain=SYSTEM-DOMAIN \
+-o cf-deployment/operations/CUSTOM-OPS-FILE.yml
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>BOSH-ENVIRONMENT</code> is your BOSH environment alias. For more information about creating an environment alias for BOSH v2 or later, see <a href="https://bosh.io/docs/cli-envs/">Environments</a> in the BOSH documentation.</li>
+<li><code>SYSTEM-DOMAIN</code> is the system domain of your Cloud Foundry deployment.</li>
+<li><code>CUSTOM-OPS-FILE.yml</code> is your operations file.</li>
+</ul>
+</li>
+</ol>
+<h2 id="register-an-isolation-segment"><a class="header" href="#register-an-isolation-segment"><a id="register-an-is"></a> Register an isolation segment</a></h2>
+<p>To register an isolation segment in the Cloud Controller database (CCDB), use the cf CLI.</p>
+<p>To register an isolation segment in the CCDB:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf create-isolation-segment SEGMENT-NAME
+</code></pre>
+<p>Where <code>SEGMENT-NAME</code> is the name you give your isolation segment.
+<br></p>
+ 
+<p class="note"><span class="note__title"><strong>Note</strong></span> The isolation segment name used in the cf CLI command must match the value specified in the <code>placement_tags</code> section of the Diego manifest file. If the names do not match, Cloud Foundry fails to place apps in the isolation segment when apps are started or restarted in the space assigned to the isolation segment.</p>
+
+<p>If successful, the command returns an <code>OK</code> message:</p>
+ 
+<pre class="terminal">
+ Creating isolation segment SEGMENT-NAME as admin...
+ OK
+ </pre>
+
+</li>
+</ol>
+<h2 id="retrieve-isolation-segment-information"><a class="header" href="#retrieve-isolation-segment-information"><a id="lists"></a> Retrieve isolation segment information</a></h2>
+<p>The <code>cf isolation-segments</code>, <code>cf org</code>, and <code>cf space</code> commands retrieve information about isolation segments. The isolation segments you can see depends on your role:</p>
+<ul>
+<li><strong>Admins</strong> see all isolation segments in the system.</li>
+<li><strong>Other users</strong> only see the isolation segments that their orgs are entitled to.</li>
+</ul>
+<h3 id="list-isolation-segments"><a class="header" href="#list-isolation-segments"><a id="list_is"></a> List isolation segments</a></h3>
+<p>To see a list of the isolation segments that are available to you:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf isolation-segments
+</code></pre>
+<p>The command returns results similar to this example output:</p>
+ 
+<pre class="terminal">
+ Getting isolation segments as admin...
+ OK
+ name     	   orgs
+ SEGMENT-NAME     org1, org2
+ </pre>
+
+</li>
+</ol>
+<h3 id="display-isolation-segments-enabled-for-an-org"><a class="header" href="#display-isolation-segments-enabled-for-an-org"><a id="list_is_org"></a> Display isolation segments enabled for an org</a></h3>
+<p>An admin can entitle an org to multiple isolation segments.</p>
+<p>To view the isolation segments that are available to an org:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf org ORG-NAME
+</code></pre>
+<p>Where <code>ORG-NAME</code> is the name of your org.</p>
+<p>The command returns results similar to this example output:</p>
+ 
+<pre class="terminal">
+ Getting info for org ORG-NAME as user@example.com...
+
+ name:                 ORG-NAME
+ domains:              example.com, apps.example.com
+ quota:                paid
+ spaces:               development, production, sample-apps, staging
+ isolation segments:   SEGMENT-NAME, OTHER-SEGMENT-NAME
+ </pre>
+
+</li>
+</ol>
+<h3 id="showing-the-isolation-segment-assigned-to-a-space"><a class="header" href="#showing-the-isolation-segment-assigned-to-a-space"><a id="list_is_space"></a> Showing the isolation segment assigned to a space</a></h3>
+<p>Only one isolation segment can be assigned to a space.</p>
+<p>To view the isolation segment assigned to a space:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf space SPACE-NAME
+</code></pre>
+<p>Where <code>SPACE-NAME</code> is the name of the space to which your isolation segment is assigned.</p>
+<p>The command returns results similar to this example output:</p>
+ 
+<pre class="terminal">
+ name:                staging
+ org:                 ORG-NAME
+ apps:
+ services:
+ isolation segment:   SEGMENT-NAME
+ space quota:
+ security groups:     dns, p-mysql, p.mysql, public_networks, rabbitmq, ssh-logging
+ </pre>
+
+</li>
+</ol>
+<h2 id="deleting-an-isolation-segment"><a class="header" href="#deleting-an-isolation-segment"><a id="delete_is"></a> Deleting an isolation segment</a></h2>
+<p>An isolation segment with deployed apps cannot be deleted.</p>
+<p>Only admins can delete isolation segments.</p>
+<p>To delete an isolation segment:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf delete-isolation-segment SEGMENT-NAME
+</code></pre>
+<p>Where <code>SEGMENT-NAME</code> is the name of the isolation segment you want to delete.</p>
+<p>If successful, the command returns an <code>OK</code> message:</p>
+ 
+<pre class="terminal">
+ $ cf delete-isolation-segment SEGMENT-NAME
+ Deleting isolation segment SEGMENT-NAME as admin...
+ OK
+ </pre>
+
+</li>
+</ol>
+<h2 id="managing-isolation-segment-relationships"><a class="header" href="#managing-isolation-segment-relationships"><a id="relationships"></a> Managing isolation segment relationships</a></h2>
+<p>The commands listed in the following sections manage the relationships between isolation segments, orgs, and spaces.</p>
+<h3 id="enabling-an-org-to-use-isolation-segments"><a class="header" href="#enabling-an-org-to-use-isolation-segments"><a id="enable_org_is"></a> Enabling an org to use isolation segments</a></h3>
+<p>Only admins can enable orgs to use isolation segments.</p>
+<p>To enable the use of an isolation segment:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf enable-org-isolation ORG-NAME SEGMENT-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ORG-NAME</code> is the name of your org.</li>
+
+   
+<li><code>SEGMENT-NAME</code> is the name of the isolation segment you want your org to use.</li>
+
+ </ul>
+
+</li>
+</ol>
+<p>If an org is entitled to use only one isolation segment, that isolation segment does not automatically become the default isolation segment for the org. You must explicitly set the default isolation segment of an org. For more information, see <a href="#set_org_default_is">Set the Default Isolation Segment for an Org</a>.</p>
+<h3 id="deactivating-an-org-from-using-isolation-segments"><a class="header" href="#deactivating-an-org-from-using-isolation-segments"><a id="remove_org_is"></a> Deactivating an org from using isolation segments</a></h3>
+<p>You cannot deactivate an org from using an isolation segment if a space within that org is assigned to the isolation
+segment. Additionally, you cannot deactivate an org from using an isolation segment if the isolation segment is configured as the default for that org.</p>
+<p>To deactivate an org from using an isolation segment:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf disable-org-isolation ORG-NAME SEGMENT-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+  
+<li><code>ORG-NAME</code> is the name of your org.</li>
+
+  
+<li><code>SEGMENT-NAME</code> is the name of the isolation segment you want to deactivate the org from using.</li>
+
+ </ul>
+
+<p>If successful, the command returns an <code>OK</code> message:</p>
+ 
+<pre class="terminal">
+ Removing entitlement to isolation segment SEGMENT-NAME from org org1 as admin...
+ OK
+ </pre>
+
+</li>
+</ol>
+<h3 id="setting-the-default-isolation-segment-for-an-org"><a class="header" href="#setting-the-default-isolation-segment-for-an-org"><a id="set_org_default_is"></a> Setting the default isolation segment for an org</a></h3>
+<p>Only admins and org managers can set the default isolation segment for an org.</p>
+<p>When an org has a default isolation segment, apps in the spaces belong to the default isolation segment unless you assign them to another isolation segment. You must restart running apps to move them into the default isolation segment.</p>
+<p>To set the default isolation segment for an org:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf set-org-default-isolation-segment ORG-NAME SEGMENT-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>ORG-NAME</code> is the name of your org.</li>
+
+   
+<li><code>SEGMENT-NAME</code> is the name of the isolation segment you want to set as your org's default.</li>
+
+ </ul>
+
+<p>If successful, the command returns an <code>OK</code> message:</p>
+ 
+<pre class="terminal">
+ $ cf set-org-default-isolation-segment org1 SEGMENT-NAME
+ Setting isolation segment SEGMENT-NAME to default on org org1 as admin...
+ OK
+ </pre>
+
+</li>
+</ol>
+<p>To display the default isolation segment for an org:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf org
+</code></pre>
+</li>
+</ol>
+<h3 id="assign-an-isolation-segment-to-a-space"><a class="header" href="#assign-an-isolation-segment-to-a-space"><a id="assign_iso_seg"></a> Assign an isolation segment to a space</a></h3>
+<p>Admins and org managers can assign an isolation segment to a space. Apps in that space start in the specified isolation segment.</p>
+<p>To assign an isolation segment to a space, you must first activate the space’s org to use the isolation segment. For more information, see <a href="#enable_org_is">Enable an Org to Use Isolation Segments</a>.</p>
+<p>To assign an isolation segment to a space:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf set-space-isolation-segment SPACE-NAME SEGMENT-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>SPACE-NAME</code> is the name of your space.</li>
+
+   
+<li><code>SEGMENT-NAME</code> is the name of the isolation segment you want to assign to your space.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="resetting-the-isolation-segment-assignment-for-a-space"><a class="header" href="#resetting-the-isolation-segment-assignment-for-a-space"><a id="reset_space"></a> Resetting the isolation segment assignment for a space</a></h3>
+<p>Admins can reset the isolation segment assigned to a space to use the org’s default isolation segment.</p>
+<p>To assign the default isolation segment for an org to a space:</p>
+<ol>
+<li>
+<p>Log in to your deployment by running:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf reset-space-isolation-segment SPACE-NAME
+</code></pre>
+<p>Where <code>SPACE-NAME</code> is the name of the space to which you want to assign your org’s default isolation segment.</p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../adminguide/isolation-segment-index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../adminguide/routing-is.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../adminguide/isolation-segment-index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../adminguide/routing-is.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

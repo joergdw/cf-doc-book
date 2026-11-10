@@ -1,0 +1,986 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>App manifest attribute reference - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-app-manifest-attribute-reference-owner-cli"><a class="header" href="#title-app-manifest-attribute-reference-owner-cli">title: App manifest attribute reference
+owner: CLI</a></h2>
+<p>You can manage app properties and behavior using cf CLI commands or the app manifest (a YAML properties file). This topic describes manifest formatting and provides a list of attributes available for app manifests. You can use it with <a href="manifest.html">Deploying with app manifests</a>, which provides basic procedures and guidance for deploying apps with manifests.</p>
+<p>For more information about V3 manifest properties, see the <a href="http://v3-apidocs.cloudfoundry.org/index.html#space-manifest">Cloud Foundry API (CAPI) V3 documentation</a>.</p>
+<h2 id="manifest-format"><a class="header" href="#manifest-format"><a id="minimal-manifest"></a> Manifest format</a></h2>
+<p>Manifests are written in YAML. The following manifest illustrates some YAML conventions:</p>
+<ul>
+<li>
+<p>The manifest begins with three dashes.</p>
+</li>
+<li>
+<p>The <code>version</code> property specifies a manifest schema version. This property is optional. For more information, see <a href="#manifest-schema-version">Add schema version to a manifest</a>.</p>
+</li>
+<li>
+<p>The <code>applications</code> block begins with a heading followed by a colon.</p>
+</li>
+<li>
+<p>The app <code>name</code> is preceded by a single dash and one space.</p>
+</li>
+<li>
+<p>Subsequent lines in the block are indented two spaces to align with <code>name</code>.</p>
+</li>
+</ul>
+<pre><code class="language-console">---
+version: 1
+applications:
+- name: my-app
+  memory: 512M
+  instances: 2
+</code></pre>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If your app name begins with the dash character (<code>-</code>), you cannot interact with the app using the cf CLI. This is because the cf CLI interprets the dash as a flag.
+</p>
+
+<h3 id="add-schema-version-to-a-manifest"><a class="header" href="#add-schema-version-to-a-manifest"><a id="manifest-schema-version"></a> Add schema version to a manifest</a></h3>
+<div class="note important">
+<span class="note__title"><strong>Important</strong></span>
+This attribute is available with CAPI V3 only. To push a manifest that uses this attribute, do one of the following:
+    
+<ul>
+      
+<li>Use cf CLI v8.
+      See <a href="../../cf-cli/v8.html">Upgrading to cf CLI v8</a>.</li>
+
+      
+<li>Run <code>cf push APP-NAME</code>. Enter <code>cf help push</code> for information about this function.</li>
+
+    </ul>
+
+</div>
+
+<p>You can specify the schema version in the <code>versions</code> property of the manifest. This property is optional.</p>
+<p>The only supported version is <code>1</code>. If not specified, the default value for the <code>versions</code> property is <code>1</code>.</p>
+<h3 id="add-variables-to-a-manifest"><a class="header" href="#add-variables-to-a-manifest"><a id="variable-substitution"></a> Add variables to a manifest</a></h3>
+<p>You can use variables to create app manifests with values shared across all applicable environments in combination with references to environment-specific differences defined in separate files.</p>
+<p>To add variables to an app manifest:</p>
+<ol>
+<li>
+<p>Create a file called <code>vars.yml</code>.</p>
+</li>
+<li>
+<p>Add attributes to your <code>vars.yml</code> file. For example:</p>
+<pre><code>instances: 2
+memory: 1G
+</code></pre>
+</li>
+<li>
+<p>Add the variables to your app manifest file using the following format: <code>((VARIABLE-NAME))</code>. For example:</p>
+<pre><code>---
+applications:
+- name: test-app
+  instances: ((instances))
+  memory: ((memory))
+  buildpacks:
+  - go_buildpack
+  env:
+    GOPACKAGENAME: go_calls_ruby
+  command: go_calls_ruby
+</code></pre>
+ 
+<p class="note">
+ <span class="note__title"><strong>Note</strong></span>
+ You can also use variables for partial values. For example, you can specify <code>host</code> in your variables file and <code>- route: ((host)).env.com</code> in your manifest file.
+ </p>
+
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf push --vars-file /PATH/vars.yml
+</code></pre>
+<p>Where <code>PATH</code> is the path to the file you created.</p>
+</li>
+</ol>
+<h3 id="minimize-duplication-with-yaml-anchors"><a class="header" href="#minimize-duplication-with-yaml-anchors"><a id="minimize-duplication"></a> Minimize duplication with YAML anchors</a></h3>
+<p>Top-level attributes are deprecated in favor of YAML anchors. For more information, see <a href="#top-level-attributes">Top-level attributes</a>.</p>
+<p>In manifests where multiple apps share settings or services, you might see duplicated content. While the manifests still work, duplication increases the risk of typographical errors, which cause deployments to fail.</p>
+<p>You can declare shared configuration using a YAML anchor, to which the manifest refers in app declarations by using an alias.</p>
+<pre><code>---
+defaults: &amp;amp;defaults
+  buildpacks:
+    - staticfile_buildpack
+  memory: 1G
+
+applications:
+- name: bigapp
+  &amp;lt;&amp;lt;: *defaults
+- name: smallapp
+  &amp;lt;&amp;lt;: *defaults
+  memory: 256M
+</code></pre>
+<p>In the example, manifest pushes two apps with the <code>staticfile</code> buildpack, <code>smallapp</code> and <code>bigapp</code>, with 256 M of memory for <code>smallapp</code> and 1 G of
+memory for <code>bigapp</code>.</p>
+<h2 id="app-attributes"><a class="header" href="#app-attributes"><a id="optional-attributes"></a> App attributes</a></h2>
+<p>This section explains how to describe optional app attributes in manifests. You can also specify each of these attributes using a command line option. Command-line options override the manifest.</p>
+<h3 id="buildpacks"><a class="header" href="#buildpacks"><a id="buildpacks"></a> buildpacks</a></h3>
+<p>You can refer to a buildpack by name in a manifest or a command-line option. The <code>cf buildpacks</code> command lists the buildpacks that you can use.</p>
+<ul>
+<li>
+<p><strong>Custom buildpacks:</strong> If your app requires a custom buildpack, you can use the <code>buildpacks</code> attribute to specify it in a number of ways:</p>
+<ul>
+<li>
+<p>By name: <code>BUILDPACK</code>.</p>
+</li>
+<li>
+<p>By GitHub URL:</p>
+<ul>
+<li>For the source code repo: <code>https://github.com/cloudfoundry/java-buildpack.git</code> or</li>
+<li>For a fully-packaged asset: <code>https://github.com/cloudfoundry/java-buildpack/releases/download/v4.76.0/java-buildpack-v4.76.0.zip</code></li>
+</ul>
+</li>
+<li>
+<p>By GitHub URL with a branch or tag: <code>https://github.com/cloudfoundry/java-buildpack.git#v3.3.0</code> for the <code>v3.3.0</code> tag.</p>
+<pre><code>---
+  ...
+  buildpacks:
+    - buildpack_URL
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Multiple buildpacks:</strong> If you are using multiple buildpacks, you can provide an additional <code>-b</code> flag or add an additional value to your manifest:</p>
+<pre><code>---
+  ...
+  buildpacks:
+    - buildpack_URL
+    - buildpack_URL
+</code></pre>
+  
+<div class="note important">
+  <span class="note__title"><strong>Important</strong></span>
+    
+<ul>
+      
+<li>This feature does not work with the deprecated <code>buildpack</code> attribute. For more information, see
+        <a href="#buildpack-deprecated">buildpack</a>.</li>
+
+      
+<li>You must specify multiple buildpacks in the correct order: the buildpack uses the app start command given by the final buildpack. For more information, see the <a href="https://github.com/cloudfoundry/multi-buildpack#usageapp">multi-buildpack</a> repository on GitHub.</li>
+
+    </ul>
+
+  </div>
+
+</li>
+</ul>
+<p>The <code>-b</code> command-line flag overrides this attribute.</p>
+<p>For more information, see <a href="../../buildpacks/use-multiple-buildpacks.html">Pushing an app with multiple buildpacks</a>.</p>
+<h3 id="command"><a class="header" href="#command"><a id="start-commands"></a> command</a></h3>
+<p>Some languages and frameworks require that you provide a custom command to start an app. To find out if you need to provide a custom start command, see <a href="../../buildpacks/index.html">Buildpacks</a>.</p>
+<p>You can provide the custom start command in your app manifest or on the command line. For more information about how Cloud Foundry determines its default start command, see <a href="start-restart-restage.html">Starting, restarting, and restaging apps</a>.</p>
+<p>To specify the custom start command in your app manifest, add it in the <code>command: START-COMMAND</code> format. For example:</p>
+<pre><code>---
+  ...
+  command: bundle exec rake VERBOSE=true
+</code></pre>
+<p>The start command you specify becomes the default for your app. To return to using the original default start command set by your buildpack, you must explicitly set the attribute to <code>null</code>. For example:</p>
+<pre><code>---
+  ...
+  command: null
+</code></pre>
+<p>On the command line, you can specify the custom start command by including the <code>-c</code> flag, similar to the following example:</p>
+<pre class="terminal">
+cf push my-app -c "bundle exec rake VERBOSE=true"
+</pre>
+
+<p>The <code>-c</code> option with a value of <code>null</code> forces <code>cf push</code> to use the buildpack start command. For more information, see <a href="start-restart-restage.html#revert">Forcing cf push to use the Buildpack Start Command</a> in <em>Starting, restarting, and restaging apps</em>.</p>
+<p>If you override the start command for a Buildpack app, Linux uses <code>bash -c COMMAND</code> to run your app. If you override the start command for a Docker
+app, Linux uses <code>sh -c COMMAND</code> to run your app. Because of this, if you override a start command, you must prefix <code>exec</code> to the final command in your custom composite start command.</p>
+<p>An app must catch termination signals and clean up appropriately. Because of the way that shells manage process trees, the use of custom composite shell commands, particularly those that create child processes using <code>&amp;</code>, <code>&amp;&amp;</code>, <code>||</code>, and so on, can prevent your app from receiving signals that are sent to the top-level bash process. For more information, see <a href="prepare-to-deploy.html#moving-apps">Considerations for designing and running an app in the cloud</a>.</p>
+<p>To resolve this issue, you can use <code>exec</code> to replace the bash process with your own process.</p>
+<p>For example:</p>
+<ul>
+<li>
+<p><code>bin/rake cf:on_first_instance db:migrate &amp;&amp; bin/rails server -p $PORT -e $RAILS_ENV</code>: The process tree is bash -&gt; ruby, so on graceful shutdown only the bash process receives the TERM signal, not the ruby process.</p>
+</li>
+<li>
+<p><code>bin/rake cf:on_first_instance db:migrate &amp;&amp; exec bin/rails server -p $PORT -e $RAILS_ENV</code>: Because of the <code>exec</code> prefix included on the final command, the Ruby process that is run by Rails takes over the bash process managing the execution of the composite command. The process tree is only Ruby, so the Ruby web server receives the TERM signal and can shut down gracefully for 10 seconds.</p>
+</li>
+</ul>
+<p>In more complex situations, like making a custom buildpack, you might want to use bash <code>trap</code>, <code>wait</code>, and background processes to manage your process tree and shut down apps gracefully. In most situations, however, a well-placed <code>exec</code> is sufficient.</p>
+<h3 id="disk_quota"><a class="header" href="#disk_quota"><a id="disk-quota"></a> disk_quota</a></h3>
+<p>The <code>disk_quota</code> attribute allocates the disk space for your app instance. This attribute requires a unit of measurement: <code>M</code>, <code>MB</code>, <code>G</code>, or <code>GB</code>, in either uppercase or lowercase.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  disk_quota: 1024M
+</code></pre>
+<p>The <code>-k</code> command-line flag overrides this attribute.</p>
+<h3 id="docker"><a class="header" href="#docker"><a id="docker"></a> docker</a></h3>
+<p>If your app is contained in a Docker image, the <code>docker</code> attribute specifies it and an Docker user name (optional). This attribute is a combination of <code>push</code> options that include <code>--docker-image</code> and <code>--docker-username</code>.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  docker:
+    image: docker-image-repository/docker-image-name
+    username: docker-user-name
+</code></pre>
+<p>The <code>--docker-image</code> or <code>-o</code> command-line flag overrides <code>docker.image</code>.  The <code>--docker-username</code> command-line flag overrides <code>docker.username</code>.</p>
+<p>The manifest attribute <code>docker.username</code> is optional. If it is used, the password must be provided in the environment variable <code>CF_DOCKER_PASSWORD</code>. If a Docker user name is specified, then a Docker image must also be specified.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+Using the <code>docker</code> attribute with the <code>buildpacks</code> or <code>path</code> attributes causes an error.
+</p>
+
+<h3 id="features"><a class="header" href="#features"><a id="features"></a> features</a></h3>
+<p>App features can be set using the manifest attribute <code>features</code>. The attribute value is a key-value mapping of app feature names to Boolean values indicating whether the feature is enabled or not. If omitted, a feature is enabled or disabled based on its default value (e.g. <code>revisions</code> is enabled by default, and the <code>ssh</code> status depends on the configuration of the foundation).</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  features:
+    ssh: true
+    revisions: true
+    service-binding-k8s: false
+    file-based-vcap-services: false
+</code></pre>
+<h3 id="health-check-type"><a class="header" href="#health-check-type"><a id="health-check-type"></a> health-check-type</a></h3>
+<p>The <code>health-check-type</code> attribute sets the <code>health_check_type</code> flag to either <code>port</code>, <code>process</code> or <code>http</code>. If you do not provide a <code>health-check-type</code> attribute, the default is <code>port</code>.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  health-check-type: port
+</code></pre>
+<p>The <code>-u</code> command-line flag overrides this attribute.</p>
+<h3 id="health-check-http-endpoint"><a class="header" href="#health-check-http-endpoint"><a id="health-check-http-ep"></a> health-check-http-endpoint</a></h3>
+<p>The <code>health-check-http-endpoint</code> attribute customizes the endpoint for the <code>http</code> health check type. If you do not provide a <code>health-check-http-endpoint</code> attribute, it uses endpoint <code>/</code>.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  health-check-type: http
+  health-check-http-endpoint: /health
+</code></pre>
+<h3 id="health-check-invocation-timeout"><a class="header" href="#health-check-invocation-timeout"><a id="health-check-invoc-time"></a> health-check-invocation-timeout</a></h3>
+<p>The <code>health-check-invocation-timeout</code> attribute specifies the timeout in seconds for individual health check requests for http and port health checks. The default value is 1.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  health-check-invocation-timeout: 30
+</code></pre>
+<p>To override this attribute, run:</p>
+<pre><code class="language-console">cf set-health-check APP-NAME http --invocation-timeout 10
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+<p>Within the manifest, the health check invocation timeout is controlled by the <code>health-check-invocation-timeout</code> attribute.</p>
+<h3 id="health-check-interval"><a class="header" href="#health-check-interval"><a id="health-check-interval"></a> health-check-interval</a></h3>
+<p>The <code>health-check-interval</code> attribute specifies the time in seconds between starting individual health check requests for HTTP and port health checks. The default value is 30.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  health-check-interval: 15
+</code></pre>
+<h3 id="readiness-health-check-type"><a class="header" href="#readiness-health-check-type"><a id="readiness-health-check-type"></a> readiness-health-check-type</a></h3>
+<p>The <code>readiness-health-check-type</code> attribute sets the readiness health check type to <code>port</code>, <code>process</code> or <code>http</code>. If you do not provide a <code>readiness-health-check-type</code> attribute, the default is <code>process</code>.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  readiness-health-check-type: port
+</code></pre>
+<h3 id="readiness-health-check-http-endpoint"><a class="header" href="#readiness-health-check-http-endpoint"><a id="readiness-health-check-http-ep"></a> readiness-health-check-http-endpoint</a></h3>
+<p>The <code>readiness-health-check-http-endpoint</code> attribute customizes the endpoint for the <code>http</code> readiness health check types. If you do not provide a <code>readiness-health-check-http-endpoint</code> attribute, it uses endpoint <code>/</code>.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  readiness-health-check-type: http
+  readiness-health-check-http-endpoint: /health
+</code></pre>
+<h3 id="readiness-health-check-invocation-timeout"><a class="header" href="#readiness-health-check-invocation-timeout"><a id="readiness-health-check-invoc-time"></a> readiness-health-check-invocation-timeout</a></h3>
+<p>The <code>readiness-health-check-invocation-timeout</code> attribute specifies the timeout in seconds for individual readiness health check requests for HTTP and port health checks. The default value is 1.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  readiness-health-check-invocation-timeout: 30
+</code></pre>
+<h3 id="readiness-health-check-interval"><a class="header" href="#readiness-health-check-interval"><a id="readiness-health-check-interval"></a> readiness-health-check-interval</a></h3>
+<p>The <code>readiness-health-check-interval</code> attribute specifies the amount of time in seconds between starting individual readiness health check requests for HTTP and port health checks.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  readiness-health-check-interval: 15
+</code></pre>
+<h3 id="instances"><a class="header" href="#instances"><a id="instances"></a> instances</a></h3>
+<p>The <code>instances</code> attribute configures the number of app instances.</p>
+<p>For example:</p>
+<pre><code class="language-console">---
+  ...
+  instances: 2
+</code></pre>
+<p>The default number of instances is 1.</p>
+<p>To ensure that platform maintenance does not interrupt your app, Cloud Foundry recommends running at least two instances.</p>
+<h3 id="lifecycle"><a class="header" href="#lifecycle"><a id="lifecycle"></a> lifecycle</a></h3>
+<p>The <code>lifecycle</code> attribute specifies which application lifecycle to use for staging and running the application. Three variants are supported at the moment:</p>
+<ul>
+<li><a href="../../buildpacks/classic.html">buildpack</a></li>
+<li><a href="../../buildpacks/cnb/index.html">cnb</a></li>
+<li><a href="push-docker.html">docker</a></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+  ...
+  lifecycle: buildpack
+</code></pre>
+<p>The default is <code>buildpack</code> unless the <a href="#docker"><code>docker</code></a> attribute is specified.</p>
+<h3 id="log-rate-limit-per-second"><a class="header" href="#log-rate-limit-per-second"><a id="log-rate-limit-per-second"></a> log-rate-limit-per-second</a></h3>
+<p>The <code>log-rate-limit-per-second</code> attribute specifies the log rate limit for all instances of an app. This attribute requires a unit of measurement: <code>B</code>, <code>K</code>, <code>KB</code>, <code>M</code>, <code>MB</code>, <code>G</code>, or <code>GB</code>, in either uppercase or lowercase.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  log-rate-limit-per-second: 24KB
+</code></pre>
+<p>To configure each app instance to send an unlimited number of logs to Loggregator, specify <code>-1</code>.</p>
+<p>The default log rate limit is 16 K. If you know that your app instances do not require the default log rate limit, you might want to
+specify a smaller limit in your manifest to conserve quota space.</p>
+<p>The <code>-l</code> command-line flag overrides this attribute.</p>
+<h3 id="memory"><a class="header" href="#memory"><a id="memory"></a> memory</a></h3>
+<p>The <code>memory</code> attribute specifies the memory limit for all instances of an app. This attribute requires a unit of measurement: <code>M</code>, <code>MB</code>, <code>G</code>, or <code>GB</code>, in either uppercase or lowercase.</p>
+<p>For example:</p>
+<pre><code class="language-console">---
+  ...
+  memory: 1024M
+</code></pre>
+<p>The default memory limit is 1 G. If you know that your app instances do not require 1 G of memory, you might want to specify a smaller limit to conserve quota space.</p>
+<p>The <code>-m</code> command-line flag overrides this attribute.</p>
+<h3 id="metadata"><a class="header" href="#metadata"><a id="metadata"></a> metadata</a></h3>
+<p>The <code>metadata</code> attribute tags your apps with additional information. You can specify two types of metadata: <code>labels</code> and <code>annotations</code>. For more information,
+see <a href="../../adminguide/metadata.html#types">Types of metadata</a> in <em>Using Metadata</em>.</p>
+<p>For example:</p>
+<pre><code>metadata:
+  annotations:
+    contact: "bob@example.com jane@example.com"
+  labels:
+    sensitive: true
+</code></pre>
+<p>For more information about metadata, see <a href="../../adminguide/metadata.html">Using metadata</a>.</p>
+<h3 id="no-route"><a class="header" href="#no-route"><a id="no-route"></a> no-route</a></h3>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If you use the <code>no-route</code> flag attribute in the manifest or the flag option, it overrides all route-related attributes.
+</p>
+
+<p>By default, <code>cf push</code> assigns a route to every app. But, some apps process data while running in the background and must not be assigned routes.</p>
+<p>You can use the <code>no-route</code> attribute with a value of <code>true</code> to prevent a route from being created for your app.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  no-route: true
+</code></pre>
+<p>The <code>--no-route</code> command-line flag overrides this attribute.</p>
+<p>In the Diego architecture, <code>no-route</code> skips creating and binding a route for the app, but does not specify which type of health check to perform. If your app does not listen on a port because it is a worker or a scheduler app, then it does not satisfy the port-based health check, and Cloud Foundry marks it as failed. To prevent this, deactivate the port-based health check by running:</p>
+<pre><code class="language-console">cf set-health-check APP-NAME --process
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+<p>To remove a route from an existing app:</p>
+<ol>
+<li>
+<p>Remove the route using the <code>cf unmap-route</code> command.</p>
+</li>
+<li>
+<p>Push the app again with the <code>no-route: true</code> attribute in the manifest or the <code>--no-route</code> command line option.</p>
+</li>
+</ol>
+<p>For more information, see <a href="manifest.html#multi-apps">Deploy multiple apps with one manifest</a> in <em>Deploying with App Manifests</em>.</p>
+<h3 id="path"><a class="header" href="#path"><a id="path"></a> path</a></h3>
+<p>The <code>path</code> attribute tells Cloud Foundry the directory location in which it can find your app. The directory specified as the <code>path</code>, either as an attribute or as a parameter on the command line, becomes the location where the buildpack <code>Detect</code> script runs.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  path: /path/to/app/bits
+</code></pre>
+<p>The <code>-p</code> command-line flag overrides this attribute.</p>
+<p>For more information, see <a href="../../cf-cli/getting-started.html#find-app">How cf push finds the app</a> in <em>Getting Started with the cf CLI</em>.</p>
+<h3 id="processes"><a class="header" href="#processes"><a id="processes"></a> processes</a></h3>
+<div class="note important">
+<span class="note__title"><strong>Important</strong></span>
+This attribute is available with CAPI V3 only. To push a manifest that uses this attribute, do one of the following:
+    
+<ul>
+      
+<li>Use cf CLI v8.
+      See <a href="../../cf-cli/v8.html">Upgrading to cf CLI v8</a>.</li>
+
+      
+<li>Run <code>cf push APP-NAME</code>. Enter <code>cf help push</code> for information about this function.</li>
+
+    </ul>
+
+</div>
+
+<p>The <code>processes</code> attribute pushes apps that run multiple processes, such as a web app that has a UI process and a worker process.</p>
+<p>For example:</p>
+<pre><code>processes:
+- type: web
+  command: start-web.sh
+  disk_quota: 512M
+  health-check-http-endpoint: /healthcheck
+  health-check-type: http
+  health-check-invocation-timeout: 10
+  instances: 3
+  memory: 500M
+  timeout: 10
+- type: worker
+  command: start-worker.sh
+  disk_quota: 1G
+  health-check-type: process
+  instances: 2
+  memory: 256M
+  timeout: 15
+</code></pre>
+<p>For detailed information about the process-level configuration, see the <a href="https://v3-apidocs.cloudfoundry.org/version/3.76.0/index.html#app-manifest">CAPI
+documentation</a>.</p>
+<p>For more information about pushing an app with multiple processes, see <a href="../multiple-processes.html">Pushing an app with multiple processes</a>.</p>
+<h3 id="random-route"><a class="header" href="#random-route"><a id="random-route"></a> random-route</a></h3>
+<p>If you push your app without specifying any route-related CLI options or app manifest flags, the cf CLI attempts to generate a route based on the app name, which can cause collisions.</p>
+<p>You can use the <code>random-route</code> attribute to generate a unique route and avoid name collisions. When you use <code>random-route</code>, the cf CLI generates one of the following:</p>
+<ul>
+<li>
+<p>An HTTP route with a random host, if no value is specified for <code>host</code></p>
+</li>
+<li>
+<p>A TCP route with an unused port number.</p>
+</li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+  ...
+  random-route: true
+</code></pre>
+<p>The following example use cases demonstrate when you might use the <code>random-route</code> attribute:</p>
+<ul>
+<li>
+<p>You deploy the same app to multiple spaces for testing purposes. In this situation, you can use <code>random-route</code> to randomize routes declared with the route attribute in the app manifest.</p>
+</li>
+<li>
+<p>You use an app manifest for a classroom training exercise in which multiple users deploy the same app to the same space.</p>
+</li>
+</ul>
+<p>The <code>--random-route</code> command-line flag overrides this attribute.</p>
+<h3 id="routes"><a class="header" href="#routes"><a id="routes"></a> routes</a></h3>
+<p>The <code>routes</code> attribute in the manifest provides multiple HTTP and TCP routes. Each route for this app is created if it does not already exist.</p>
+<p>In cf CLI v8+, the <code>routes</code> flag can be used.</p>
+<p>You can specify the <code>protocol</code> attribute to configure which network protocol the route uses for app ingress traffic. This is optional. The available protocols are <code>http2</code>, <code>http1</code>, and <code>tcp</code>.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The <code>protocol</code> route attribute is available only for Cloud Foundry deployments that use HTTP/2 routing. For information about configuring support for HTTP/2 in Cloud Foundry, see <a href="https://docs.cloudfoundry.org/adminguide/supporting-http2.html">Configuring HTTP/2 Support</a>. 
+</p>
+
+<p>For example:</p>
+<pre><code>---
+  ...
+  routes:
+  - route: example.com
+    protocol: http2
+  - route: www.example.com/foo
+  - route: tcp-example.com:1234
+</code></pre>
+<p>Under each route, you can optionally include an <code>options</code> attribute to configure per-route options as described in <a href="../custom-per-route-options.html">Configuring per-route options</a>.</p>
+<p>Available options are:</p>
+<ul>
+<li><code>loadbalancing</code> - defines how Gorouter distributes requests across the application backends. Valid values are <code>round-robin</code>, <code>least-connection</code> and <code>hash</code>.</li>
+<li><code>hash_header</code> - defines the HTTP header used for hash-based routing decisions. Required when <code>loadbalancing</code> is set to <code>hash</code>.</li>
+<li><code>hash_balance</code> - defines the balance factor used to manage load imbalance for hash-based routing. Optional when <code>loadbalancing</code> is set to <code>hash</code>. Values in the 1.1-2.0 range provide the best balance of even distribution and performance. Omitting <code>hash_balance</code> or setting it explicitly to 0 indicates that the load situation will not be considered.</li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+  ...
+  routes:
+  - route: example.com
+    options:
+      loadbalancing: round-robin
+  - route: example2.com
+    options:
+      loadbalancing: least-connection
+  - route: example3.com
+    options:
+      loadbalancing: hash
+      hash_header: Hash-Relevant-Header
+      hash_balance: 1.25
+</code></pre>
+<h4 id="manifest-attributes"><a class="header" href="#manifest-attributes"><a id="manifest-attibutes-2"></a> Manifest attributes</a></h4>
+<p>If you use the <code>routes</code> attribute with the <code>host</code>, <code>hosts</code>, <code>domain</code>, <code>domains</code>, or <code>no-hostname</code> attributes, an error results.</p>
+<h4 id="push-flag-options"><a class="header" href="#push-flag-options"><a id="push-flag-options"></a> push flag options</a></h4>
+<p>This attribute has unique interactions with different command-line options.</p>
+<table class="table">
+  
+<thead>
+<tr>
+    <th>Flag</th>
+    <th>Result</th>
+  </tr>
+</thead>
+
+  
+<tr>
+    <td><code>--no-route</code></td>
+    <td>All declared routes are ignored. This flag does not unbind all existing routes associated with the app.</td>
+  </tr>
+
+  
+<tr>
+    <td><code>--random-route</code></td>
+    <td>Sets or overrides the <code>HOSTNAME</code> in all HTTP routes. Sets or overrides the <code>PORT</code> in all TCP routes. The <code>PORT</code> and
+      <code>HOSTNAME</code> are randomly generated.</td>
+  </tr>
+
+</table>
+
+<h3 id="sidecars"><a class="header" href="#sidecars"><a id="sidecars"></a> sidecars</a></h3>
+<div class="note important">
+<span class="note__title"><strong>Important</strong></span>
+This attribute is available with CAPI V3 only. To push a manifest that uses this attribute, do one of the following:
+    
+<ul>
+      
+<li>Use cf CLI v8.
+      See <a href="../../cf-cli/v8.html">Upgrading to cf CLI v8</a>.</li>
+
+      
+<li>Run <code>cf push APP-NAME</code>. Enter <code>cf help push</code> for information about this function.</li>
+
+    </ul>
+
+</div>
+
+<p>The <code>sidecars</code> attribute specifies additional processes to run in the same container as your app. Each sidecar must have values for <code>name</code>, <code>process_types</code>, and <code>command</code>, whereas <code>memory</code> is optional.</p>
+<p>For example:</p>
+<pre><code>sidecars:
+- name: authenticator
+  process_types: [ 'web', 'worker' ]
+  command: bundle exec run-authenticator
+  memory: 800M
+- name: upcaser
+  process_types: [ 'worker' ]
+  command: ./tr-server
+  memory: 900M
+</code></pre>
+<p>For more information about sidecars, see <a href="../sidecars.html">Pushing apps with sidecar processes</a>.</p>
+<h3 id="stack"><a class="header" href="#stack"><a id="stack"></a> stack</a></h3>
+<p>The <code>stack</code> attribute specifies the stack to which your app deploys.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  stack: cflinuxfs4
+</code></pre>
+<p>To see a list of available stacks, run <code>cf stacks</code>.</p>
+<p>The <code>-s</code> command-line flag overrides this attribute.</p>
+<h3 id="timeout"><a class="header" href="#timeout"><a id="timeout"></a> timeout</a></h3>
+<p>The <code>timeout</code> attribute defines the number of seconds that Cloud Foundry allocates for starting your app. It is related to the
+<code>health-check-type</code> attribute.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  timeout: 80
+</code></pre>
+<p>You can increase the timeout length for very large apps that require more time to start. The default for the <code>timeout</code> attribute is <code>60</code>, but you can set it to any value up to the Cloud Controller’s <code>cc.maximum_health_check_timeout</code> property.</p>
+<p><code>cc.maximum_health_check_timeout</code> defaults to the maximum of <code>180</code> seconds, but your Cloud Foundry operator can set it to a different value.</p>
+<p>The <code>-t</code> command-line flag overrides this attribute.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If you configure <code>timeout</code> with a value greater than
+<code>cc.maximum_health_check_timeout</code>, the Cloud Controller reports a validation error with the maximum limit.
+</p>
+
+<h2 id="environment-variables"><a class="header" href="#environment-variables"><a id="env-block"></a> Environment variables</a></h2>
+<p>The <code>env</code> block consists of a heading, then one or more environment variable/value pairs.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  env:
+    RAILS_ENV: production
+    RACK_ENV: production
+</code></pre>
+<p><code>cf push</code> deploys the app to a container on the server. The variables belong to the container environment.</p>
+<div class="note important">
+<span class="note__title"><strong>Important</strong></span>
+  
+<ul>
+    
+<li>You must name variables with alphanumeric characters and underscores. Non-conforming variable names might cause unpredictable behavior.</li>
+
+    
+<li>Do not use user-provided environment variables for security sensitive information such as credentials, because they might unintentionally show up in cf CLI output and Cloud Controller logs. Use <a href="../services/user-provided.html">user-provided service instances</a> instead. Credentials that are provided to the app through service bindings are redacted for user roles such as Space Supporter and in Cloud Controller log files.</li>
+
+  </ul>
+
+</div>
+
+<p>While the app is running, you can edit environment variables using one of these methods:</p>
+<ul>
+<li>
+<p>To view all variables, run:</p>
+<pre><code>cf env APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+<li>
+<p>To set an individual variable, run:</p>
+<pre><code>cf set-env APP-NAME VARIABLE-NAME VARIABLE-VALUE
+</code></pre>
+<p>Where:</p>
+  
+<ul>
+    
+<li><code>APP-NAME</code> is the name of your app.</li>
+
+    
+<li><code>VARIABLE-NAME</code> is the environment variable you want to set.</li>
+
+    
+<li><code>VARIABLE-VALUE</code> is the value of the environment value.</li>
+
+  </ul>
+
+</li>
+<li>
+<p>Removing an environment variable from the manifest YAML file is not sufficient to un-set it. To un-set an environment variable, run:</p>
+<pre><code>cf unset-env APP-NAME VARIABLE-NAME
+</code></pre>
+<p>Where:</p>
+  
+<ul>
+    
+<li><code>APP-NAME</code> is the name of your app.</li>
+
+    
+<li><code>VARIABLE-NAME</code> is the environment variable you want to un-set.</li>
+
+  </ul>
+
+</li>
+</ul>
+<p>Environment variables interact with manifests in the following ways:</p>
+<ul>
+<li>
+<p>When you deploy an app for the first time, Cloud Foundry reads the variables described in the environment block of the manifest and adds them to the environment of the container where the app is staged, and the environment of the container where the app is deployed.</p>
+</li>
+<li>
+<p>When you stop and then restart an app, its environment variables persist.</p>
+</li>
+</ul>
+<h2 id="services"><a class="header" href="#services"><a id="services-block"></a> Services</a></h2>
+<p>Apps can bind to services such as databases, messaging, and key-value stores.</p>
+<p>Apps are deployed into app spaces. An app can only bind to services instances that exist in the target app space before the app is deployed.</p>
+<p>The <code>services</code> block consists of a heading and one or more service instance names.
+The following ‘services’ attributes are allowed:</p>
+<pre><code>---
+  ...
+  services:
+    - service-1
+    - name: service-2
+    - name: service-3
+      parameters:
+        key-1: value-1
+        key-2: [value-2, value-3]
+        key-3: ... any other kind of value ...
+    - name: service-4
+      binding_name: binding-1
+</code></pre>
+<p>The person who creates the service chooses the service instance names. These names can convey logical information, describe the nature of the service, or neither.</p>
+<p>For example:</p>
+<pre><code>---
+  ...
+  services:
+   - instance_ABC
+   - instance_XYZ
+</code></pre>
+<p>For more information, see <a href="../services/application-binding.html#bind">Bind a service</a> in <em>Delivering Service Credentials to an App</em>.</p>
+<h2 id="deprecated-app-manifest-features"><a class="header" href="#deprecated-app-manifest-features"><a id="deprecated"></a> Deprecated app manifest features</a></h2>
+<p>This section describes app manifest features that are deprecated in favor of other features.</p>
+<p class="note caution">
+<span class="note__title"><strong>Caution</strong></span>
+Running <code>cf push app -f manifest.yml</code> fails if your manifest uses any of these deprecated features with the feature that replaces it.
+</p>
+
+<h3 id="top-level-attributes"><a class="header" href="#top-level-attributes"><a id="top-level-attributes"></a> Top-level attributes</a></h3>
+<p>Previously, you could declare top-level attributes, which are also known as global attributes. For example, you can move an attribute above the <code>applications</code> block, where it need appear only once.</p>
+<p>The following example demonstrates how this was used to manage duplicated settings:</p>
+<pre><code>---
+domain: shared-domain.example.com
+memory: 1G
+instances: 1
+services:
+- clockwork-mysql
+applications:
+- name: springtock
+  host: tock09876
+  path: ./spring-music/build/libs/spring-music.war
+- name: springtick
+  host: tick09875
+  path: ./spring-music/build/libs/spring-music.war
+</code></pre>
+<p>Top-level attributes are deprecated in favor of YAML aliases.</p>
+<p>The following example demonstrates how to specify a shared configuration using a YAML anchor, which the manifest refers to in app declarations by using an alias:</p>
+<pre><code>---
+defaults: &amp;amp;defaults
+  buildpacks:
+    - staticfile_buildpack
+  memory: 1G
+
+applications:
+- name: bigapp
+  &amp;lt;&amp;lt;: *defaults
+- name: smallapp
+  &amp;lt;&amp;lt;: *defaults
+  memory: 256M
+</code></pre>
+<p>When pushing the app, make explicit the attributes in each app’s declaration. To do this, assign the anchors and include the app-level attributes with YAML
+aliases in each app declaration.</p>
+<h3 id="domain-domains-host-hosts-and-no-hostname-attributes"><a class="header" href="#domain-domains-host-hosts-and-no-hostname-attributes"><a id="route-attribute"></a> domain, domains, host, hosts, and no-hostname attributes</a></h3>
+<p>The following route component attributes are deprecated in cf CLI v7+:</p>
+<ul>
+<li><code>domain</code></li>
+<li><code>domains</code></li>
+<li><code>host</code></li>
+<li><code>hosts</code></li>
+<li><code>no-hostname</code></li>
+</ul>
+<p>You must specify routes using the <code>routes</code> attribute:</p>
+<pre><code>---
+applications:
+- name: webapp
+  routes:
+  - route: www.example.com/foo
+  - route: tcp.example.com:1234
+</code></pre>
+<h3 id="inheritance"><a class="header" href="#inheritance"><a id="inheritance-deprecated"></a> Inheritance</a></h3>
+<p>This feature is deprecated and replaced by variable substitution. For more information, see <a href="#variable-substitution">Variable substitution</a>.</p>
+<p>With inheritance, child manifests inherited configurations from a parent manifest. The child manifests can use the inherited configurations as provided,
+extend them, or override them.</p>
+<h3 id="buildpack"><a class="header" href="#buildpack"><a id="buildpack-deprecated"></a> buildpack</a></h3>
+<p>The singular <code>buildpack</code> attribute is deprecated. It is replaced by <code>buildpacks</code>, which specifies multiple buildpacks. For more information, see
+<a href="#buildpacks">buildpacks</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../devguide/deploy-apps/manifest.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../devguide/deploy-apps/push-docker.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../devguide/deploy-apps/manifest.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../devguide/deploy-apps/push-docker.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

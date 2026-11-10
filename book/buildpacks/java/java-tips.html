@@ -1,0 +1,694 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Using Cloud Foundry Java buildpack - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-using-cloud-foundry-java-buildpack-owner-java"><a class="header" href="#title-using-cloud-foundry-java-buildpack-owner-java">title: Using Cloud Foundry Java buildpack
+owner: Java</a></h2>
+<p>You can use the Java buildpack with Cloud Foundry.</p>
+<p>You can deploy a number of different JVM-based artifact types.
+For a more detailed explanation of what the Cloud Foundry Java Builpack supports, see <a href="https://github.com/cloudfoundry/java-buildpack#additional-documentation">Additional Documentation</a> in the repository on GitHub.</p>
+<h2 id="java-buildpack"><a class="header" href="#java-buildpack"><a id="buildpack"></a> Java buildpack</a></h2>
+<p>For information about using, configuring, and extending the Cloud Foundry Java buildpack, see the <a href="https://github.com/cloudfoundry/java-buildpack">Cloud Foundry Java Buildpack</a> repository on GitHub.</p>
+<p class="note">
+<strong>Note</strong>: As of v5.1.0, the Java buildpack is a rewrite in Go (previously Ruby), per
+<a href="https://github.com/cloudfoundry/community/blob/main/toc/rfc/rfc-0050-java-buildpack-migration-to-golang.md">RFC-0050</a>.
+The Go buildpack aims for behavioral parity with the Ruby buildpack it replaces, but some
+details differ; see the
+<a href="https://github.com/cloudfoundry/java-buildpack/blob/main/RUBY_VS_GO_BUILDPACK_COMPARISON.md">Ruby vs. Go buildpack comparison</a>
+for a full breakdown. The last version of the docs describing the Ruby buildpack (v4.x) is
+archived at this
+<a href="https://github.com/cloudfoundry/docs-buildpacks/tree/a475367b92eea48640c72c96dae9e7ac31bc7525/java">pre-v5 commit</a>.
+</p>
+
+<h2 id="java-buildpack-design"><a class="header" href="#java-buildpack-design"><a id="design"></a> Java buildpack design</a></h2>
+<p>The Java buildpack can convert artifacts that run on the JVM into executable apps. It does this by identifying one of the supported artifact types (Grails, Groovy, Java, Play Framework, Spring Boot, and Servlet) and downloading all additional dependencies needed to run. It also analyzes the collection of services bound to the app and downloads any dependencies related to those services.</p>
+<p>For example, pushing a WAR file that is bound to a PostgreSQL database and an OpenTelemetry collector for observability shows output like this:</p>
+<pre class="terminal">
+-----&gt; Java Buildpack version 5.1.0
+-----&gt; Supplying Java
+       Detected container: Tomcat
+       No JRE explicitly configured, using default: OpenJDK
+       Selected JRE: OpenJDK
+-----&gt; Installing OpenJDK
+       Installing OpenJDK (17.0.20+10)
+-----&gt; Installing openjdk 17.0.20+10
+       Download [https://buildpacks.cloudfoundry.org/dependencies/openjdk/openjdk_17.0.20%2B10_linux_x64_cflinuxfs4_42fe5962.tgz]
+       Detected Java major version: 17
+       Installing JVMKill Agent (1.17.0)
+-----&gt; Installing jvmkill 1.17.0
+       Installing Memory Calculator (4.2.0)
+-----&gt; Installing memory-calculator 4.2.0
+       Memory Calculator installed: Loaded Classes: 14775 (auto-detected), Threads: 250 (default), Headroom: 0% (default)
+       OpenJDK installation complete
+       OpenTelemetry service detected!
+-----&gt; Installing frameworks [PostgreSQL JDBC, Client Certificate Mapper, Container Security Provider, Java Opts, OpenTelemetry Javaagent]
+-----&gt; Installing postgresql-jdbc 42.7.13
+-----&gt; Installing client-certificate-mapper 2.1.0
+-----&gt; Installing container-security-provider 1.20.0
+-----&gt; Installing open-telemetry-javaagent 2.31.1
+-----&gt; Supplying Tomcat
+-----&gt; Installing tomcat 10.1.60
+       Installed Tomcat (10.1.60)
+...
+-----&gt; Finalizing Java
+...
+       Java buildpack finalization complete
+</pre>
+
+<p>The JRE is installed under <code>$DEPS_DIR/&lt;idx&gt;/jre</code> and exposed to the app through
+the <code>$JAVA_HOME</code> environment variable; do not hardcode a path such as the Ruby
+buildpack’s former <code>.java-buildpack/open_jdk_jre</code>, which no longer exists.</p>
+<h2 id="configuration"><a class="header" href="#configuration"><a id="configuration"></a> Configuration</a></h2>
+<p>In most cases, the buildpack can work without any configuration. If you are new to Cloud Foundry, Cloud Foundry recommends that you make your first attempts without modifying the buildpack configuration. The buildpack is flexible, though, and you can configure it through environment variables. For more information, see <a href="https://github.com/cloudfoundry/java-buildpack#configuration-and-extension">Configuration and Extension</a> in the Cloud Foundry Java Buildpack repository on GitHub.</p>
+<h2 id="java-client-library"><a class="header" href="#java-client-library"><a id="java-client-library"></a> Java Client Library</a></h2>
+<p>The Cloud Foundry Client Library provides a Java API for interacting with an instance. This library, <code>cloudfoundry-client</code>, can be
+used by Java based tools to interact with the platform.</p>
+<p>For information about using this library, see <a href="./java-client.html">Java Cloud Foundry Library</a>.</p>
+<h2 id="grails"><a class="header" href="#grails"><a id="grails"></a> Grails</a></h2>
+<p>Grails packages apps into WAR files for deployment into a Servlet container. To build the WAR file and deploy it, run:</p>
+<pre><code>grails prod war
+cf push YOUR-APP -p target/YOUR-APP-VERSION.war
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-APP-VERSION</code> is the name of the WAR file you want to build and deploy.</li>
+</ul>
+<h2 id="groovy"><a class="header" href="#groovy"><a id="groovy"></a> Groovy</a></h2>
+<p>Cloud Foundry supports Groovy apps based on both Ratpack and a simple collection of files.</p>
+<h3 id="ratpack"><a class="header" href="#ratpack"><a id="ratpack"></a> Ratpack</a></h3>
+<p>Ratpack packages apps into two different styles. Cloud Foundry supports the <code>distZip</code> style. To build the ZIP file and deploy it, run:</p>
+<pre><code>gradle distZip
+cf push YOUR-APP -p build/distributions/YOUR-ZIP-FILE.zip
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-ZIP-FILE</code> is the name of the ZIP file you want to build and deploy.</li>
+</ul>
+<p>For more information, see the <a href="https://ratpack.io">Ratpack</a> website.</p>
+<h3 id="raw-groovy"><a class="header" href="#raw-groovy"><a id="raw-groovy"></a> Raw Groovy</a></h3>
+<p>You can run Groovy apps that are made up of a single entry point and any supporting files without any other work. To deploy them, run:</p>
+<pre><code>cf push YOUR-APP
+</code></pre>
+<p>Where <code>YOUR-APP</code> is the name of your app.</p>
+<p>For more information, see <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/container-groovy.md">Groovy Container</a> in the Cloud Foundry Java Buildpack repository on GitHub.</p>
+<h2 id="http2"><a class="header" href="#http2"><a id="http-2"></a> HTTP/2</a></h2>
+<p>To deploy Java apps that use HTTP/2, you must have:</p>
+<ol>
+<li>A Cloud Foundry foundation that has HTTP/2 support enabled. For information about configuring support for HTTP/2 in Cloud Foundry, see <a href="https://docs.cloudfoundry.org/adminguide/supporting-http2.html">Configuring HTTP/2 Support</a>.</li>
+<li>Cloud Foundry Command-Line Interface (cf CLI) v8 or later. See <a href="../../cf-cli/v8.html">Upgrading to cf CLI v8</a>.</li>
+</ol>
+<p>You can deploy any Java app and get automatic support for the HTTP/2 protocol without making any changes to your app.
+When a client connects through a route mapped to your Java apps over HTTP/2, the foundation transparently downgrades the protocol and communicates with your app over HTTP/1.1.</p>
+<p>If you require end-to-end HTTP/2, for example, because of gRPC, do the following:</p>
+<ol>
+<li>Enable HTTP/2 support in the app:
+<ul>
+<li>See <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.webserver.configure-http2">Configure HTTP/2</a> in the Spring Boot documentation.</li>
+<li>If you are deploying a standard non-executable WAR file, you only need to make sure that you are using Java buildpack v4.43 or later. Starting with v4.43, the Java buildpack configures Apache Tomcat to accept HTTP/2 connections.</li>
+<li>Other frameworks, including Play, Ratpack, and apps that use the distZip format, embed an HTTP server. You must configure these apps to enable HTTP/2, specifically H2C, clear-text. See your framework’s documentation for enabling HTTP/2 and H2C.
+H2C is required because Cloud Foundry uses Envoy to secure communications into the app container.</li>
+</ul>
+</li>
+<li>Configure the route to use the HTTP/2 protocol using either the cf CLI or the app manifest:
+<ul>
+<li>
+<p>Using the cf CLI: <code>cf map-route MY-APP EXAMPLE.COM --hostname host --app-protocol http2</code>.</p>
+</li>
+<li>
+<p>Using a <code>manifest.yml</code> file:</p>
+<pre><code>---
+applications:
+- name: MY-APP
+  routes:
+    - route: MY-APP.EXAMPLE.COM
+      protocol: http2
+</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="http2-example"><a class="header" href="#http2-example"><a id="example"></a> HTTP/2 example</a></h3>
+<p>For example:</p>
+<ol>
+<li>
+<p>Fetch the Spring Music app:</p>
+<pre><code>git clone https://github.com/cloudfoundry-samples/spring-music.git
+</code></pre>
+</li>
+<li>
+<p>Build the app:</p>
+<pre><code>./gradle assemble
+</code></pre>
+</li>
+<li>
+<p>Push the app without assigning a route:</p>
+<pre><code>cf push --no-route
+</code></pre>
+</li>
+<li>
+<p>Map a route:</p>
+<pre><code>cf map-route spring-music EXAMPLE.COM --hostname spring-music --app-protocol http2
+</code></pre>
+</li>
+<li>
+<p>Validate:</p>
+<pre><code>curl https://spring-music.EXAMPLE.COM/request --http2 -s | jq .
+</code></pre>
+</li>
+</ol>
+<p>A successful response looks like the following:</p>
+<pre><code>```
+{
+  "protocol": "HTTP/2.0",
+  "remote-addr": "198.51.100.100",
+  "method": "GET",
+  "scheme": "https",
+  "session-id": "1A891C614AB6B6CB59A56D7F520BBCBD"
+}
+```
+</code></pre>
+<h2 id="java-main"><a class="header" href="#java-main"><a id="java-main"></a> Java main</a></h2>
+<p>Java apps with a <code>main()</code> method can be run provided that they are packaged as self-executable JARs. For more information, see <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/container-java_main.md">Java Main Container</a> in the Cloud Foundry Java Buildpack repository on GitHub.</p>
+<p>If your app is not web enabled, you must suppress route creation to avoid a <code>failed to start accepting connections</code> error.
+To suppress route creation, add <code>no-route: true</code> to the app manifest or use the
+<code>–no-route</code> flag with the <code>cf push</code> command. <br><br>For more information about the <code>no-route</code> attribute,
+see <a href="../../devguide/deploy-apps/manifest.html">Deploying with App Manifests</a>.</p>
+<h3 id="maven"><a class="header" href="#maven"><a id="java-main-maven"></a> Maven</a></h3>
+<p>A Maven build can create a self-executable JAR. To build and deploy the JAR, run:</p>
+<pre><code>mvn package
+cf push YOUR-APP -p target/YOUR-APP-VERSION.jar
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-APP-VERSION</code> is the name of the JAR you want to build and deploy.</li>
+</ul>
+<h3 id="gradle"><a class="header" href="#gradle"><a id="java-main-gradle"></a> Gradle</a></h3>
+<p>A Gradle build can create a self-executable JAR. To build and deploy the JAR, run:</p>
+<pre><code>gradle build
+cf push YOUR-APP -p build/libs/YOUR-APP-VERSION.jar
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-APP-VERSION</code> is the name of the JAR you want to build and deploy.</li>
+</ul>
+<h2 id="play-framework"><a class="header" href="#play-framework"><a id="play-framework"></a> Play Framework</a></h2>
+<p>The Play Framework packages apps into two different styles. Cloud Foundry supports both the <code>staged</code> and <code>dist</code> styles. To build the <code>dist</code> style and deploy it, run:</p>
+<pre><code>play dist
+cf push YOUR-APP -p target/universal/YOUR-APP-VERSION.zip
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-APP-VERSION</code> is the name of the <code>dist</code> style ZIP you want to build and deploy.</li>
+</ul>
+<p>For more information, see the <a href="https://www.playframework.com/">Play Framework</a> website.</p>
+<h2 id="spring-boot-cli"><a class="header" href="#spring-boot-cli"><a id="spring-boot-cli"></a> Spring Boot CLI</a></h2>
+<p>Spring Boot can run apps comprised entirely of POGOs. To deploy them, run:</p>
+<pre><code>spring grab *.groovy
+cf push YOUR-APP
+</code></pre>
+<p>Where <code>YOUR-APP</code> is the name of your app.</p>
+<p>For more information, see <a href="https://spring.io/projects/spring-boot">Spring Boot</a> on the Spring website and <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/container-spring_boot_cli.md">Spring Boot CLI Container</a> in the Cloud Foundry Java Buildpack repository on GitHub.</p>
+<h2 id="servlet"><a class="header" href="#servlet"><a id="servlet"></a> Servlet</a></h2>
+<p>Java apps can be packaged as Servlet apps.</p>
+<h3 id="maven-1"><a class="header" href="#maven-1"><a id="servlet-maven"></a> Maven</a></h3>
+<p>A Maven build can create a Servlet WAR. To build and deploy the WAR, run:</p>
+<pre><code>mvn package
+cf push YOUR-APP -p target/YOUR-APP-VERSION.war
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-APP-VERSION</code> is the name of the WAR you want to build and deploy.</li>
+</ul>
+<h3 id="gradle-1"><a class="header" href="#gradle-1"><a id="servlet-gradle"></a> Gradle</a></h3>
+<p>A Gradle build can create a Servlet WAR. To build and deploy the WAR, run:</p>
+<pre><code>gradle build
+cf push YOUR-APP -p build/libs/YOUR-APP-VERSION.war
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>YOUR-APP-VERSION</code> is the name of the WAR you want to build and deploy.</li>
+</ul>
+<h2 id="binding-to-services"><a class="header" href="#binding-to-services"><a id="services"></a> Binding to services</a></h2>
+<p>For more information about binding apps to services, see <a href="configuring-service-connections.html">Configuring Service Connections</a>.</p>
+<h2 id="java-and-grails-best-practices"><a class="header" href="#java-and-grails-best-practices"><a id="java-apps"></a> Java and Grails best practices</a></h2>
+<h3 id="provide-a-jdbc-driver"><a class="header" href="#provide-a-jdbc-driver"><a id="jdbc"></a> Provide a JDBC driver</a></h3>
+<p>The Java buildpack does not bundle a JDBC driver with your app. If you want your app to access a SQL RDBMS, include the appropriate driver in your app.</p>
+<h3 id="allocate-sufficient-memory"><a class="header" href="#allocate-sufficient-memory"><a id="memory"></a> Allocate sufficient memory</a></h3>
+<p>If you do not allocate sufficient memory to a Java app when you deploy it, it may fail to start, or Cloud Foundry may terminate it. You must allocate enough memory to allow for:</p>
+<ul>
+<li>Java heap</li>
+<li>Metaspace</li>
+<li>Stack size per Thread</li>
+<li>JVM overhead</li>
+</ul>
+<p>The Java buildpack has built-in memory calculator defaults (for example, 250 threads and 0% headroom; the loaded class count is detected from the app). Override them with the <code>memory_calculator</code> settings of the <code>JBP_CONFIG_OPEN_JDK_JRE</code> environment variable, for example <code>JBP_CONFIG_OPEN_JDK_JRE: '{ memory_calculator: { stack_threads: 200 } }'</code>. For an explanation of JRE memory sizes and weightings and how the Java buildpack calculates and allocates memory to the JRE for your app, see <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/jre-open_jdk_jre.md">Open JDK JRE</a> in the Cloud Foundry Java Buildpack on GitHub.</p>
+<p>To configure memory-related JRE options for your app, you can override the default memory settings of your buildpack as described in <a href="https://github.com/cloudfoundry/java-buildpack#configuration-and-extension">Configuration and Extension</a> with the properties listed in the Open JDK JRE README in the Cloud Foundry Java Buildpack on GitHub. For more information about configuring manifests, see <a href="../../devguide/deploy-apps/manifest.html">Deploying with App Manifests</a>.</p>
+<p>To see memory utilization when your app is running, run:</p>
+<pre><code>cf app YOUR-APP
+</code></pre>
+<p>Where <code>YOUR-APP</code> is the name of your app.</p>
+<h3 id="troubleshoot-out-of-memory"><a class="header" href="#troubleshoot-out-of-memory"><a id="memory-troubleshoot"></a> Troubleshoot out of memory</a></h3>
+<p>A Java app may crash because of insufficient memory on the Garden container or the JVM on which it runs. The sections below provide guidance for help diagnosing and resolving such issues.</p>
+<h4 id="jvm"><a class="header" href="#jvm"><a id="jvm"></a> JVM</a></h4>
+<ul>
+<li>
+<p><strong>Error</strong>: <code>java.lang.OutOfMemoryError</code>. For example:</p>
+  
+<pre class="terminal">
+  $ cf logs YOUR-APP --recent
+  2016-06-20T09:18:51.00+0100 [APP/0] OUT java.lang.OutOfMemoryError: Metaspace
+  </pre>
+
+<p>Where <code>YOUR-APP</code> is the name of your app.</p>
+</li>
+<li>
+<p><strong>Cause</strong>: If the JVM cannot garbage-collect enough space to ensure the allocation of a data-structure, it fails with <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/OutOfMemoryError.html">java.lang.OutOfMemoryError</a>. In the example above, JVM has an under-sized <code>metaspace</code>. You may see failures in other memory pools, such as <code>heap</code>.</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Configure the JVM correctly for your app. For more information, see <a href="#memory">Allocate Sufficient Memory</a>.</p>
+</li>
+</ul>
+<h4 id="garden-container"><a class="header" href="#garden-container"><a id="garden-container"></a> Garden container</a></h4>
+<p>The solutions in this section require configuring the memory calculator, which is a sub project of the Java buildpack that calculates suitable memory settings for Java apps when you push them. For more information, see the <a href="https://github.com/cloudfoundry/java-buildpack-memory-calculator">java-buildpack-memory-calculator</a> repository on GitHub. If you have questions about the memory calculator, you can ask them in the <strong>#java-buildpack</strong> channel of the <a href="https://slack.cloudfoundry.org/">Cloud Foundry Slack organization</a>.</p>
+<ul>
+<li>
+<p><strong>Error</strong>: The Garden container terminates the Java process with the out of memory event. For example:</p>
+  
+<pre class="terminal">
+  $ cf events YOUR-APP
+  time                          event         actor         description
+  2016-06-20T09:18:51.00+0100   app.crash     app-name      index: 0, reason: CRASHED, exit_description: out of memory, exit_status: 255
+  </pre>
+
+<p>Where <code>YOUR-APP</code> is the name of your app.</p>
+<p>This error appears when the JVM allocates more OS-level memory than the quota requested by the app, such as through the manifest.</p>
+</li>
+<li>
+<p><strong>Cause 1 - Insufficient native memory</strong>: This error commonly means that the JVM requires more native memory. In the scope of the Java buildpack and the memory calculator, the term “native” means the memory required for the JVM to work, along with forms of memory not covered in the other classifications of the memory calculator. This includes the memory footprint of OS-level threads, program counters, when an app forks and runs subprocesses, or when an app uses JNI to allocate memory.</p>
+</li>
+<li>
+<p><strong>Solution 1</strong>: Determine how much native memory a Java app needs by measuring it with realistic workloads and fine-tuning it accordingly. You can then configure the Java buildpack using the native setting of the memory calculator, as in the example below:</p>
+<pre><code>---
+applications:
+- name: YOUR-APP
+  memory: 1G
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '[memory_calculator: {headroom: 10}}]'
+</code></pre>
+<p>Where <code>YOUR-APP</code> is the name of your app.
+<br><br>
+This example shows that 10% of the overall available <code>1G</code> is reserved for anything that is not <code>heap</code>, <code>metaspace</code>, <code>direct</code>, <code>code cache</code> or <code>threads</code>. In less common cases, this may come from companion processes started by the JVM, such as the Process API.
+<br><br>
+For more information about measuring how much native memory a Java app needs, see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/troubleshoot/tooldescr007.html">Native Memory Tracking</a> in the Java documentation. For more information about configuring the Java buildpack using the native setting, see <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/jre-open_jdk_jre.md#memory">OpenJDK JRE</a> in the Cloud Foundry Java Buildpack on GitHub. For more information about the Process API, see <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html">Class Process</a> in the Java documentation.</p>
+</li>
+<li>
+<p><strong>Cause 2 - High thread count</strong>: Java threads in the JVM can cause memory errors at the Garden level. When an app is under heavy load, it uses a high number of threads. Each thread consumes some memory, and, if there are enough threads, they consume a significant amount of memory.</p>
+</li>
+<li>
+<p><strong>Solution 2</strong>: Set the reserved memory for stack traces to the correct value for your app.
+<br>
+<br>You can use the <code>-Xss</code> setting of the JVM to configure the amount of space the JVM reserves for each Java thread. You must multiply this value by the number of threads your app requires. Specify the number of threads in the <code>stack_threads</code> setting of the memory calculator. For example, if you estimate the max thread count for an app at <code>800</code> and the amount of memory needed to represent the deepest stacktrace of a Java thread is <code>512KB</code>, configure the memory calculator as follows:</p>
+<pre><code>---
+applications:
+- name: YOUR-APP
+  memory: 1G
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '[memory_calculator: {stack_threads: 800}]'
+    JAVA_OPTS: '-Xss512k'
+</code></pre>
+<p>Where <code>YOUR-APP</code> is the name of your app.
+<br><br>
+In this example, the overall memory amount reserved by the JVM for representing the stacks of Java threads is <code>800 * 512k = 400m</code>.
+<br><br>
+The correct settings for <code>-Xss</code> and <code>stack_threads</code> depend on your app code, including the libraries it uses. Your app may technically have no upper limit, such as in the case of <a href="">cavalier usage</a> of <code>CachedThreadPool</code> executors. However, you still must calculate the depth of the thread stacks, and the amount of space the JVM reserves for each of them. For more information, see <a href="http://dev.bizo.com/2014/06/cached-thread-pool-considered-harmlful.html">Executors.newCachedThreadPool() considered harmful</a> on the Bizo website and the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html#newCachedThreadPool--">newCachedThreadPool</a> section of the <em>Class Executors</em> topic in the Java documentation.</p>
+</li>
+</ul>
+<h3 id="troubleshoot-failed-upload"><a class="header" href="#troubleshoot-failed-upload"><a id="upload"></a> Troubleshoot failed upload</a></h3>
+<p>If your app fails to upload when you push it to Cloud Foundry, it may be for one of the following reasons:</p>
+<ul>
+<li>
+<p><strong>WAR is too large</strong>: An upload may fail due to the size of the WAR file. Cloud Foundry testing indicates WAR files as large as 250 MB upload successfully. If a WAR file larger than that fails to upload, it may be a result of the file size.</p>
+</li>
+<li>
+<p><strong>Connection issues</strong>: App uploads can fail if you have a slow Internet connection, or if you upload from a location that is very remote from the target Cloud Foundry instance. If an app upload takes a long time, your authorization token can expire before the upload completes. A workaround is to copy the WAR to a server that is closer to the Cloud Foundry instance, and then push it from there.</p>
+</li>
+<li>
+<p><strong>Out-of-date cf CLI client</strong>: Upload of a large WAR is faster and therefore less likely to fail if you are using a recent version of the cf CLI. If you are using an older version of the cf CLI client to upload a large WAR, and having problems, try updating to the latest version of the cf CLI.</p>
+</li>
+<li>
+<p><strong>Incorrect WAR targeting</strong>: By default, <code>cf push</code> uploads everything in the current directory. For a Java app, <code>cf push</code> with no option flags uploads source code and other unnecessary files, in addition to the WAR. When you push a Java app, specify the path to the WAR by running:</p>
+<pre><code>cf push YOUR-APP -p PATH/TO/WAR-FILE
+</code></pre>
+<p>Where:</p>
+  
+<ul>
+    
+<li><code>YOUR-APP</code> is the name of your app.</li>
+
+    
+<li>
+      <code>PATH/TO/WAR-FILE</code> is the path to the WAR.
+      You can determine whether or not the path was specified for a previously pushed app by examining the app deployment manifest, <code>manifest.yml</code>.
+      If the <code>path</code> attribute specifies the current directory, the manifest includes a line like:
+      
+<pre class="terminal">path: .</pre>
+
+      To re-push just the WAR, do one of the following:
+      
+<ul>
+        
+<li>Delete <code>manifest.yml</code> and run <code>cf push</code> again, specifying the location of the WAR using the <code>-p</code> flag.</li>
+
+        
+<li>Edit the <code>path</code> argument in <code>manifest.yml</code> to point to the WAR, and re-push the app.</li>
+
+      </ul>
+
+    </li>
+
+  </ul>
+
+</li>
+</ul>
+<h3 id="debuging-java-apps"><a class="header" href="#debuging-java-apps"><a id="debugging"></a> Debuging Java apps</a></h3>
+<p>Because of the way Cloud Foundry deploys your apps and isolates them, it is not possible to connect to your app with the remote Java debugger. Instead, instruct the app to connect to the Java debugger on your local machine.</p>
+<p>To set up remote debugging when using BOSH Lite or a Cloud Foundry installation:</p>
+<ol>
+<li>
+<p>Open your project in Eclipse.</p>
+</li>
+<li>
+<p>Right-click your project, go to <strong>Debug as</strong> and pick <strong>Debug Configurations</strong>.</p>
+</li>
+<li>
+<p>Create a new <strong>Remote Java Application</strong>.</p>
+</li>
+<li>
+<p>Make sure your project is selected, pick <strong>Standard (Socket Listen)</strong> from the <strong>Connection Type</strong> drop down and set a port. Make sure this port is open if you are running a firewall.</p>
+</li>
+<li>
+<p>Click <strong>Debug</strong>.</p>
+</li>
+</ol>
+<p>The debugger is running. If you switch to the Debug perspective, you see your app listed in the Debug panel, and it
+says <code>Waiting for vm to connect at port</code>.</p>
+<p>Next, to push your app to Cloud Foundry and instruct Cloud Foundry to connect to the debugger running on your local machine:</p>
+<ol>
+<li>
+<p>Edit your <code>manifest.yml</code> file. Set the instances count to 1. If you set this greater than one, multiple apps try to connect to your debugger.</p>
+</li>
+<li>
+<p>Also in <code>manifest.yml</code>, add an <code>env</code> block and create a variable named <code>JAVA_OPTS</code>. For more information about the <code>env</code> block, see <a href="../../devguide/deploy-apps/manifest.html#env-block">Deploying with App Manifests</a>.</p>
+</li>
+<li>
+<p>Add the remote debugger configuration to the <code>JAVA_OPTS</code> variable: <code>-agentlib:jdwp=transport=dt_socket,address=YOUR-IP-ADDRESS:YOUR-PORT</code>.</p>
+</li>
+<li>
+<p>Save the <code>manifest.yml</code> file.</p>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf push
+</code></pre>
+</li>
+</ol>
+<p>Upon completion, you can see that your app has started and is now connected to the debugger running in your IDE. You can now add
+breakpoints and interrogate the app just as you would if it were running locally.</p>
+<h3 id="slow-starting-java-or-grails-apps"><a class="header" href="#slow-starting-java-or-grails-apps"><a id="slow-start"></a> Slow starting Java or Grails apps</a></h3>
+<p>Some Java and Grails apps do not start quickly, and the health check for an app can fail if an app starts too slowly.</p>
+<p>The current Java buildpack implementation sets the Tomcat <code>bindOnInit</code> property to <code>false</code>. This prevents Tomcat from listening for HTTP requests until an app has fully deployed.</p>
+<p>If your app does not start quickly, the health check might fail because it checks the health of the app before the app can accept requests. By default, the health check fails after a timeout threshold of 60 seconds.</p>
+<p>To resolve this issue, run <code>cf push</code> with the <code>-t TIMEOUT-THRESHOLD</code> option to increase the timeout threshold. Run:</p>
+<pre><code>$ cf push YOUR-APP -t TIMEOUT-THRESHOLD
+</code></pre>
+<p>or</p>
+<pre><code>$ cf push YOUR-APP --app-start-timeout TIMEOUT-THRESHOLD
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>YOUR-APP</code> is the name of your app.</li>
+<li><code>TIMEOUT-THRESHOLD</code> is the number of seconds to which you want to increase the timeout threshold.</li>
+</ul>
+<p>The timeout threshold cannot exceed 180 seconds. Specifying a timeout threshold greater than 180 seconds causes the
+following error:</p>
+<pre><code>Server error, status code: 400, error code: 100001, message: The app is invalid: health_check_timeout maximum_exceeded&lt;/code&gt;
+</code></pre>
+<h2 id="extension"><a class="header" href="#extension"><a id="extension"></a> Extension</a></h2>
+<p>The Java buildpack can also be easily extended. It creates abstractions for three types of components (containers, frameworks, and JREs) to allow users to easily add functionality. In addition to these abstractions, there are a number of helper functions for simplifying typical buildpack behaviors.</p>
+<p>Each component implements a small Go interface. For example, every framework (such as the OpenTelemetry Java agent) implements:</p>
+<pre><code>type Framework interface {
+	// Detect returns the framework name if this framework should be included
+	Detect() (string, error)
+
+	// Supply installs the framework (runs during the supply phase)
+	Supply() error
+
+	// Finalize performs final framework configuration (runs during the finalize phase)
+	Finalize() error
+}
+</code></pre>
+<p>For more information, see <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/design.md">Design</a>, <a href="https://github.com/cloudfoundry/java-buildpack/blob/main/docs/IMPLEMENTING_FRAMEWORKS.md">Implementing Frameworks</a>, and <a href="https://github.com/cloudfoundry/java-buildpack#configuration-and-extension">Configuration and Extension</a> in the Cloud Foundry Java Buildpack repository on GitHub.</p>
+<h2 id="environment-variables"><a class="header" href="#environment-variables"><a id="env-var"></a> Environment variables</a></h2>
+<p>You can access environments variable programmatically.</p>
+<p>For example, you can obtain <code>VCAP_SERVICES</code> by running:</p>
+<pre><code>System.getenv("VCAP_SERVICES");
+</code></pre>
+<p>For more information, see <a href="../../devguide/deploy-apps/environment-variable.html">Cloud Foundry Environment Variables</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../buildpacks/java/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../buildpacks/java/getting-started-deploying-apps/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../buildpacks/java/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../buildpacks/java/getting-started-deploying-apps/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

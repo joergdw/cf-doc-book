@@ -1,0 +1,574 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Accessing your apps with SSH - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-accessing-your-apps-with-ssh-owner-diego"><a class="header" href="#title-accessing-your-apps-with-ssh-owner-diego">title: Accessing your apps with SSH
+owner: Diego</a></h2>
+<p>The Cloud Foundry Command Line Interface (cf CLI) lets you securely log in to remote host virtual machines (VMs) running Cloud Foundry (Cloud Foundry) app instances. The commands that activate SSH access to apps, and activate, deactivate, and verify permissions for such access are described here.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The <code>cf ssh</code> command in cf CLI includes the <code>all_proxy</code> environment variable, which allows you to specify a proxy server to activate proxying for all requests. For more information, see <a href="../../cf-cli/http-proxy.html#v3-ssh-socks5">Use SOCKS5 with cf v3-ssh</a> in <em>Using the cf CLI with a proxy server</em>.
+For command details, enter <code>cf ssh --help</code>
+</p>
+
+<p>The cf CLI looks up the <code>app_ssh_oauth_client</code> identifier in the Cloud Controller <code>/v2/info</code> endpoint, and uses this identifier to query the UAA server for an SSH authorization code. On the target VM side, the SSH proxy contacts the Cloud Controller through the <code>app_ssh_endpoint</code> listed in <code>/v2/info</code> to confirm permission for SSH access.</p>
+<h2 id="app-ssh-commands"><a class="header" href="#app-ssh-commands"><a id="ssh-commands"></a> App SSH commands</a></h2>
+<table id="ssh-commands" class="table">
+  
+<thead>
+<tr>
+    <th>cf CLI command</th>
+    <th>Purpose</th>
+  </tr>
+</thead>
+
+  
+<tr>
+    <td>
+      <code>cf enable-ssh</code><br />
+      <code>cf disable-ssh</code><br />
+      <code>cf allow-space-ssh</code><br />
+      <code>cf disallow-space-ssh</code>
+    </td>
+    <td><a href="#enable-disable-ssh">Activate and deactivate SSH access</a></td>
+  </tr>
+
+  
+<tr>
+    <td>
+      <code>cf ssh-enabled</code><br />
+      <code>cf space-ssh-allowed</code>
+    </td>
+    <td><a href="#check-ssh-permissions">Verify SSH access permissions
+  
+  
+<tr>
+    <td><code>cf ssh</code></td>
+    <td><a href="#ssh-command">Log in to an application container with cf SSH
+  
+  
+<tr>
+    <td><code>cf ssh-code</code></td>
+    <td><a href="#other-ssh-access">App SSH access without cf CLI</a> using non-<code>cf SSH</code> tools like <code>ssh</code>, <code>scp</code>, and <code>sftp</code></td>
+  </tr>
+
+
+<h2 id="activate-and-deactivate-ssh-access"><a class="header" href="#activate-and-deactivate-ssh-access"><a id="enable-disable-ssh"></a> Activate and deactivate SSH access</a></h2>
+<p>A cloud operator can deploy Cloud Foundry to either allow or prohibit app SSH across the entire deployment. For more information, see <a href="../../running/config-ssh.html">Configuring SSH Access for Cloud Foundry</a>.</p>
+<p>Within a deployment that permits SSH access to apps, Space Developers can activate or deactivate SSH access to individual apps, and Space Managers can activate or deactivate SSH access to all apps running within a space.</p>
+<p>You must restart your app after enabling SSH access.</p>
+<h3 id="configuring-ssh-access-at-the-app-level"><a class="header" href="#configuring-ssh-access-at-the-app-level"><a id="config-ssh-access-apps"></a> Configuring SSH access at the app level</a></h3>
+<p><code>cf enable-ssh</code> activates SSH access to all instances of an app:</p>
+<pre class="terminal">
+$ cf enable-ssh MY-AWESOME-APP
+</pre>
+
+<p><code>cf disable-ssh</code> deactivates SSH access to all instances of an app:</p>
+<pre class="terminal">
+$ cf disable-ssh MY-AWESOME-APP
+</pre>
+
+<h3 id="configuring-ssh-access-at-the-space-level"><a class="header" href="#configuring-ssh-access-at-the-space-level"><a id="config-ssh-access-spaces"></a> Configuring SSH access at the space level</a></h3>
+<p><code>cf allow-space-ssh</code> allows SSH access into all apps in a space:</p>
+<pre class="terminal">
+$ cf allow-space-ssh SPACE-NAME
+</pre>
+
+<p><code>cf disallow-space-ssh</code> disallows SSH access into all apps in a space:</p>
+<pre class="terminal">
+$ cf disallow-space-ssh SPACE-NAME
+</pre>
+
+<h2 id="verify-ssh-permissions"><a class="header" href="#verify-ssh-permissions"><a id="check-ssh-permissions"></a> Verify SSH permissions</a></h2>
+<p><code>cf ssh-enabled</code> verifies whether an app is accessible with SSH:</p>
+<pre class="terminal">$ cf ssh-enabled MY-AWESOME-APP
+ssh support is disabled for 'MY-AWESOME-APP'
+</pre>
+
+<p><code>cf space-ssh-allowed</code> verifies whether all apps running within a space are accessible with SSH:</p>
+<pre class="terminal">
+$ cf space-ssh-allowed SPACE-NAME
+ssh support is enabled in space 'SPACE-NAME'
+</pre>
+
+<h2 id="log-in-to-an-application-container-with-cf-ssh"><a class="header" href="#log-in-to-an-application-container-with-cf-ssh"><a id="ssh-command"></a> Log in to an application container with cf SSH</a></h2>
+<p>If SSH access is allowed at the deployment, space, and app level, you can run the <code>cf ssh APP-NAME</code> command to start an interactive SSH session with a VM hosting an app. By default, the command accesses the container running the first instance of the app, the instance with index <strong>0</strong>.</p>
+<pre class="terminal">
+$ cf ssh MY-AWESOME-APP
+</pre>
+
+<p>When logged into a VM hosting an app, you can use tools like the Cloud Foundry Diego Operator Toolkit (cfdot) to run app status diagnostics. For more information, see the <a href="https://github.com/cloudfoundry/cfdot">cfdot</a> repository on GitHub and the <a href="https://docs.cloudfoundry.org/running/monitoring-test.html#cfdot">cfdot CLI</a> section of the <em>Monitoring and Testing Diego Components</em> topic.</p>
+<h3 id="common-cf-ssh-flags"><a class="header" href="#common-cf-ssh-flags"><a id="ssh-common-flags"></a> Common cf SSH flags</a></h3>
+<p>You can tailor <code>cf ssh</code> commands with the following flags, most of which mimic flags for the UNIX or Linux <code>ssh</code> command. Run the <code>cf ssh --help</code> command for more details.</p>
+<ul>
+<li>
+<p>The <code>-i</code> flag targets a specific instance of an app. To log in to the VM container hosting the third instance, <code>index=2</code>,  of MY-AWESOME-APP, run:</p>
+  
+<pre class="terminal">
+  $ cf ssh MY-AWESOME-APP -i 2
+  </pre>
+
+</li>
+<li>
+<p>The <code>-L</code> flag activates local port forwarding, binding an output port on your machine to an input port on the app VM. Pass in a local port, and your app VM port and port number, all colon-separated. You can prepend your local network interface, or use the default <code>localhost</code>.</p>
+  
+<pre class="terminal">
+  $ cf ssh MY-AWESOME-APP -L [LOCAL-NETWORK-INTERFACE:]LOCAL-PORT:REMOTE-HOST-NAME:REMOTE-HOST-PORT
+  </pre>
+
+</li>
+<li>
+<p>The <code>-N</code> flag skips returning a command prompt on the remote machine. This sets up local port forwarding if you do not need to run commands on the host VM.</p>
+</li>
+<li>
+<p>The <code>--process</code> flag in cf CLI allows you to SSH into the container for a specific process running as part of your app.</p>
+</li>
+<li>
+<p>The <code>--request-pseudo-tty</code> and <code>--force-pseudo-tty </code> flags allow you run an SSH session in pseudo-tty mode rather than generate terminal line output.</p>
+</li>
+</ul>
+<h2 id="ssh-session-environment"><a class="header" href="#ssh-session-environment"><a id="ssh-env"></a> SSH session environment</a></h2>
+<p>To make the environment of your interactive SSH session match the environment of
+your buildpack-based app, with the same environment variables and working directory, run
+the following command after starting the session:</p>
+<pre class="terminal">
+/tmp/lifecycle/shell
+</pre>
+
+<p>After running the previous command, the value of the <code>VCAP_APPLICATION</code> environment variable differs
+slightly from its value in the environment of the app process, because it does not have the <code>host</code>,
+<code>instance_id</code>, <code>instance_index</code>, or <code>port</code> fields set. These fields are available in other
+environment variables, as described in
+<a href="environment-variable.html#VCAP-APPLICATION">VCAP_APPLICATION</a> in
+<em>Cloud Foundry Environment Variables</em>.</p>
+<h2 id="app-ssh-access-without-cf-cli"><a class="header" href="#app-ssh-access-without-cf-cli"><a id="other-ssh-access"></a> App SSH access without cf CLI</a></h2>
+<p>In addition to <code>cf ssh</code>, you can use other SSH clients such as <code>ssh</code>, <code>scp</code>, or <code>sftp</code> to access
+your app via its process GUID, if you have SSH permissions.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Previous versions of Cloud Foundry supported SSH access to apps via the app GUID, as archived at <a href="https://web.archive.org/web/20241224221352/https://docs.cloudfoundry.org/devguide/deploy-apps/ssh-apps.html#app-guid">Access app SSH using app GUID</a>.
+</p>
+
+<p>To securely connect to an app instance using its process GUID:</p>
+<ol>
+<li>
+<p>Query the <code>/v2/info</code> endpoint of the Cloud Controller in your deployment. Record the domain name
+and port number of the <code>app_ssh_endpoint</code> field, and the <code>app_ssh_host_key_fingerprint</code> field. You
+can compare the <code>app_ssh_host_key_fingerprint</code> with the fingerprint returned by the SSH proxy on
+your target VM. For example:</p>
+ 
+<pre class="terminal">
+ $ cf curl /v2/info
+ {
+      ...
+      "app_ssh_endpoint": "ssh.example.com:2222",
+      "app_ssh_host_key_fingerprint": "a6:14:c0:ea:42:07:b2:f7:53:2c:0b:60:e0:00:21:6c",
+      ...
+ }
+ </pre>
+
+<p>In this example:</p>
+ 
+<ul>
+   
+<li>The domain name is <code>ssh.example.com</code>.</li>
+
+   
+<li>The port number is <code>2222</code>.</li>
+
+   
+<li>The fingerprint is <code>a6:14:c0:ea:42:07:b2:f7:53:2c:0b:60:e0:00:21:6c</code>.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Run:</p>
+<pre><code>ssh -p PORT-NUMBER cf:$(cf curl /v3/apps/$(cf app APP-NAME --guid)/processes | jq -r '.resources[] | select(.type=="web") | .guid')/0@SSH-ENDPOINT
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>PORT-NUMBER</code> is the port number of the <code>app_ssh_endpoint</code> field that you recorded in an earlier step.</li>
+
+   
+<li><code>APP-NAME</code> is the name of your target app.</li>
+
+   
+<li><code>SSH-ENDPOINT</code> is the domain name of the <code>app_ssh_endpoint</code> field that you recorded in an earlier step.</li>
+
+ </ul>
+
+<p>For example:</p>
+ 
+<pre class="terminal">
+ ssh -p 2222 cf:$(cf curl /v3/apps/$(cf app my-app --guid)/processes | jq -r '.resources[] | select(.type=="web") | .guid')/0@ssh.example.com
+ </pre>
+
+</li>
+<li>
+<p>Run <code>cf ssh-code</code> to obtain a one-time authorization code that substitutes for an SSH password.
+You can run <code>cf ssh-code | pbcopy</code> to copy the code to the clipboard. For example:</p>
+ 
+<pre class="terminal">
+ $ cf ssh-code
+ E1x89n
+ </pre>
+
+</li>
+<li>
+<p>When the SSH proxy reports its RSA fingerprint, confirm that it matches the
+<code>app_ssh_host_key_fingerprint</code> recorded previously. When prompted for a password, paste in the
+authorization code returned by <code>cf ssh-code</code>. For example:</p>
+ 
+<pre class="terminal">
+ $ ssh -p 2222 cf:abcdefab-1234-5678-abcd-1234abcd1234/0<span>@</span>ssh.MY-DOMAIN.com
+ The authenticity of host '[ssh.example.com]:2222 ([203.0.113.5]:2222)' can't be established.
+ RSA key fingerprint is a6:14:c0:ea:42:07:b2:f7:53:2c:0b:60:e0:00:21:6c.
+ Are you sure you want to continue connecting (yes/no)? yes
+ Warning: Permanently added '[ssh.example.com]:2222 [203.0.113.5]:2222' (RSA) to the list of known hosts.
+ cf:d0a2e11d-e6ca-4120-b32d-140<span>@</span>ssh.ketchup.cf-app.com's password:
+ vcap@ce4l5164kws:~$
+ </pre>
+
+<p>You have now securely connected to the app instance.</p>
+</li>
+</ol>
+<h2 id="ssh-proxy-security-configuration"><a class="header" href="#ssh-proxy-security-configuration"><a id="ssh-proxy-security-config"></a> SSH proxy security configuration</a></h2>
+<p>The SSH proxy has these SSH security configuration by default:</p>
+<table id="ssh-proxy-security-configuration-values" class="table">
+  
+<thead>
+<tr>
+    <th>Security parameter</th>
+    <th>Values</th>
+  </tr>
+</thead>
+
+  
+<tr>
+    <td>Ciphers</td>
+    <td>
+      <code>chacha20-poly1305@openssh.com</code><br />
+      <code>aes128-gcm@openssh.com</code><br />
+      <code>aes256-ctr</code><br />
+      <code>aes192-ctr</code><br />
+      <code>aes128-ctr</code>
+    </td>
+  </tr>
+
+  
+<tr>
+    <td><abbr title="Message Authentication Codes">MACs</abbr></td>
+    <td>
+      <code>hmac-sha2-256-etm@openssh.com</code><br />
+      <code>hmac-sha2-256</code>
+    </td>
+  </tr>
+
+  
+<tr>
+    <td>Key exchanges</td>
+    <td>
+      <code>curve25519-sha256@libssh.org</code>
+    </td>
+  </tr>
+
+</table>
+
+<p>The <code>cf ssh</code> command is compatible with this security configuration. If you use a different SSH client to access apps over SSH, you can ensure that you configure your client to be compatible with these ciphers, MACs, and key exchanges. For more information about other SSH clients, see <a href="#other-ssh-access">App SSH access without cf CLI</a>.</p>
+<p>Cloud Foundry deployment operators can also change these default values in the SSH proxy configuration. Changing these default values might require a change to the SSH client configuration.</p>
+<h2 id="proxy-to-container-authentication"><a class="header" href="#proxy-to-container-authentication"><a id="proxy-to-container-auth"></a> Proxy to container authentication</a></h2>
+<p>A second layer of SSH security runs within each container. When the SSH proxy attempts to handshake with the SSH daemon inside the target container, it uses the following fields associated with the <code>diego-ssh</code> key in its route to the app instance. This inner layer works invisibly and requires no user action, but is described here to complete the SSH security picture.</p>
+<h3 id="container_port-required"><a class="header" href="#container_port-required">CONTAINER_PORT (required)</a></h3>
+<p><code>container_port</code> indicates which port inside the container the SSH daemon is listening on. The proxy attempts to connect to host side mapping of this port after authenticating the client.</p>
+<h3 id="host_fingerprint-optional"><a class="header" href="#host_fingerprint-optional">HOST_FINGERPRINT (optional)</a></h3>
+<p>When present, <code>host_fingerprint</code> declares the expected fingerprint of the SSH daemon’s host public key. When the fingerprint of the actual target’s host key does not match the expected fingerprint, the connection is stopped. The fingerprint must only contain the hex string generated by <code>ssh-keygen -l</code>.</p>
+<h3 id="user-optional"><a class="header" href="#user-optional">USER (optional)</a></h3>
+<p><code>user</code> declares the user ID to use during authentication with the container’s SSH daemon. While this is not a required part of the routing data, it is required for password authentication and might be required for public key authentication.</p>
+<h3 id="password-optional"><a class="header" href="#password-optional">PASSWORD (optional)</a></h3>
+<p><code>password</code> declares the password to use during password authentication with the container’s SSH daemon.</p>
+<h3 id="private_key-optional"><a class="header" href="#private_key-optional">PRIVATE_KEY (optional)</a></h3>
+<p><code>private_key</code> declares the private key to use when authenticating with the container’s SSH daemon. If present, the key must be a PEM encoded RSA or DSA public key.</p>
+<h4 id="example-app-process"><a class="header" href="#example-app-process">Example app process</a></h4>
+<pre><code class="language-json">{
+  "process_guid": "ssh-process-guid",
+  "domain": "ssh-experiments",
+  "rootfs": "preloaded:cflinuxfs3",
+  "instances": 1,
+  "start_timeout": 30,
+  "setup": {
+    "download": {
+      "artifact": "diego-sshd",
+      "from": "http://file-server.service.cf.internal.example.com:8080/v1/static/diego-sshd/diego-sshd.tgz",
+      "to": "/tmp",
+      "cache_key": "diego-sshd"
+    }
+  },
+  "action": {
+    "run": {
+      "path": "/tmp/diego-sshd",
+      "args": [
+          "-address=0.0.0.0:2222",
+          "-authorizedKey=ssh-rsa ..."
+      ],
+      "env": [],
+      "resource_limits": {}
+    }
+  },
+  "ports": [ 2222 ],
+  "routes": {
+    "diego-ssh": {
+      "container_port": 2222,
+      "private_key": "PEM encoded PKCS#1 private key"
+    }
+  }
+}
+</code></pre>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+To avoid security exposure, migrate your apps and custom buildpacks to use the <code>cflinuxfs4</code> stack based on Ubuntu 22.04 LTS (Jammy Jellyfish). The <code>cflinuxfs3</code> stack is based on Ubuntu 18.04 (Bionic Beaver), which reaches end of standard support in April 2023.
+</p>
+
+<h3 id="daemon-discovery"><a class="header" href="#daemon-discovery">Daemon discovery</a></h3>
+<p>To be accessible through the SSH proxy, containers must host an SSH daemon, expose it through a mapped port, and advertise the port in a <code>diego-ssh</code> route. If a proxy cannot find the target process or a route, user authentication fails.</p>
+<pre><code>  "routes": {
+    "diego-ssh": { "container_port": 2222 }
+  }
+</code></pre>
+<p>The Diego system generates the appropriate process definitions for Cloud Foundry apps to reflect the policies in effect.</p>
+</a></td></tr>
+</a></td></tr>
+</table>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../devguide/deploy-apps/app-ssh-overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../devguide/deploy-apps/ssh-services.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../devguide/deploy-apps/app-ssh-overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../devguide/deploy-apps/ssh-services.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

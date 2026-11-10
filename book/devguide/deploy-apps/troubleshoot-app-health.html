@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Troubleshooting app deployment and health - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<p>title: Troubleshooting app deployment and health
+owner:</p>
+<ul>
+<li>CF for VMs Networking</li>
+<li>Release Integration</li>
+</ul>
+<hr>
+<p>You can diagnose and resolve common issues when you deploy and run apps on Cloud Foundry.</p>
+<h2 id="common-issues"><a class="header" href="#common-issues"><a id="scenarios"></a> Common issues</a></h2>
+<p>The following sections describe common issues you might encounter when attempting to deploy and run your app, and suggest possible resolutions.</p>
+<h3 id="cf-push-times-out"><a class="header" href="#cf-push-times-out"><a id="time"></a> cf push times out</a></h3>
+<p>If your deployment times out during the upload or staging phase, you might receive one of these error messages:</p>
+<ul>
+<li>
+<p><code>504 Gateway Timeout</code></p>
+</li>
+<li>
+<p><code>Error uploading application</code></p>
+</li>
+<li>
+<p><code>Timed out waiting for async job JOB-NAME to finish</code></p>
+</li>
+</ul>
+<p>If this happens:</p>
+<ul>
+<li>
+<p><strong>Check your network speed.</strong> Depending on the size of your app, your <code>cf push</code> can timeout if the upload takes too long.
+Cloud Foundry recommends an Internet connection speed of at least 768 KB/s, or 6 Mb/s, for uploads.</p>
+</li>
+<li>
+<p><strong>Make sure you are pushing only needed files.</strong> By default, <code>cf push</code> pushes all the contents of the current working directory. Make sure you are pushing only the directory for your app. If your app is too large, or if it has many small files, Cloud Foundry might timeout during the upload. To reduce the number of files you are pushing, ensure that you push only the directory for your app, and remove unneeded files or use the <code>.cfignore</code> file to specify excluded files. For more information, see <a href="prepare-to-deploy.html#exclude">Ignore unnecessary files when pushing</a> in <em>Considerations for Designing and Running an App in the Cloud</em>.</p>
+</li>
+<li>
+<p><strong>Set the <code>CF_STAGING_TIMEOUT</code> and <code>CF_STARTUP_TIMEOUT</code> environment variables.</strong> By default, your app has 15 minutes to stage and 5 minutes to start. You can increase these times by setting <code>CF_STAGING_TIMEOUT</code> and <code>CF_STARTUP_TIMEOUT</code>. For more information, run <code>cf push -h</code>.</p>
+</li>
+<li>
+<p><strong>If your app contains a large number of files, try pushing the app repeatedly.</strong> Each push uploads a few more files. Eventually, all files upload, and the push succeeds. This is less likely to work if your app has many small files.</p>
+</li>
+</ul>
+<h3 id="app-too-large"><a class="header" href="#app-too-large"><a id="upload"></a> App too large</a></h3>
+<p>If your app is very large, you might receive an error message on <code>cf push</code>. For example:</p>
+<ul>
+<li>
+<p><code>413 Request Entity Too Large</code></p>
+</li>
+<li>
+<p><code>You have exceeded your organization's memory limit</code></p>
+</li>
+</ul>
+<p>If this happens:</p>
+<ul>
+<li>
+<p><strong>Make sure your org and space have enough resources for all instances of your app.</strong> You cannot use more resources in a space than is allocated for your org. To view the resource quota name for your org, use <code>cf org ORG-NAME</code>, then <code>cf org-quota QUOTA-NAME</code>. To view resource quota name for your space, use <code>cf space SPACE-NAME</code>, then <code>cf space-quota QUOTA-NAME</code>. Your total organization resource usage is the sum of the resources used by all apps in all spaces within the org. Each app’s resource usage is the resources allocated to it multiplied by the number of instances. To view the resource usage of all the apps in a space, use <code>cf apps</code>, then <code>cf app APP-NAME</code> for each app.</p>
+</li>
+<li>
+<p><strong>Make sure your app is less than 1 GB.</strong> By default, <code>cf push</code> deploys all the contents of the current working directory. To reduce the number of files you are pushing, ensure that you push only the directory for your app, and remove unneeded files or use the <code>.cfignore</code> file to specify excluded files.
+The following limits apply:</p>
+<ul>
+<li>The app files to push cannot exceed 1 GB.</li>
+<li>The droplet that results from compiling those files cannot exceed 1.5 GB. Droplets are typically a third larger than the pushed files.</li>
+<li>The combined size of the app files, compiled droplet, and buildpack cache cannot total more than 4 GB of space during staging.</li>
+</ul>
+</li>
+</ul>
+<h3 id="unable-to-detect-a-supported-app-type"><a class="header" href="#unable-to-detect-a-supported-app-type"><a id="detect"></a> Unable to detect a supported app type</a></h3>
+<p>If Cloud Foundry cannot identify an appropriate buildpack for your app, you see an <code>Unable to detect a supported app type</code> error.</p>
+<p>You can view what buildpacks are available with the <code>cf buildpacks</code> command.</p>
+<p>If you see a buildpack that you believe supports your app, see the <a href="../../buildpacks/index.html">buildpack documentation</a> for details about how that buildpack
+detects apps it supports.</p>
+<p>If you do not see a buildpack for your app, you might still be able to push your app with a <a href="../../buildpacks/custom.html">custom buildpack</a> using <code>cf push -b</code>
+with a path to your buildpack.</p>
+<h3 id="app-deploy-fails"><a class="header" href="#app-deploy-fails"><a id="deploy-fail"></a> App deploy fails</a></h3>
+<p>Even when the deployment fails, the app might exist on Cloud Foundry. Run <code>cf apps</code> to review the apps in the targeted org and space. You might be able to correct the issue using the CLI, or you might need to delete the app and re-deploy.</p>
+<p>If you push multiple apps using a manifest and one fails to deploy, Cloud Foundry does not attempt to push apps specified after the app that failed.</p>
+<p>Common reasons deploying an app fails include:</p>
+<ul>
+<li>
+<p>The app does not bind to a service, such as a PostgreSQL or MongoDB. The service might not exist, be down, or reject the binding.</p>
+</li>
+<li>
+<p>The app does not have a unique URL. For more information, see <a href="#unique-url">App requires unique URL</a>.</p>
+</li>
+</ul>
+<h3 id="app-requires-unique-url"><a class="header" href="#app-requires-unique-url"><a id="unique-url"></a> App requires unique URL</a></h3>
+<p>Cloud Foundry requires that each app that you deploy has a unique URL. Otherwise, the new app URL collides with an existing app URL and Cloud Foundry cannot deploy the app. You can resolve this issue by running <code>cf push</code> with either of the following flags to create a unique URL:</p>
+<ul>
+<li><code>--random-route</code> to create a URL that includes the app name and random words. Using this option might create a long URL, depending on the number of words that the app name includes.</li>
+</ul>
+<h3 id="app-fails-to-start"><a class="header" href="#app-fails-to-start"><a id="start"></a> App fails to start</a></h3>
+<p>After <code>cf push</code> stages the app and uploads the droplet, the app might fail to start, commonly with a pattern of starting and failing similar to the following example:</p>
+<pre class="terminal">
+-----&gt; Uploading droplet (23M)
+...
+0 of 1 instances running, 1 starting
+0 of 1 instances running, 1 down
+...
+0 of 1 instances running, 1 failing
+FAILED
+Start unsuccessful
+</pre>
+
+<p>If this happens:</p>
+<ul>
+<li>
+<p><strong>Find the reason app is failing and modify your code.</strong> Run <code>cf events APP-NAME</code> and <code>cf logs APP-NAME --recent</code> and look for messages similar to the following example:</p>
+<pre class="terminal">
+2018-07-20T15:53:26.00-0700   app.crash      app-name   index: 2, reason: CRASHED, cell_id: d874ad05-d0ca-4c63-9f5a-0b1ddd90dd5d, instance: f406c53e-b1ca-4a0f-6140-dddd, exit_description: APP/PROC/WEB: Exited with status 1
+</pre>
+
+<p>These messages can identify a memory or port issue. If they do, take that as a starting point when you re-examine and fix your app code.</p>
+</li>
+<li>
+<p><strong>Ensure that your app code uses the <code>PORT</code> environment variable.</strong> Your app might be failing because it is listening on the wrong port. Instead of hard-coding
+the port on which your app listens, use the <code>PORT</code> environment variable. For example, this Ruby snippet assigns the port value to the <code>listen_here</code> variable:</p>
+<pre><code>listen_here = ENV['PORT']
+</code></pre>
+<p>For more examples specific to your app framework, see the appropriate <a href="../../buildpacks/index.html">buildpack documentation</a> for your app’s language.</p>
+</li>
+<li>
+<p><strong>Ensure that your app adheres to the principles described in <a href="http://12factor.net">Twelve-Factor App</a> and <a href="prepare-to-deploy.html">Prepare to deploy an app</a>.</strong> These texts explain how to prevent situations where your app builds locally but fails to build in the cloud.</p>
+</li>
+<li>
+<p><strong>Verify the timeout configuration of your app.</strong> App health checks use a timeout setting when an app starts up for the first time. For more information, see <a href="healthchecks.html">Using app health checks</a>. If an app fails to start up due to health check timeout, you might see messages in the logs similar to the following example:</p>
+<pre class="terminal">
+2017-01-30T14:07:20.39-0800 [CELL/0]     OUT Creating container
+2017-01-30T14:07:20.65-0800 [CELL/0]     OUT Successfully created container
+2017-01-30T14:07:22.30-0800 [CELL/0]     OUT Starting health monitoring of container
+2017-01-30T14:08:23.52-0800 [CELL/0]     ERR Timed out after 1m0s:
+health check never passed.
+2017-01-30T14:08:23.57-0800 [CELL/0]     OUT Destroying container
+2017-01-30T14:08:23.59-0800 [API/0]      OUT Process has crashed with type: "web"
+2017-01-30T14:08:23.59-0800 [CELL/0]     OUT Creating container
+2017-01-30T14:08:23.60-0800 [API/0]      OUT App instance exited with guid 91086440-bac0-44f0-808f-a034a1ec2ed0
+payload: {"instance"=&gt;"", "index"=&gt;0, "reason"=&gt;"CRASHED",
+"exit_description"=&gt;"2 error(s) occurred:\n\n* 1 error(s)
+occurred:\n\n* Exited with status 6\n* 2 error(s)
+occurred:\n\n* cancelled\n* cancelled", "crash_count"=&gt;1,
+"crash_timestamp"=&gt;1485814103565763172,
+"version"=&gt;"3e6e4232-7e19-4168-9583-1176833d2c71"}
+2017-01-30T14:08:23.83-0800 [CELL/0]     OUT Successfully destroyed container
+2017-01-30T14:08:23.84-0800 [CELL/0]     OUT Successfully created container
+2017-01-30T14:08:25.41-0800 [CELL/0]     OUT Starting health monitoring of container
+</pre>
+
+</li>
+</ul>
+<h3 id="app-consumes-too-much-memory-then-fails"><a class="header" href="#app-consumes-too-much-memory-then-fails"><a id="out-of-memory"></a> App consumes too much memory, then fails</a></h3>
+<p>An app that <code>cf push</code> has uploaded and started can fail later if it uses too much memory.</p>
+<p><strong>Make sure your app is not consuming more memory than allowed.</strong> When you ran <code>cf push</code> and <code>cf scale</code>, that configured a limit on the amount of memory your app uses. Verify your app’s actual memory usage. If it exceeds the limit, edit the app to use less memory.</p>
+<h3 id="routing-conflict"><a class="header" href="#routing-conflict"><a id="routing-conflict"></a> Routing conflict</a></h3>
+<p>Cloud Foundry allows multiple apps, or versions of the same app, to be mapped to the same route. This feature activates blue-green deployment. For more information see <a href="./blue-green.html">Using blue-green deployment to reduce downtime and risk</a>.</p>
+<p>Routing multiple apps to the same route might cause undesirable behavior in some situations by routing incoming requests randomly to one of the apps on the shared route.</p>
+<p>If you suspect a routing conflict, run <code>cf routes</code> to verify the routes in your Cloud Foundry deployment.</p>
+<p>If two apps share a route outside of a blue-green deployment strategy, choose one app to reassign to a different route and use the following procedure:</p>
+<ol>
+<li>
+<p>Remove the existing route from that app by running:</p>
+<pre><code class="language-console">cf unmap-route APP-NAME OLD-ROUTE
+</code></pre>
+</li>
+<li>
+<p>Map the app to a new, unique route by running:</p>
+<pre><code class="language-console">cf map-route APP-NAME NEW-ROUTE
+</code></pre>
+</li>
+</ol>
+<h2 id="gather-diagnostic-information"><a class="header" href="#gather-diagnostic-information"><a id="info"></a> Gather diagnostic information</a></h2>
+<p>This section describes how to gather diagnostic information and troubleshoot app deployment issues.</p>
+<h3 id="examine-environment-variables"><a class="header" href="#examine-environment-variables"><a id="env"></a> Examine environment variables</a></h3>
+<p><code>cf push</code> deploys your app to a container on the server. The environment variables in the container govern your app.</p>
+<p>You can set environment variables in a manifest created before you deploy. For more information, see <a href="manifest.html">Deploying with app manifests</a>.</p>
+<p>You can also set an environment variable by running <code>cf set-env</code>, followed by <code>cf push</code>. You must run <code>cf push</code> for the variable to take effect in the
+container environment.</p>
+<p>Run <code>cf env APP-NAME</code> to view the environment variables that you have set using the <code>cf set-env</code> command and the variables in the container environment:</p>
+<pre class="terminal">
+Getting env variables for app example-app in org example-org / space development as admin...
+OK
+
+System-Provided:
+{
+ "VCAP_SERVICES": {
+   "p-mysql-n/a": [
+     {
+       "credentials": {
+         "uri":"postgres://lrra:e6B-X@p-mysqlprovider.example.com:5432/lraa
+       },
+       "label": "p-mysql-n/a",
+       "name": "p-mysql",
+       "syslog_drain_url": "",
+       "tags": ["postgres","postgresql","relational"]
+     }
+   ]
+ }
+}
+
+User-Provided:
+my-env-var: 100
+my-drain: http://drain.example.com
+</pre>
+
+<h3 id="view-logs"><a class="header" href="#view-logs"><a id="logs"></a> View logs</a></h3>
+<p>To view app logs streamed in real time, run <code>cf logs APP-NAME</code>.</p>
+<p>To aggregate your app logs to view log history, bind your app to a syslog drain service. For more information, see <a href="./../services/log-management.html">Streaming app logs to log management services</a>.</p>
+<h3 id="trace-cloud-controller-rest-api-calls"><a class="header" href="#trace-cloud-controller-rest-api-calls"><a id="trace"></a> Trace Cloud Controller REST API calls</a></h3>
+<p>If a command fails or produces unexpected results, re-run it with HTTP tracing activated to view requests and responses between the Cloud Foundry Command Line Interface (cf CLI) and the Cloud Controller REST API.</p>
+<p>For example:</p>
+<ul>
+<li>
+<p>Re-run <code>cf push</code> with <code>-v</code>:</p>
+<pre><code>cf push APP-NAME -v
+</code></pre>
+</li>
+<li>
+<p>Re-run <code>cf push</code> while appending API request diagnostics to a log file:</p>
+<pre><code>CF_TRACE=PATH-TO-TRACE.LOG cf push APP-NAME
+</code></pre>
+</li>
+</ul>
+<p>These examples activate HTTP tracing for a single command only. To activate it for an entire shell session, set the variable first:</p>
+<pre><code>export CF_TRACE=true
+export CF_TRACE=PATH-TO-TRACE.LOG
+</code></pre>
+<p class="note caution">
+<span class="note__title"><strong>Caution</strong></span>
+<code>CF_TRACE</code> is a local environment variable that modifies the behavior of the cf CLI. Do not confuse <code>CF_TRACE</code> with the variables in the container environment where your apps run. For more information about these container variables, see <a href="#env">Examine environment variables</a>.
+</p>
+
+<h3 id="analyze-zipkin-trace-ids"><a class="header" href="#analyze-zipkin-trace-ids"><a id="zipkin_trace"></a> Analyze Zipkin trace IDs</a></h3>
+<p>When the Zipkin feature is activated in Cloud Foundry, the Gorouter adds or forwards Zipkin trace IDs and span IDs to HTTP headers. For more information about what the Gorouter provides in the HTTP header, see <a href="../../concepts/http-routing.html#http-headers">HTTP headers</a> in <em>HTTP Routing</em>.</p>
+<p>After adding Zipkin HTTP headers to app logs, developers can run <code>cf logs APP-NAME</code> to correlate the trace and span IDs logged by the Gorouter with the trace IDs logged by their app. To correlate trace IDs for a request through multiple apps, each app must forward appropriate values for the headers with requests to other apps.</p>
+<h2 id="use-troubleshooting-commands"><a class="header" href="#use-troubleshooting-commands"><a id="cf-commands"></a> Use troubleshooting commands</a></h2>
+<p>You can investigate app deployment and health using the cf CLI.</p>
+<p>Some cf CLI commands return connection credentials. Remove credentials and other sensitive information from command output before you post the output a public forum.</p>
+<ul>
+<li>
+<p><code>cf apps</code>: Returns a list of the apps deployed to the current space with deployment options, including the name, current state, number of instances, and URLs of each app.</p>
+</li>
+<li>
+<p><code>cf app APP-NAME</code>: Returns information about the processes in the current space. Apps are listed alphabetically.</p>
+  
+<p class="note important">
+  <span class="note__title"><strong>Important</strong></span>
+  CPU values returned by <code>cf app</code> show the total usage of each app instance on all CPU cores on a host VM, where each core contributes 100%. For example, the CPU of a single-threaded app instance on a Diego Cell with one core cannot exceed 100%, and four instances sharing the Diego Cell cannot exceed an average CPU of 25%. A multi-threaded app instance running alone on a Diego Cell with eight cores can draw up to 800% CPU.
+  </p>
+
+</li>
+<li>
+<p><code>cf env APP-NAME</code>: Returns environment variables set using <code>cf set-env</code> and variables existing in the container environment.</p>
+</li>
+<li>
+<p><code>cf events APP-NAME</code>: Returns information about app failures, including error codes. Shows that an app instance exited. For more detail, look in the app
+logs. For a list of Cloud Foundry errors, see the <a href="https://github.com/cloudfoundry/errors">cloudfoundry-attic</a> repository on GitHub.</p>
+</li>
+<li>
+<p><code>cf logs APP-NAME --recent</code>: Dumps recent logs. For more information, see <a href="streaming-logs.html#view">Viewing logs in the Command Line Interface</a> in <em>App
+Logging in Cloud Foundry</em>.</p>
+</li>
+<li>
+<p><code>cf logs APP-NAME</code>: Returns a real-time stream of the app stdout and stderr. Press <strong>Ctrl+C</strong> or <strong>Command+C</strong> on your keyboard to exit the real-time stream.</p>
+</li>
+</ul>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+Your app must direct its logs to stdout and stderr. The <code>cf logs</code> command also returns messages from any Log4j facility that you configure to send logs to STDOUT. For more information, see the <a href="http://logging.apache.org/log4j/">Log4j website</a>.
+</p>
+
+<h2 id="access-apps-with-ssh"><a class="header" href="#access-apps-with-ssh"><a id="ssh"></a> Access apps with SSH</a></h2>
+<p>If you need to troubleshoot an instance of an app, you can gain SSH access to the app with the SSH proxy and daemon. For more information, see <a href="app-ssh-overview.html">App SSH overview</a>.</p>
+<h2 id="send-requests-to-app-instance"><a class="header" href="#send-requests-to-app-instance"><a id="request-to-instance"></a> Send requests to app instance</a></h2>
+<p>To obtain debug data without SSH, you can make HTTP requests to a specific instance of an app by using the <code>X-CF-APP-INSTANCE</code> HTTP header. For more
+information, see <a href="../../concepts/http-routing.html#app-instance-routing">App instance routing</a> in <em>HTTP Routing</em>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../devguide/deploy-apps/blue-green.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../devguide/ssh-index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../devguide/deploy-apps/blue-green.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../devguide/ssh-index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

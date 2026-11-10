@@ -1,0 +1,524 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Security event logging - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-security-event-logging-owner-logging-and-metrics"><a class="header" href="#title-security-event-logging-owner-logging-and-metrics">title: Security event logging
+owner: Logging and Metrics</a></h2>
+<p>Here you can learn how to activate and interpret security event logging for the Cloud Controller, the User Account and Authentication (UAA) server, and CredHub.</p>
+<p>You can use these logs to retrieve information about a subset of requests to the Cloud Controller, UAA server, and CredHub for security or compliance purposes.</p>
+<h2 id="cloud-controller-logging"><a class="header" href="#cloud-controller-logging"><a id="cc"></a>Cloud Controller logging</a></h2>
+<p class="note"><span class="note__title"><strong>Note</strong></span> By default, Cloud Foundry does not enable Cloud Controller request logging. To enable this feature, you must set the <code>cc.security_event_logging.enabled</code> property in your Cloud Foundry manifest to <code>true</code> and redeploy.</p>
+
+<p>The Cloud Controller logs security events to syslog. You must configure a syslog drain to forward your system logs to a log management service.</p>
+<p>For more information, see <a href="../running/managing-cf/logging-config.html">Configuring System Logging</a> and <a href="../devguide/services/log-management.html">Using Log Management Services</a>.</p>
+<h3 id="formatting-log-entries"><a class="header" href="#formatting-log-entries"><a id="format"></a>Formatting log entries</a></h3>
+<p>Cloud Controller logs security events in the <a href="https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf">Common Event Format</a> (CEF). CEF specifies the following format for log entries:</p>
+<pre><code>CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension
+</code></pre>
+<p>Entries in the Cloud Controller log use the following format:</p>
+<pre><code>CEF:CEF_VERSION|cloud_foundry|cloud_controller_ng|CC_API_VERSION|
+SIGNATURE_ID|NAME|SEVERITY|rt=TIMESTAMP suser=USERNAME suid=USER_GUID
+cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM
+cs2Label=vcapRequestId cs2=VCAP_REQUEST_ID request=REQUEST
+requestMethod=REQUEST_METHOD cs3Label=result cs3=RESULT
+cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS
+dst=DESTINATION_ADDRESS cs5Label=xForwardedFor cs5=X_FORWARDED_FOR_HEADER
+</code></pre>
+<p>Refer to the following list for a description of the properties shown in the Cloud Controller log format:</p>
+<ul>
+<li><code>CEF_VERSION</code>: The version of CEF used in the logs.</li>
+<li><code>CC_API_VERSION</code>: The current Cloud Controller API version.</li>
+<li><code>SIGNATURE_ID</code>: The method and path of the request. For example, <code>GET /v2/app:GUID</code>.</li>
+<li><code>NAME</code>: The same as <code>SIGNATURE_ID</code>.</li>
+<li><code>SEVERITY</code>: An integer that reflects the importance of the event.</li>
+<li><code>TIMESTAMP</code>: The number of milliseconds since the Unix epoch.</li>
+<li><code>USERNAME</code>: The name of the user who originated the request.</li>
+<li><code>USER_GUID</code>: The GUID of the user who originated the request.</li>
+<li><code>AUTH_MECHANISM</code>: The user authentication mechanism. This can be <code>oauth-access-token</code>, <code>basic-auth</code>, or <code>no-auth</code>.</li>
+<li><code>VCAP_REQUEST_ID</code>: The VCAP request ID of the request.</li>
+<li><code>REQUEST</code>: The request path and parameters. For example, <code>/v2/info?MY-PARAM=VALUE</code>.</li>
+<li><code>REQUEST_METHOD</code>. The method of the request. For example, <code>GET</code>.</li>
+<li><code>RESULT</code>: The meaning of the HTTP status code of the response. For example, <code>success</code>.</li>
+<li><code>HTTP_STATUS_CODE</code>. The HTTP status code of the response. For example, <code>200</code>.</li>
+<li><code>SOURCE_ADDRESS</code>: The IP address of the client who originated the request.</li>
+<li><code>DESTINATION_ADDRESS</code>: The IP address of the Cloud Controller VM.</li>
+<li><code>X_FORWARDED_FOR_HEADER</code>: The contents of the X-Forwarded-For
+header of the request. This is empty if the header is not present.</li>
+</ul>
+<h3 id="examples-of-log-entries"><a class="header" href="#examples-of-log-entries"><a id="example"></a>Examples of log entries</a></h3>
+<p>The following list provides several example requests with the corresponding Cloud Controller log entries.</p>
+<ul>
+<li>
+<p>An anonymous <code>GET</code> request:</p>
+<pre><code>CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/info|GET
+/v2/info|0|rt=1460690037402 suser= suid= request=/v2/info
+requestMethod=GET src=127.0.0.1 dst=192.0.2.1
+cs1Label=userAuthenticationMechanism cs1=no-auth cs2Label=vcapRequestId
+cs2=c4bac383-7cc9-4d9f-b1c0-1iq8c0baa000 cs3Label=result cs3=success
+cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor
+cs5=198.51.100.1
+</code></pre>
+</li>
+<li>
+<p>A <code>GET</code> request with basic authentication:</p>
+<pre><code>CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/syslog_drain_urls|GET
+/v2/syslog_drain_urls|0|rt=1460690165743 suser=bulk_api suid=
+request=/v2/syslog_drain_urls?batch_size\=1000 requestMethod=GET
+src=127.0.0.1 dst=192.0.2.1 cs1Label=userAuthenticationMechanism
+cs1=basic-auth cs2Label=vcapRequestId cs2=79187189-e810-33dd-6911-b5d015bbc999
+::eat1234d-4004-4622-ad11-9iaai88e3ae9 cs3Label=result cs3=success
+cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=198.51.100.1
+</code></pre>
+</li>
+<li>
+<p>A <code>GET</code> request with OAuth access token authentication:</p>
+<pre><code>CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/routes|GET
+/v2/routes|0|rt=1460689904925 suser=admin suid=c7ca208f-8a9e-4aab-
+92f5-28795f86d62a request=/v2/routes?inline-relations-depth\=1&amp;q\=
+host%3Adora%3Bdomain_guid%3B777-1o9f-5f5n-i888-o2025cb2dfc3
+requestMethod=GET src=127.0.0.1 dst=192.0.2.1
+cs1Label=userAuthenticationMechanism cs1=oauth-access-token
+cs2Label=vcapRequestId cs2=79187189-990i-8930-52b2-9090b2c5poz0
+::5a265621-b223-4520-afae-ab7d0ee7c75b cs3Label=result cs3=success
+cs4Label=httpStatusCode cs4=200 cs5Label=xForwardedFor cs5=198.51.100.1
+</code></pre>
+</li>
+<li>
+<p>A <code>GET</code> request that results in a 404 error:</p>
+<pre><code>CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|GET /v2/apps/7f310103-
+39aa-4a8c-b92a-9ff8a6a2fa6b|GET /v2/apps/7f310103-39aa-4a8c-b92a-
+9ff8a6a2fa6b|0|rt=1460691002394 suser=bob suid=a00i2026-55io-3983-
+555o-40e611410aec request=/v2/apps/7f310103-39aa-4a8c-b92a-9ff8a6a2fa6b
+requestMethod=GET src=127.0.0.1 dst=192.0.2.1
+cs1Label=userAuthenticationMechanism cs1=oauth-access-token cs2Label=vcapRequestId
+cs2=49f21579-9eb5-4bdf-6e49-e77d2de647a2::9f8841e6-e04a-498b-b3ff-d59cfe7cb7ea
+cs3Label=result cs3=clientError cs4Label=httpStatusCode cs4=404
+cs5Label=xForwardedFor cs5=198.51.100.1
+</code></pre>
+</li>
+<li>
+<p>A <code>POST</code> request that results in a 403 error:</p>
+<pre><code>CEF:0|cloud_foundry|cloud_controller_ng|2.54.0|POST /v2/apps|POST
+/v2/apps|0|rt=1460691405564 suser=bob suid=4f9a33f9-fb13-4774-a708-
+f60c939625cd request=/v2/apps?async\=true requestMethod=POST
+src=127.0.0.1 dst=192.0.2.1 cs1Label=userAuthenticationMechanism
+cs1=oauth-access-token cs2Label=vcapRequestId cs2=booc03111-9999-4003-88ab-
+20i9r33333ou::5a4993fc-722f-48bc-aff4-99b2005i9bb5 cs3Label=result
+cs3=clientError cs4Label=httpStatusCode cs4=403 cs5Label=xForwardedFor
+cs5=198.51.100.1
+</code></pre>
+</li>
+</ul>
+<h2 id="uaa-logging"><a class="header" href="#uaa-logging"><a id="uaa"></a>UAA logging</a></h2>
+<p>UAA logs security events to a file located at <code>/var/vcap/sys/log/uaa/uaa.log</code> on the UAA virtual machine (VM). Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.</p>
+<p>For more information, see <a href="../running/managing-cf/logging-config.html">Configuring System Logging</a> and <a href="../devguide/services/log-management.html">Using Log Management Services</a>.</p>
+<h3 id="log-events"><a class="header" href="#log-events"><a id="uaa-events"></a>Log Events</a></h3>
+<p>UAA logs identify the following categories of events:</p>
+<ul>
+<li>Authorization and Password Events</li>
+<li>SCIM Administration Events</li>
+<li>Token Events</li>
+<li>Client Administration Events</li>
+<li>UAA Administration Events</li>
+</ul>
+<p>To learn more about the names of the events included in these categories and the information they record in the UAA logs, see <a href="https://docs.cloudfoundry.org/running/managing-cf/uaa-audit-requirements.html">User Account and Authentication Service Audit Requirements</a>.</p>
+<h3 id="examples-of-log-entries-1"><a class="header" href="#examples-of-log-entries-1"><a id="uaa-events"></a>Examples of log entries</a></h3>
+<p>The following sections provide several example requests with the corresponding UAA log entries.</p>
+<h4 id="successful-user-authentication"><a class="header" href="#successful-user-authentication">Successful user authentication</a></h4>
+<pre><code>Audit: TokenIssuedEvent ('["openid","scim.read","uaa.user",
+"cloud_controller.read","password.write","cloud_controller.write",
+"scim.write"]'): principal=a42026d6-5533-1884-eef2-838abcd0i3e3,
+origin=[client=cf, user=bob], identityZoneId=[uaa]
+</code></pre>
+<ul>
+<li>This entry records a <code>TokenIssuedEvent</code>.</li>
+<li>UAA issued a token associated with the scopes <code>"openid","scim.read","uaa.user", "cloud_controller.read","password.write","cloud_controller.write","scim.write"</code> to the user <code>bob</code>.</li>
+</ul>
+<h4 id="failed-user-authentication"><a class="header" href="#failed-user-authentication">Failed user authentication</a></h4>
+<pre><code>Audit: UserAuthenticationFailure ('bob@example.com'):
+principal=61965469-c821-46b7-825f-630e12a51d6c,
+origin=[remoteAddress=198.51.100.1, clientId=cf],
+identityZoneId=[uaa]
+</code></pre>
+<ul>
+<li>This entry records a <code>UserAuthenticationFailure</code>.</li>
+<li>The user <code>bob@example.com</code> originating at <code>198.51.100.1</code> failed to authenticate.</li>
+</ul>
+<h4 id="successful-user-creation"><a class="header" href="#successful-user-creation">Successful user creation</a></h4>
+<pre><code>Audit: UserCreatedEvent ('["user_id=61965469-c821-
+46b7-825f-630e12a51d6c","username=bob@example.com"]'):
+principal=91220262-d901-44c0-825f-633i33b55d6c,
+origin=[client=cf, user=admin, details=(198.51.100.1,
+tokenType=bearertokenValue=&lt;TOKEN&gt;,
+sub=20i03423-dd8e-33e1-938d-e9999e30f500,
+iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
+</code></pre>
+<ul>
+<li>This entry records a <code>UserCreatedEvent</code>.</li>
+<li>The <code>admin</code> user originating at <code>198.51.100.1</code> created a user named <code>bob@example.com</code>.</li>
+</ul>
+<h4 id="successful-user-deletion"><a class="header" href="#successful-user-deletion">Successful user deletion</a></h4>
+<pre><code>Audit: UserDeletedEvent ('["user_id=61965469-c821-
+46b7-825f-630e12a51d6c","username=bob@example.com"]'):
+principal=61965469-c821-46b7-825f-630e12a51d6c,
+origin=[client=admin, details=(remoteAddress=198.51.100.1,
+tokenType=bearertokenValue=&lt;TOKEN&gt;,
+sub=admin, iss=https://uaa.example.com/oauth/token)], identityZoneId=[uaa]
+</code></pre>
+<ul>
+<li>This entry records a <code>UserDeletedEvent</code>.</li>
+<li>The <code>admin</code> user originating at <code>198.51.100.1</code> deleted a user named <code>bob@example.com</code>.</li>
+</ul>
+<h2 id="credhub-logging"><a class="header" href="#credhub-logging"><a id="credhub"></a>CredHub logging</a></h2>
+<p>CredHub logs security events to a file located at <code>/var/vcap/sys/log/credhub/credhub_security_events.log</code> on the CredHub VM. Because these logs are automatically rotated, you must configure a syslog drain to forward your system logs to a log management service.</p>
+<p>For more information, see <a href="../running/managing-cf/logging-config.html">Configuring System Logging</a> and <a href="../devguide/services/log-management.html">Using Log Management Services</a>.</p>
+<h3 id="format-for-log-entries"><a class="header" href="#format-for-log-entries"><a id="credhub-format"></a>Format for Log Entries</a></h3>
+<p>CredHub logs security events in the <a href="https://kc.mcafee.com/resources/sites/MCAFEE/content/live/CORP_KNOWLEDGEBASE/78000/KB78712/en_US/CEF_White_Paper_20100722.pdf">Common Event Format</a> (CEF). CEF specifies the following format for log entries:</p>
+<pre><code>CEF:Version|Device Vendor|Device Product|Device Version|Signature ID|Name|Severity|Extension
+</code></pre>
+<p>Entries in the CredHub log use the following format:</p>
+<pre><code>CEF:0|cloud_foundry|credhub|CREDHUB_SERVER_VERSION|
+SIGNATURE_ID|NAME|0|rt=TIMESTAMP suser=USERNAME suid=USER_GUID
+cs1Label=userAuthenticationMechanism cs1=AUTH_MECHANISM
+request=REQUEST requestMethod=REQUEST_METHOD
+cs3Label=versionUuid cs3=VERSION_UUID
+cs4Label=httpStatusCode cs4=HTTP_STATUS_CODE src=SOURCE_ADDRESS dst=DESTINATION_ADDRESS
+cs2Label=resourceName cs2=RESOURCE_NAME
+cs5Label=resourceUuid cs5=RESOURCE_UUID deviceAction=OPERATION
+cs6Label=requestDetails cs6=REQUEST_DETAILS
+</code></pre>
+<p>Refer to the following list for a description of the properties shown in the CredHub log.</p>
+<ul>
+<li><code>CEF_VERSION</code>: The version of CEF used in the logs.</li>
+<li><code>CREDHUB_SERVER_VERSION</code>: The current CredHub server version.</li>
+<li><code>SIGNATURE_ID</code>: The method and path of the request. For example, <code>GET /v2/app:GUID</code>.</li>
+<li><code>NAME</code>: The same as <code>SIGNATURE_ID</code>.</li>
+<li><code>TIMESTAMP</code>: The number of milliseconds since the Unix epoch.</li>
+<li><code>USERNAME</code>: The name of the user who originated the request, as defined by UAA. In the case of mTLS, no-auth, or not defined, this value is empty.</li>
+<li><code>USER_GUID</code>: The “actor” identifier. For example, <code>mtls-app:GUID</code>. If there is no authenticated user, this value is empty.</li>
+<li><code>AUTH_MECHANISM (cs1)</code>: The user authentication mechanism. This can be <code>oauth-access-token</code>, <code>mtls-auth</code>, or <code>no-auth</code>.</li>
+<li><code>REQUEST</code>: The request path and parameters. For example, <code>/v2/info?MY-PARAM=VALUE</code>.</li>
+<li><code>REQUEST_METHOD</code>: The method of the request. For example, <code>GET</code>.</li>
+<li><code>HTTP_STATUS_CODE (cs4)</code>. The HTTP status code of the response. For example, <code>200</code>.</li>
+<li><code>SOURCE_ADDRESS</code>: The IP address of the client who originated the request.</li>
+<li><code>DESTINATION_ADDRESS</code>: The IP address of the CredHub VM.</li>
+<li><code>RESOURCE_NAME (cs2)</code>: The credential path name. For example, <code>/my/awesome/credential</code>.</li>
+<li><code>RESOURCE_UUID (cs5)</code>: The top-level credential UUID. This is not the credential version.</li>
+<li><code>VERSION_UUID (cs3)</code>: The credential version UUID.</li>
+<li><code>OPERATION (deviceAction)</code>: The device action. The possible operations include the following:
+<ul>
+<li><code>get</code></li>
+<li><code>set</code></li>
+<li><code>generate</code></li>
+<li><code>regenerate</code></li>
+<li><code>bulk-regenerate</code></li>
+<li><code>delete</code></li>
+<li><code>find</code></li>
+<li><code>get-permissions</code></li>
+<li><code>add-permission</code></li>
+<li><code>delete-permission</code></li>
+<li><code>interpolate</code></li>
+<li><code>info</code></li>
+<li><code>version</code></li>
+<li><code>health</code></li>
+<li><code>key-usage</code></li>
+<li><code>update-transitional-version</code></li>
+</ul>
+</li>
+<li><code>REQUEST_DETAILS (cs6)</code>: A JSON blob that differs per request.</li>
+</ul>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+The CredHub logs include descriptions for each custom label. For example, the logs include <code>cs2Label=resourceName</code> to define the <code>cs2</code> label. The value for <code>resourceName</code> appears in the log next to <code>cs2=/path/to/credential</code>.
+</p>
+
+<h3 id="example-log-entries"><a class="header" href="#example-log-entries"><a id="credhub-example"></a>Example Log Entries</a></h3>
+<p>The following sections provide several example requests with the corresponding CredHub log entries.</p>
+<h4 id="accessing-a-credential"><a class="header" href="#accessing-a-credential">Accessing a credential</a></h4>
+<pre><code>CEF:0|cloud_foundry|credhub|2.0.0-beta.28|GET /api/v1/data|
+GET /api/v1/data|0|rt=1530901816757
+suser=app:3c538393-d192-4e23-8c83-456654b3fa6c
+suid=mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c
+cs1Label=userAuthenticationMechanism
+cs1=mutual_tls request=/api/v1/data?path=0b353167-0d5a-48c7-5036-7eaa
+requestMethod=GET
+cs3Label=versionUuid cs3=null
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=null
+cs5Label=resourceUuid cs5=null deviceAction=FIND
+cs6Label=requestDetails
+cs6={"nameLike":null,"path":"0b353167-0d5a-48c7-5036-7eaa","paths":null}
+</code></pre>
+<ul>
+<li>A user authenticated to the CredHub instance using <code>mutual_tls</code> from <code>10.0.0.1</code>.</li>
+<li>The authenticated user accessed a CredHub credential.</li>
+</ul>
+<h4 id="setting-a-credential"><a class="header" href="#setting-a-credential">Setting a credential</a></h4>
+<pre><code>CEF:0|cloud_foundry|credhub|2.0.0-beta.28|PUT /api/v1/data|
+PUT /api/v1/data|0|rt=1530901097921
+suser=cc_service_key_client suid=uaa-client:cc_service_key_client
+cs1Label=userAuthenticationMechanism
+cs1=uaa request=/api/v1/data requestMethod=PUT
+cs3Label=versionUuid cs3=32b3d5bf-463a-4045-a6b5-65c97e61059a
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=/1530901097842989110
+cs5Label=resourceUuid cs5=ccda25c5-a40a-4512-b6f5-a42f8c3b5c4c deviceAction=SET
+cs6Label=requestDetails
+cs6={"name":"/1530901097842989110","type":"json","mode":null,
+"additionalPermissions":[{"actor":"uaa-client:cc_service_key_client",
+"allowedOperations":["READ","WRITE","DELETE","WRITE_ACL","READ_ACL"]}]}
+</code></pre>
+<ul>
+<li>A user authenticated to the CredHub instance with UAA from <code>10.0.0.1</code>.</li>
+<li>The authenticated user set a CredHub credential.</li>
+</ul>
+<h4 id="generating-a-credential"><a class="header" href="#generating-a-credential">Generating a credential</a></h4>
+<pre><code>CEF:0|cloud_foundry|credhub|2.0.0-beta.28|POST /api/v1/data|
+POST /api/v1/data|0|rt=1530901403532
+suser=app:3c538393-d192-4e23-8c83-456654b3fa6c
+suid=mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c
+cs1Label=userAuthenticationMechanism
+cs1=mutual_tls request=/api/v1/data requestMethod=POST
+cs3Label=versionUuid cs3=8c21b7b3-d4bf-4d8a-a0c5-64c8c207cb40
+cs4Label=httpStatusCode cs4=200 src=10.0.0.1 dst=credhub.service.cf.internal
+cs2Label=resourceName cs2=/0b353167-0d5a-48c7-5036-7eaa/2
+cs5Label=resourceUuid cs5=1d55cff3-5264-434c-a127-0810f341cb2b deviceAction=GENERATE
+cs6Label=requestDetails cs6={"name":"/my/awesome/credential","type":"password",
+"mode":null,"additionalPermissions":[{"actor":"mtls-app:3c538393-d192-4e23-8c83-456654b3fa6c",
+"allowedOperations":["READ","WRITE","DELETE","WRITE_ACL","READ_ACL"]}]}
+</code></pre>
+<ul>
+<li>A user authenticated to the CredHub instance using <code>mutual_tls</code> from <code>10.0.0.1</code>.</li>
+<li>The authenticated user generated a password credential named <code>/my/awesome/credential</code>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../loggregator/cli-plugin.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../devguide/deploy-apps/streaming-logs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../loggregator/cli-plugin.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../devguide/deploy-apps/streaming-logs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

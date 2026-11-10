@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Scaling Cloud Controller - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-scaling-cloud-controller-owner-capi"><a class="header" href="#title-scaling-cloud-controller-owner-capi">title: Scaling Cloud Controller
+owner: CAPI</a></h2>
+<p>This topic describes how and when to scale BOSH jobs in CAPI, and includes details about some key metrics, heuristics, and logs.</p>
+<p>To inform some scaling decisions, check current CPU values by running <code>bosh instances --ps --vitals</code>.
+The <strong>CPU User</strong> value corresponds with the <code>system.cpu.user</code> metric and is scaled by the number of CPUs.
+For example, on a 4-core <code>api</code> VM, a <code>cloud_controller_ng</code> process that is using 100% of a core is listed as using 25% in the <code>system.cpu.user</code> metric.</p>
+<h2 id="cloud_controller_ng"><a class="header" href="#cloud_controller_ng"><a id="cloud_controller_ng"></a> cloud_controller_ng</a></h2>
+<p>The <code>cloud_controller_ng</code> Ruby process is the primary job in CAPI.
+It, along with <code>nginx_cc</code>, powers the Cloud Controller API that all users of Cloud Foundry (Cloud Foundry) interact with.
+In addition to serving external clients, <code>cloud_controller_ng</code> also provides APIs for internal components within Cloud Foundry, such as Loggregator and Networking subsystems.</p>
+<p>The <code>cloud_controller_ng</code> web server can either be Puma (Default) or Thin (Deprecated). The characteristics of these web servers differ significantly. The Thin web server runs on a single process per VM, therefore scaling should be done horizontally by adding more VMs. Puma allows for multiple processes to run per VM, therefore scaling can be both vertical or horizontal.</p>
+<h3 id="when-to-scale"><a class="header" href="#when-to-scale">When to Scale</a></h3>
+<p>When you are determining whether to scale <code>cloud_controller_ng</code>, look for the following:</p>
+<h4 id="key-metrics"><a class="header" href="#key-metrics">Key Metrics</a></h4>
+<p>Cloud Controller emits the following metrics:</p>
+<ul>
+<li><code>cc.requests.outstanding.gauge</code> or <code>cc_requests_outstanding_total</code>
+<ul>
+<li>Thin: is at or consistently near 20.</li>
+<li>Puma: is at or consistently near the total number of available Puma threads on the VM. You can calculate this with <code>Puma Workers x Puma Max Threads</code>.
+<ul>
+<li>Note: <code>cc.requests.outstanding.gauge</code> does not work correctly with Puma. Use <code>cc_requests_outstanding_total</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>system.cpu.user</code>
+<ul>
+<li>Thin: is above 0.85 utilization of a single core on the API VM. This metric is scaled by number of cores. If the VM has more than 1 core, you can determine how much Thin is using of a single core by using the formula <code>system.cpu.user / (1 / Number of CPU Cores)</code>.</li>
+<li>Puma: is above 0.85 total utilization.</li>
+</ul>
+</li>
+<li><code>cc.vitals.cpu_load_avg</code>
+<ul>
+<li>Thin: is 1 or higher.</li>
+<li>Puma: is at the number of CPU cores or higher.</li>
+</ul>
+</li>
+<li><code>cc.vitals.uptime</code> is consistently low, indicating frequent restarts (possibly due to memory pressure).</li>
+<li><code>cc_db_connection_pool_timeouts_total</code> indicates that the DB connection pool is too small which caused threads to wait and finally fail a request because no connection could be acquired within the timeout.</li>
+<li><code>cc_db_connection_wait_duration_seconds</code> indicates that threads have to wait for free DB connections.</li>
+</ul>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+The above guidelines for Puma assume that the number of Puma workers is configured to be the same as the number of CPU cores on the VM - see <a href="#scale-puma">Scaling Puma Web Server</a> below. If you have configured Puma workers to be different than the number of CPU cores, you should adjust threshold calculations accordingly.
+</p>
+
+<h4 id="heuristic-failures"><a class="header" href="#heuristic-failures">Heuristic Failures</a></h4>
+<p>The following behaviors may occur:</p>
+<ul>
+<li>There is a latency in average response.</li>
+<li>Web UI responsiveness or timeouts are degraded.</li>
+<li><code>bosh is --ps --vitals</code> has elevated CPU usage for the <code>cloud_controller_ng</code> job in the API instance group.</li>
+</ul>
+<h4 id="relevant-log-files"><a class="header" href="#relevant-log-files">Relevant Log Files</a></h4>
+<p>You can find the above heuristic failures in the following log files:</p>
+<ul>
+<li><code>/var/vcap/sys/log/cloud_controller_ng/cloud_controller_ng.log</code></li>
+<li><code>/var/vcap/sys/log/cloud_controller_ng/nginx-access.log</code></li>
+</ul>
+<h3 id="how-to-scale"><a class="header" href="#how-to-scale"><a id="scale"></a> How to Scale</a></h3>
+<p>Before and after you scale Cloud Controller API VMs, verify that the Cloud Controller database is not overloaded.
+All Cloud Controller processes are backed by the same database, so heavy load on the database impacts API performance regardless of the number of Cloud Controllers deployed.
+Cloud Controller supports both PostgreSQL and MySQL, so there is no specific scaling guidance for the database.</p>
+<p>In Cloud Foundry deployments with internal MySQL clusters, a single MySQL database VM with CPU usage over 80% can be considered overloaded.
+When this happens, the MySQL VMs must be scaled up to prevent the added load of
+additional Cloud Controllers exacerbating the issue.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Since Cloud Controller supports both PostgreSQL and MySQL external databases, there is no absolute guidance about what a healthy database looks like. In general, high database CPU utilization is a good indicator of scaling issues, but always defer to the documentation specific to your database.
+</p>
+
+<h4 id="scaling-puma-web-server"><a class="header" href="#scaling-puma-web-server"><a id="scale-puma"></a> Scaling Puma Web Server</a></h4>
+<p>When deployed with the Puma web server, Cloud Controller API VMs can be scaled both vertically and horizontally. Puma supports multiple processes per VM and so can scale with the number of CPU cores available.</p>
+<p>Puma web server exposes the following configuration options.
+For more information see <a href="https://github.com/cloudfoundry/capi-release/blob/develop/jobs/cloud_controller_ng/spec">Cloud Controller Configuration</a>:</p>
+<ul>
+<li><code>cc.puma.workers</code> - Number of workers for Puma webserver.</li>
+<li><code>cc.puma_max_threads</code> - Maximum number of threads per Puma webserver worker.</li>
+<li><code>cc.puma.max_db_connections_per_process</code> - Maximum database connections for Puma per process (main + Puma workers), if not set the ccng value is used (default).</li>
+</ul>
+<p>The following are loose recommendations for setting these parameters:</p>
+<ul>
+<li>The number of workers should equal the number of CPU cores on the VM.</li>
+<li>The max number of threads should be between 5 and 20.</li>
+<li>The max number of DB Connections per process should be at least equal to the max number of threads. This ensures a thread always has a DB connection available. However, when choosing the max number of DB connections be aware that this is per Puma worker. You may estimate the total number of connections by <code>Number of VMs x Number of Workers x Max DB Connections Per Process</code>. For example, if you had 2 VMs with 4 workers and 10 max DB connections per process, you may have up to 80 DB connections. Be careful this does not exeed any Database limit.</li>
+</ul>
+<p>If when switching to Puma you reduce the number of overall Cloud Controller API VMs, you may need to increase the number of Cloud Controller Local workers per VM to handle the increased load on the remaining API VMs. For more information, see <a href="#cloud_controller_worker_local">cloud_controller_worker_local</a>.</p>
+<h4 id="scaling-thin-web-server"><a class="header" href="#scaling-thin-web-server"><a id="scale-thin"></a> Scaling Thin Web Server</a></h4>
+<p>When deployed with the Thin web server, Cloud Controller API VMs should primarily be scaled horizontally.
+Scaling up the number of cores on a single VM is not effective.
+This is because Thin operates in a single process and Ruby’s Global Interpreter Lock (GIL) limits the <code>cloud_controller_ng</code> process so that it can only effectively use a single CPU core on a multi-core machine.</p>
+<h4 id="adjusting-db-connection-pool"><a class="header" href="#adjusting-db-connection-pool">Adjusting DB connection pool</a></h4>
+<p>If there are any threads which had to wait for a free DB connection (indicated by <code>cc_db_connection_wait_duration_seconds</code>) it might be worth to increase the DB connection pool if possible.
+Threads waiting on free DB connections will cause delays in the web server’s responses.</p>
+<ul>
+<li>Thin: Connection pool size can be configured with: <code>ccdb.max_connections</code></li>
+<li>Puma: Connection pool size per process (main + workers) can be configured with: <code>cc.puma.max_db_connections_per_process</code></li>
+</ul>
+<p>In case threads failed to acquire a free DB connection within the configured timeout, <code>cc_db_connection_pool_timeouts_total</code> will be &gt; 0. Then either the connection pool size or the number of API VMs should be increased.</p>
+<p>See <a href="./multi-process-cloud-controller.html">Cloud Controller Multi-Process Mode (Puma)</a> for more information on the differences between using Thin and Puma.</p>
+<h2 id="cloud_controller_worker_local"><a class="header" href="#cloud_controller_worker_local"><a id="cloud_controller_worker_local"></a> cloud_controller_worker_local</a></h2>
+<p>This job, also called “local workers”, is primarily responsible for handling files uploaded to the API VMs during <code>cf push</code>, such as <code>packages</code>, <code>droplets</code>, and resource matching.</p>
+<h3 id="when-to-scale-1"><a class="header" href="#when-to-scale-1">When to scale</a></h3>
+<p>When determining whether to scale <code>cloud_controller_worker_local</code>, look for the following:</p>
+<h4 id="key-metrics-1"><a class="header" href="#key-metrics-1">Key metrics</a></h4>
+<p>Cloud Controller emits the following metrics:</p>
+<ul>
+<li><code>cc.job_queue_length.cc-VM_NAME-VM_INDEX</code> is continuously growing.</li>
+<li><code>cc.job_queue_length.total</code> is continuously growing.</li>
+</ul>
+<h4 id="heuristic-failures-1"><a class="header" href="#heuristic-failures-1">Heuristic failures</a></h4>
+<p>The following behaviors may occur:</p>
+<ul>
+<li><code>cf push</code> is intermittently failing.</li>
+<li><code>cf push</code> average time is elevated.</li>
+</ul>
+<h4 id="relevant-log-files-1"><a class="header" href="#relevant-log-files-1">Relevant log files</a></h4>
+<p>You can find the heuristic failures in the following log files:</p>
+<ul>
+<li><code>/var/vcap/sys/log/cloud_controller_ng/cloud_controller_ng.log</code></li>
+</ul>
+<h3 id="how-to-scale-1"><a class="header" href="#how-to-scale-1">How to scale</a></h3>
+<p>Because local workers are located with the Cloud Controller API job, they are scaled horizontally along with the API.</p>
+<h2 id="cloud_controller_worker"><a class="header" href="#cloud_controller_worker"><a id="cloud_controller_worker"></a> cloud_controller_worker</a></h2>
+<p>Colloquially known as “generic workers” or just “workers”, this job and VM are responsible for handling asynchronous work, batch deletes, and other periodic tasks scheduled by the <code>cloud_controller_clock</code>.</p>
+<h3 id="when-to-scale-2"><a class="header" href="#when-to-scale-2">When to scale</a></h3>
+<p>When determining whether to scale <code>cloud_controller_worker</code>, look for the following:</p>
+<h4 id="key-metrics-2"><a class="header" href="#key-metrics-2">Key metrics</a></h4>
+<p>Cloud Controller emits the following metrics:</p>
+<ul>
+<li><code>cc.job_queue_length.cc-VM_TYPE-VM_INDEX</code> (ie. <code>cc.job_queue_length.cc-cc-worker-0</code>) is continuously growing.</li>
+<li><code>cc.job_queue_length.total</code> is continuously growing.</li>
+</ul>
+<h4 id="heuristic-failures-2"><a class="header" href="#heuristic-failures-2">Heuristic failures</a></h4>
+<p>The following behaviors may occur:</p>
+<ul>
+<li><code>cf delete-org ORG_NAME</code> appears to leave its contained resources around for a long time. Also, the command fails if the <code>-org ORG_NAME</code> contains shared private domains.</li>
+<li>Users report slow deletes for other resources.</li>
+<li>cf-acceptance-tests succeed generally, but fail during cleanup.</li>
+</ul>
+<h4 id="relevant-log-files-2"><a class="header" href="#relevant-log-files-2">Relevant log files</a></h4>
+<p>You can find the above heuristic failures in the following log files:</p>
+<ul>
+<li><code>/var/vcap/sys/log/cloud_controller_worker/cloud_controller_worker.log</code></li>
+</ul>
+<h3 id="how-to-scale-2"><a class="header" href="#how-to-scale-2">How to scale</a></h3>
+<p>The cc-worker VM can safely scale horizontally in all deployments, but if your worker VMs have CPU/memory headroom,
+you can also use the <code>cc.jobs.generic.number_of_workers</code> BOSH property to increase the number of worker processes on each VM.</p>
+<h2 id="cloud_controller_clock-and-cc_deployment_updater"><a class="header" href="#cloud_controller_clock-and-cc_deployment_updater"><a id="clock_and_updater"></a> cloud_controller_clock and cc_deployment_updater</a></h2>
+<p>The <code>cloud_controller_clock</code> job runs Diego sync process and schedules periodic background jobs.
+The <code>cc_deployment_updater</code> job is responsible for handling v3 rolling app deployments.
+For more information, see
+<a href="../../devguide/deploy-apps/rolling-deploy.html">Rolling App Deployments</a>.</p>
+<h3 id="when-to-scale-3"><a class="header" href="#when-to-scale-3">When to scale</a></h3>
+<p>When determining whether to scale <code>cloud_controller_clock</code> and <code>cc_deployment_updater</code>, look for the following:</p>
+<h4 id="key-metrics-3"><a class="header" href="#key-metrics-3">Key metrics</a></h4>
+<p>Cloud Controller emits the following metrics:</p>
+<ul>
+<li><code>cc.Diego_sync.duration</code> is continuously increasing over time.</li>
+<li><code>system.cpu.user</code> is high on the scheduler VM.</li>
+</ul>
+<h4 id="heuristic-failures-3"><a class="header" href="#heuristic-failures-3">Heuristic failures</a></h4>
+<p>The following behaviors may occur:</p>
+<ul>
+<li>Diego domains frequently lack freshness. For more information, see the <a href="https://github.com/cloudfoundry/bbs/blob/master/doc/domains.md#domain-freshness">Domain Freshness</a> section in the <em>Overview of Domains</em> topic on GitHub.</li>
+<li>The Diego Desired LRP count is larger than the total process instance count reported through the Cloud Controller APIs.</li>
+<li>Deployments are slow to increase and decrease instance count.</li>
+</ul>
+<h4 id="relevant-log-files-3"><a class="header" href="#relevant-log-files-3">Relevant log files</a></h4>
+<p>You can find the above heuristic failures in the following log files:</p>
+<ul>
+<li><code>/var/vcap/sys/log/cloud_controller_clock/cloud_controller_clock.log</code></li>
+<li><code>/var/vcap/sys/log/cc_deployment_updater/cc_deployment_updater.log</code></li>
+</ul>
+<h3 id="how-to-scale-3"><a class="header" href="#how-to-scale-3">How to scale</a></h3>
+<p>Both of these jobs are singletons, so extra instances are for failover HA rather than scalability.
+Performance issues are likely due to database overloading or greedy neighbors on the scheduler VM.</p>
+<h2 id="blobstore_nginx"><a class="header" href="#blobstore_nginx"><a id="blobstore_nginx"></a> blobstore_nginx</a></h2>
+<p>This is the internal WebDAV blobstore that comes included with Cloud Foundry by default.
+It stores <code>packages</code>, staged <code>droplets</code>, <code>buildpacks</code>, and cached app resources.
+Files are typically uploaded to the internal blobstore through the Cloud Controller local workers and downloaded by Diego when app instances are started.</p>
+<h3 id="when-to-scale-4"><a class="header" href="#when-to-scale-4">When to scale</a></h3>
+<p>When determining whether to scale <code>blobstore_nginx</code>, look for the following:</p>
+<h4 id="key-metrics-4"><a class="header" href="#key-metrics-4">Key metrics</a></h4>
+<p>Cloud Controller emits the following metrics:</p>
+<ul>
+<li><code>system.cpu.user</code> is consistently high on the <code>singleton-blobstore</code> VM.</li>
+<li><code>system.disk.persistent.percent</code> is high, indicating that the blobstore is running out of room for additional files.</li>
+</ul>
+<h4 id="heuristic-failures-4"><a class="header" href="#heuristic-failures-4">Heuristic failures</a></h4>
+<p>The following behaviors may occur:</p>
+<ul>
+<li><code>cf push</code> is intermittently failing.</li>
+<li><code>cf push</code> average time is elevated.</li>
+<li>App droplet downloads are timing out or failing on Diego.</li>
+</ul>
+<h4 id="relevant-log-files-4"><a class="header" href="#relevant-log-files-4">Relevant log files</a></h4>
+<p>You can find the above heuristic failures in the following log files:</p>
+<ul>
+<li><code>/var/vcap/sys/log/blobstore/internal_access.log</code></li>
+</ul>
+<h3 id="how-to-scale-4"><a class="header" href="#how-to-scale-4">How to scale</a></h3>
+<p>The internal WebDAV blobstore cannot be scaled horizontally, not even for availability purposes, because of its reliance on the <code>singleton-blobstore</code> VM’s persistent disk for file storage.
+For this reason, it is not recommended for environments that require high availability.
+For these environments, you should use an external blobstore. For more information, see <a href="https://docs.cloudfoundry.org/deploying/common/cc-blobstore-config.html">Cloud Controller blobstore configuration</a> and the <a href="https://docs.cloudfoundry.org/concepts/high-availability.html#blobstore">Blob storage</a> section of the <em>High Availability in Cloud Foundry</em> topic.</p>
+<p>The internal WebDAV blobstore can be scaled vertically, so scaling up the number of CPUs or adding faster disk storage can improve the performance of the internal WebDAV blobstore if it is under high load.</p>
+<p>High numbers of concurrent app container starts on Diego can cause stress on the blobstore.
+This typically happens during upgrades in environments with a large number of apps and Diego Cells.
+If vertically scaling the blobstore or improving its disk performance is not an option, limiting the max number of concurrent app container starts can mitigate the issue.
+For more information, see the <a href="https://bosh.io/jobs/auctioneer?source=github.com/cloudfoundry/diego-release&amp;version=2.29.0#p%3ddiego.auctioneer.starting_container_count_maximum">starting_container_count_maximum</a> section in the <em>auctioneer job from diego/2.29.0</em> topic in the BOSH documentation.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../uaa/uaa-metrics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../running/managing-cf/multi-process-cloud-controller.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../uaa/uaa-metrics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../running/managing-cf/multi-process-cloud-controller.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

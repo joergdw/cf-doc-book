@@ -1,0 +1,676 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Securing incoming traffic - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-securing-incoming-traffic-in-cloud-foundry-owner-cf-for-vms-networking"><a class="header" href="#title-securing-incoming-traffic-in-cloud-foundry-owner-cf-for-vms-networking">title: Securing incoming traffic in Cloud Foundry
+owner: CF for VMs Networking</a></h2>
+<p>You can secure HTTP traffic into your Cloud Foundry deployment with TLS certificates. You can also configure the location
+where your deployment stops TLS depending on your needs and certificate restrictions.</p>
+<h2 id="protocol-support"><a class="header" href="#protocol-support"><a id="protocol_support"></a> Protocol support</a></h2>
+<p>The Gorouter supports HTTP/HTTPS requests only.</p>
+<p>For more information about features supported by the Gorouter, see <a href="../concepts/http-routing.html">HTTP Routing</a>.</p>
+<p>To secure non-HTTP traffic over TCP routing, terminate TLS at your load balancer or at the app. For more information, see <a href="enabling-tcp-routing.html">Enabling TCP Routing</a>.</p>
+<h2 id="tls-termination-options-for-http-routing"><a class="header" href="#tls-termination-options-for-http-routing"><a id="ssl_options"></a> TLS termination options for HTTP routing</a></h2>
+<p>There are several options for terminating TLS for HTTP traffic. You can stop TLS at the Gorouter, your load balancer, or both.</p>
+<p>The following table summarizes TLS termination options and which option to choose for your deployment:</p>
+<table class="table">
+<thead>
+<tr>
+  <th>If the following applies to you:</th>
+  <th>Then configure TLS termination at:</th>
+  <th>Related topic and configuration procedure</th>
+</tr>
+
+</thead>
+
+<tr>
+  <td>
+    
+<ul>
+      
+<li>You want the optimum balance of performance and security, and</li>
+
+      
+<li>You want to make minimum changes to your load balancer, or</li>
+
+      
+<li>You are deploying Cloud Foundry to AWS. For information about AWS limitations, see <a href="#aws_elbs">TLS Cipher Suite Support by AWS ELBs</a>.</li>
+
+    </ul>
+
+  </td>
+  <td><b>Gorouter only</b>
+  </td>
+  <td> <a href="#gorouter_term">Terminating TLS at the Gorouter Only</a>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    
+<ul>
+      
+<li>You require TLS termination at a load balancer, or</li>
+
+      
+<li>You want the highest level of security, and</li>
+
+      
+<li>You do not mind a slightly less performant deployment.</li>
+
+      </ul>
+
+  </td>
+  <td>
+   <b>Load Balancer and Gorouter</b>
+  </td>
+  <td><a href="#lb_and_gorouter_term">Terminating TLS at the Load Balancer and Gorouter</a>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    
+<ul>
+      
+<li>You require TLS termination at a load balancer, and</li>
+
+      
+<li>You prefer unencrypted traffic between the Load Balancer and the Gorouter.</li>
+
+    </ul>
+
+  </td>
+  <td><b>Load Balancer only</b>
+  </td>
+  <td><a href="#lb_term">Terminating TLS at the Load Balancer Only</a>
+  </td>
+</tr>
+
+</table>
+
+<h2 id="certificate-requirements"><a class="header" href="#certificate-requirements"><a id="certtypes"></a> Certificate requirements</a></h2>
+<p>The following requirements apply to the certificates you use to secure traffic into Cloud Foundry:</p>
+<ul>
+<li>
+<p>You must obtain at least one TLS certificate for your environment.</p>
+<ul>
+<li>In a production environment, use a signed TLS certificate (trusted) from a known certificate authority (CA).</li>
+<li>In a development or testing environment, you can use a trusted CA certificate or a self-signed certificate. You can generate a self-signed certificate with <code>openssl</code> or a similar tool.</li>
+</ul>
+</li>
+<li>
+<p>Certificates used in Cloud Foundry must be encoded in the PEM format.</p>
+</li>
+<li>
+<p>The Gorouter supports mutual TLS, and validates a client provided certificate chain against its CA certificates if one is provided in the TLS handshake, but does not require it. Depending on whether you choose to terminate at both the load balancer and the Gorouter, or at the Gorouter alone, the client certificate can be that of the load balancer or of the originating client.</p>
+</li>
+<li>
+<p>The certificate on the Gorouter must be associated with the correct host name so that HTTPS can validate the request.</p>
+</li>
+<li>
+<p>If wildcard certificates are not supported for some or all of your domains, then configure termination requests at the load balancer only. In this type of deployment, the load balancer passes unencrypted traffic to the Gorouter. As a result, you avoid having to reissue and reinstall certificates on the Gorouter for every app or UAA security zone.</p>
+</li>
+<li>
+<p>Extended Validation (EV) certificates support multiple host names, like SAN, but do not support wildcards. As the Gorouter has not been tested with EV certificates, if EV certificates are required, then terminate TLS at the load balancer only.</p>
+</li>
+<li>
+<p>Given the dynamic and multi-tenant nature of Cloud Foundry, Cloud Foundry highly recommends using wildcard domains to avoid the need for adding an additional certificate for each app.</p>
+</li>
+<li>
+<p>To support TLS v1.3, ensure that you use certificates generated with a key larger than 512 bits.</p>
+</li>
+</ul>
+<h2 id="multiple-certificates"><a class="header" href="#multiple-certificates"><a id="multcerts"></a> Multiple certificates</a></h2>
+<p>In order to support custom domains on Cloud Foundry, an operator has to configure the Gorouter with a certificate that represents the domain. Cloud Foundry recommends that operators add a new certificate instead of reissuing a single certificate when adding TLS support for an additional domain. Using multiple certificates provides a security benefit in that it prevents clients from discovering all the custom domains of apps running on a Cloud Foundry platform.</p>
+<p>The Gorouter supports SNI and can be configured with multiple certificates, each which can optionally have wildcard and alternative names. The Gorouter uses SNI to determine the correct certificate to present in a TLS handshake. It requires clients to support the SNI protocol by sending a server name outside the encrypted request payload. For clients that do not support SNI, the Gorouter presents a default certificate. The default is the first certificate keypair in the Gorouter’s configuration.</p>
+<p>The Gorouter decides which certificate to provide in the TLS handshake as follows:</p>
+<ul>
+<li>
+<p>If a client provides an SNI header with a ServerName that matches to a configured certificate keypair, the Gorouter returns the matching certificate.</p>
+</li>
+<li>
+<p>If a client provides an SNI header with a ServerName that does not match a configured certificate keypair, the Gorouter returns the default certificate.</p>
+</li>
+</ul>
+<p>The first certificate keypair listed is used as the default.</p>
+<p>The Gorouter supports both RSA and ECDSA certificates in PEM encoding. In the case that a certificate chain is required, the order should be as follows: primary certificate, intermediate certificate, then root certificate.</p>
+<h3 id="how-to-configure-multiple-certificate-keypairs"><a class="header" href="#how-to-configure-multiple-certificate-keypairs"><a id="how-to-config-mult-certs"></a> How to configure multiple certificate keypairs</a></h3>
+<p>To configure multiple HTTPS certificates for Cloud Foundry, specify those certificate keypairs in the <code>router.tls_pem</code> property.</p>
+<p>The following is an example for configuring two certificate keypairs using <code>router.tls_pem</code></p>
+<pre><code> properties:
+    router:
+      tls_pem:
+      - cert_chain: |
+         -----BEGIN CERTIFICATE-----
+         MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDg
+         MBQGCCqGSIb3DQMHBAgD1kGN4ZslJgSCBMi1xk9jhlPxPc
+         9g73NQbtqZwI+9X5OhpSg/2ALxlCCjbqvzgSu8gfFZ4yo+
+         A .... MANY LINES LIKE THAT ....
+         X0R+meOaudPTBxoSgCCM51poFgaqt4l6VlTN4FRpj+c/Wc
+         blK948UAda/bWVmZjXfY4Tztah0CuqlAldOQBzu8TwE7WD
+         H0ga/iLNvWYexG7FHLRiq5hTj0g9mUPEbeTXuPtOkTEb/0
+         GEs=
+         ----END CERTIFICATE-----
+        private_key: |
+         -----BEGIN EXAMPLE ENCRYPTED PRIVATE KEY-----
+         MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDg
+         MBQGCCqGSIb3DQMHBAgD1kGN4ZslJgSCBMi1xk9jhlPxPc
+         9g73NQbtqZwI+9X5OhpSg/2ALxlCCjbqvzgSu8gfFZ4yo+
+         A .... MANY LINES LIKE THAT ....
+         X0R+meOaudPTBxoSgCCM51poFgaqt4l6VlTN4FRpj+c/Wc
+         blK948UAda/bWVmZjXfY4Tztah0CuqlAldOQBzu8TwE7WD
+         H0ga/iLNvWYexG7FHLRiq5hTj0g9mUPEbeTXuPtOkTEb/0
+         GEs=
+         -----END EXAMPLE ENCRYPTED PRIVATE KEY-----
+      - cert_chain: |
+         -----BEGIN CERTIFICATE-----
+         MIIDXTCCAkWgAwIBAgIJAJC1HiIAZAiIMA0GCSqGSIb3Df
+         BAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVx
+         aWRnaXRzIFB0eSBMdGQwHhcNMTExMjMxMDg1OTQ0WhcNMT
+         A .... MANY LINES LIKE THAT ....
+         JjyzfN746vaInA1KxYEeI1Rx5KXY8zIdj6a7hhphpj2E04
+         C3Fayua4DRHyZOLmlvQ6tIChY0ClXXuefbmVSDeUHwc8Yu
+         B7xxt8BVc69rLeHV15A0qyx77CLSj3tCx2IUXVqRs5mlSb
+         vA==
+         -----END CERTIFICATE-----
+        private_key: |
+         -----BEGIN EXAMPLE ENCRYPTED PRIVATE KEY-----
+         MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDg
+         MBQGCCqGSIb3DQMHBAgD1kGN4ZslJgSCBMi1xk9jhlPxPc
+         9g73NQbtqZwI+9X5OhpSg/2ALxlCCjbqvzgSu8gfFZ4yo+
+         A .... MANY LINES LIKE THAT ....
+         X0R+meOaudPTBxoSgCCM51poFgaqt4l6VlTN4FRpj+c/Wc
+         blK948UAda/bWVmZjXfY4Tztah0CuqlAldOQBzu8TwE7WD
+         H0ga/iLNvWYexG7FHLRiq5hTj0g9mUPEbeTXuPtOkTEb/0
+         GEs=
+         -----END EXAMPLE ENCRYPTED PRIVATE KEY-----
+</code></pre>
+<h2 id="tls-cipher-suite-support"><a class="header" href="#tls-cipher-suite-support"><a id="ciphers"></a> TLS cipher suite support</a></h2>
+<p>Some Cloud Foundry components like the Gorouter support additional TLS cipher suites to accommodate older clients. As a security best practice, only configure the TLS cipher suites that you need for your deployment.</p>
+<h3 id="default-gorouter-cipher-suites"><a class="header" href="#default-gorouter-cipher-suites"><a id="default"></a> Default Gorouter cipher suites</a></h3>
+<p>By default, the Gorouter supports the following TLS cipher suites:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>TLS Version</th><th>RFC</th><th>OpenSSL</th></tr>
+</thead>
+<tbody>
+<tr><td>1.2</td><td>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</td><td>ECDHE-RSA-AES128-GCM-SHA256</td></tr>
+<tr><td>1.2</td><td>TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</td><td>ECDHE-RSA-AES256-GCM-SHA384</td></tr>
+<tr><td>1.3</td><td>TLS_AES_128_GCM_SHA256</td><td>TLS_AES_128_GCM_SHA256</td></tr>
+<tr><td>1.3</td><td>TLS_AES_256_GCM_SHA384</td><td>TLS_AES_256_GCM_SHA384</td></tr>
+<tr><td>1.3</td><td>TLS_CHACHA20_POLY1305_SHA256</td><td>-</td></tr>
+</tbody>
+</table>
+</div>
+<p>You can override the default cipher suites by changing the <code>router.cipher_suites</code> and <code>router.min_tls_version</code> BOSH manifest properties.</p>
+<h3 id="tls-cipher-suite-support-by-aws-load-balancers"><a class="header" href="#tls-cipher-suite-support-by-aws-load-balancers"><a id="aws_elbs"></a> TLS cipher suite support by AWS load balancers</a></h3>
+<p>AWS Classic Load Balancers (formerly referred to as ELBs) support configuration of cipher suites for front end connections with clients only. When configuring Classic Load Balancers to forward requests to Gorouters over TLS, oyou might encounter a <code>Cipher Suite Mismatch</code> error. This is because the cipher suites supported by Classic Load Balancers for TLS handshakes with back ends (Gorouters in this case) are hardcoded, undocumented, and do not support the Gorouter default cipher suites.</p>
+<p>You can configure TLS termination in one of the following ways:</p>
+<ul>
+<li>
+<p>Configure Classic Load Balancer listeners in TCP mode. This allows TCP connections from clients to pass through the Classic Load Balancer to Gorouters on port 443. With this configuration, Gorouters are the first point of TLS termination.</p>
+</li>
+<li>
+<p>If you require TLS termination at an AWS load balancer in addition to terminating at the Gorouter, use <a href="http://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html">AWS Application Load Balancers (ALBs)</a> that support the Gorouter default cipher suites.</p>
+</li>
+</ul>
+<h3 id="tls-v13"><a class="header" href="#tls-v13"><a id="tls_1.3"></a> TLS v1.3</a></h3>
+<p>You cannot configure cipher suites for TLS v1.3. Gorouter only supports the defaults listed in <a href="#default">Default Gorouter Cipher Suites</a>.</p>
+<p>To support TLS v1.3, ensure the Gorouter is configured with certificates generated with a key larger than 512 bits.</p>
+<h3 id="tls-v12"><a class="header" href="#tls-v12"><a id="tls_1.2"></a> TLS v1.2</a></h3>
+<p>The following cipher suites are optionally supported for TLS v1.2 only:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>RFC</th><th>OpenSSL</th></tr>
+</thead>
+<tbody>
+<tr><td>TLS_RSA_WITH_AES_128_GCM_SHA256</td><td>AES128-GCM-SHA256</td></tr>
+<tr><td>TLS_RSA_WITH_AES_256_GCM_SHA384</td><td>AES256-GCM-SHA384</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_RC4_128_SHA</td><td>ECDHE-ECDSA-RC4-SHA</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</td><td>ECDHE-ECDSA-AES128-SHA</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</td><td>ECDHE-ECDSA-AES256-SHA</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_RC4_128_SHA</td><td>ECDHE-RSA-RC4-SHA</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA</td><td>ECDHE-RSA-DES-CBC3-SHA</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</td><td>ECDHE-RSA-AES128-SHA</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</td><td>ECDHE-RSA-AES256-SHA</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</td><td>ECDHE-RSA-AES128-GCM-SHA256</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</td><td>ECDHE-ECDSA-AES128-GCM-SHA256</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</td><td>ECDHE-RSA-AES256-GCM-SHA384</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</td><td>ECDHE-ECDSA-AES256-GCM-SHA384</td></tr>
+<tr><td>TLS_RSA_WITH_AES_128_CBC_SHA256</td><td>AES128-SHA256</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</td><td>ECDHE-ECDSA-AES128-SHA256</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</td><td>ECDHE-RSA-AES128-SHA256</td></tr>
+<tr><td>TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305</td><td>ECDHE-RSA-CHACHA20-POLY1305</td></tr>
+<tr><td>TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305</td><td>ECDHE-ECDSA-CHACHA20-POLY1305</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="tls-v10-and-v11"><a class="header" href="#tls-v10-and-v11"><a id="tls_10_11"></a> TLS v1.0 and v1.1</a></h3>
+<p>The following cipher suites are optionally supported for TLS v1.0 and TLS v1.1 only:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>RFC</th><th>OpenSSL</th></tr>
+</thead>
+<tbody>
+<tr><td>TLS_RSA_WITH_RC4_128_SHA</td><td>RC4-SHA</td></tr>
+<tr><td>TLS_RSA_WITH_3DES_EDE_CBC_SHA</td><td>DES-CBC3-SHA</td></tr>
+<tr><td>TLS_RSA_WITH_AES_128_CBC_SHA</td><td>AES128-SHA</td></tr>
+<tr><td>TLS_RSA_WITH_AES_256_CBC_SHA</td><td>AES256-SHA</td></tr>
+</tbody>
+</table>
+</div>
+<p>You can override the default cipher suites by changing the <code>router.cipher_suites</code> and <code>router.min_tls_version</code> BOSH manifest properties.</p>
+<p>For more information about supported ciphers, see <a href="https://github.com/golang/go/blob/release-branch.go1.7/src/crypto/tls/cipher_suites.go#L269-L285">Golang Constants</a> in the Golang repository on GitHub and <a href="https://www.openssl.org/docs/man1.1.1/man1/ciphers.html">Ciphers</a> in the OpenSSL documentation.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+ECDSA ciphers require a certificate and key for DSA, as opposed to RSA.
+</p>
+
+<h2 id="mutual-authentication-with-clients"><a class="header" href="#mutual-authentication-with-clients"><a id="gorouter_mutual_auth"></a> Mutual authentication with clients</a></h2>
+<p>The Gorouter supports validation of client certificates in TLS handshakes with clients, also known as mutual authentication. Operators can choose whether the Gorouter requests client certificates and when requesting certificates, whether or not to require them.</p>
+<p>By default, the Gorouter requests but does not require client certificates in TLS handshakes.</p>
+<h2 id="terminating-tls-at-the-gorouter-only"><a class="header" href="#terminating-tls-at-the-gorouter-only"><a id="gorouter_term"></a> Terminating TLS at the Gorouter only</a></h2>
+<p>In this configuration, the load balancer does not terminate TLS for Cloud Foundry domains at all. Instead, it passes through the underlying TCP connection to the Gorouter.</p>
+<p>Cloud Foundry recommends this more performant option, establishing and terminating a single TLS connection.</p>
+<p>The following diagram illustrates communication between the client, load balancer, Gorouter, and app.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/pass-through.png" alt="Diagram of the TLS Pass-Through."><span class="img-wrapper"><img src="./images/pass-through.png" alt="Diagram of the TLS Pass-Through."></span></label></p>
+<p>The preceding diagram shows communication between the client, load balancer, router, and the app.</p>
+<ul>
+<li>
+<p>Traffic passes from the encrypted client, to the load balancer, to the router, and traffic ends at the app.</p>
+</li>
+<li>
+<p>Traffic between the load balancer and the Gorouter is encrypted only if the client request is encrypted.</p>
+</li>
+<li>
+<p>Traffic between the Gorouter and app is encrypted with TLS, unless a Windows stemcell is being used.</p>
+</li>
+</ul>
+<h3 id="about-http-header-forwarding"><a class="header" href="#about-http-header-forwarding"><a id="http_header_gorouter"></a> About HTTP header forwarding</a></h3>
+<p>If you stop TLS at the Gorouter only, your load balancer does not send HTTP headers.</p>
+<p>The Gorouter appends the <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code> headers to requests forwarded to apps and platform system components.</p>
+<p><code>X-Forwarded-For</code> is set to the IP address of the source. Depending on the behavior of your load balancer, this can be the IP address of your load balancer. For the Gorouter to deliver the IP address of the client to apps, configure your load balancer to forward the IP address of the client or configure your load balancer to send the client IP address using the PROXY protocol.</p>
+<p><code>X-Forwarded-Proto</code> provides the scheme of the HTTP request from the client. The scheme is HTTP if the client made a request on port 80 (unencrypted) or HTTPS if the client made a request on port 443 (encrypted). The Gorouter sanitizes the <code>X-Forwarded-Proto</code> header based on the settings of the <code>router.sanitize_forwarded_proto</code> and <code>router.force_forwarded_proto_https</code> manifest properties as follows:</p>
+<ul>
+<li>
+<p><code>router.sanitize_forwarded_proto: true</code> and <code>router.force_forwarded_proto_https: true</code>: The Gorouter sets the value of <code>X-Forwarded-Proto</code> header to <code>HTTPS</code> in requests forwarded to back ends.</p>
+</li>
+<li>
+<p><code>router.sanitize_forwarded_proto: true</code> and <code>router.force_forwarded_proto_https: false</code>: The Gorouter strips the <code>X-Forwarded-Proto</code> header when present in requests from front end clients. When the request is received on port 80 (unencrypted), the Gorouter sets the value of this header to <code>HTTP</code> in requests forwarded to back ends, When the request is received on port 443 (encrypted), the Gorouter sets the value of this header to <code>HTTPS</code>.</p>
+</li>
+<li>
+<p><code>router.sanitize_forwarded_proto: false</code> and <code>router.force_forwarded_proto_https: true</code>: The Gorouter passes through the header as received from the load balancer, without modification.</p>
+</li>
+<li>
+<p><code>router.sanitize_forwarded_proto: false</code> and <code>router.force_forwarded_proto_https: false</code>: The Gorouter passes through the header as received from the load balancer, without modification.</p>
+</li>
+</ul>
+<p>If you configured TLS to stop at the Gorouter only, Cloud Foundry recommends setting <code>router.sanitize_forwarded_proto: true</code> and <code>router.force_forwarded_proto_https: false</code> to secure against header spoofing.</p>
+<p>For more information about HTTP headers in Cloud Foundry, see <a href="../concepts/http-routing.html#http-headers">HTTP Headers</a> in <em>HTTP Routing</em>. For more information about configuring the forwarding of client certificates, see <a href="../concepts/http-routing.html#forward-client-cert">Forward Client Certificate to Apps</a> in <em>HTTP Routing</em>.</p>
+<h3 id="procedure-gorouter-only"><a class="header" href="#procedure-gorouter-only"><a id="pass-through"></a> Procedure: Gorouter only</a></h3>
+<p>To enable this configuration, perform the following steps:</p>
+<ol>
+<li>Configure your load balancer to pass through requests from the client to the Gorouter.</li>
+<li>Insert the certificates into your deployment manifest for the Gorouter:
+<ol>
+<li>
+<p>Open your release manifest with a text editor.</p>
+</li>
+<li>
+<p>Copy the contents of your certificate chain and private key associated with your certificate into the <code>properties.router.tls_pem</code> field.</p>
+</li>
+<li>
+<p>Set <code>enable_ssl</code> to <code>true</code>.</p>
+<pre><code>properties:
+  router:
+    tls_pem:
+    - cert_chain: |
+        -----BEGIN CERTIFICATE-----
+        SSL_CERTIFICATE_SIGNED_BY_PRIVATE_KEY
+        -----END CERTIFICATE-----
+      private_key: |
+        -----BEGIN EXAMPLE RSA PRIVATE KEY-----
+        RSA_PRIVATE_KEY
+        -----END EXAMPLE RSA PRIVATE KEY-----
+    enable_ssl: true
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="stopping-tls-at-the-load-balancer-only"><a class="header" href="#stopping-tls-at-the-load-balancer-only"><a id="lb_term"></a> Stopping TLS at the load balancer only</a></h2>
+<p>In this configuration, your load balancer terminates TLS and passes unencrypted traffic to the Gorouter, which routes it to your app. Traffic between the load balancer and the Gorouter is not encrypted.</p>
+<p>Cloud Foundry recommends this option if you cannot use SAN certificates and if you do not require traffic to be encrypted between the load balancer and the Gorouter.</p>
+<p>The following diagram illustrates communication between the client, load balancer, Gorouter, and app.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/lb.png" alt="Diagram of the TLS Termination at Load Balancer."><span class="img-wrapper"><img src="./images/lb.png" alt="Diagram of the TLS Termination at Load Balancer."></span></label></p>
+<p>The preceding diagram shows configuration of the the client, load balancer, Gorouter, and app when the TLS terminates at the load balancer with lock icons.</p>
+<p>Traffic starts at the encrypted client, passes through the load balancer to the router, and terminates at the app. Traffic is not encrypted past the load balancer.</p>
+<p>Traffic between the Gorouter and app is encrypted with TLS, unless a Windows stemcell is being used.</p>
+<h3 id="about-http-header-forwarding-1"><a class="header" href="#about-http-header-forwarding-1"><a id="http_header_lb"></a> About HTTP header forwarding</a></h3>
+<p>If you stop TLS at your load balancer, you must also configure the load balancer to append the <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code> HTTP headers to the HTTP traffic it passes to the Gorouter.</p>
+<p>For more information about HTTP headers in Cloud Foundry, see <a href="../concepts/http-routing.html#http-headers">HTTP Headers</a> in <em>HTTP Routing</em>. If you are configuring the forwarding of client certificates, see <a href="../concepts/http-routing.html#forward-client-cert">Forward Client Certificate to Apps</a> in <em>HTTP Routing</em>.</p>
+<h3 id="procedure-load-balancer-only"><a class="header" href="#procedure-load-balancer-only"><a id="lb"></a> Procedure: Load balancer only</a></h3>
+<p>To enable this configuration, you must perform the following steps:</p>
+<ol>
+<li>
+<p>Add your certificates to your load balancer and configure the listening port. The procedures vary depending on your IaaS.</p>
+</li>
+<li>
+<p>Configure your load balancer to append the <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code> headers to client requests.</p>
+<ul>
+<li>If the load balancer cannot be configured to provide the <code>X-Forwarded-For</code> header, the Gorouter appends it in requests that are
+forwarded to applications and system components, and sets the IP address of the load balancer.</li>
+</ul>
+<p>You must configure the load balancer to forward the <code>X-Forwarded-Proto</code> header. Otherwise requests to some
+applications and system components result in redirect loops, as requests determined to be unencrypted are
+redirected to HTTPS.</p>
+</li>
+</ol>
+<h2 id="terminating-tls-at-the-load-balancer-and-gorouter"><a class="header" href="#terminating-tls-at-the-load-balancer-and-gorouter"><a id="lb_and_gorouter_term"></a> Terminating TLS at the load balancer and Gorouter</a></h2>
+<p>In this configuration, two TLS connections are established: one from the client to the load balancer, and another from the load balancer to the Gorouter. This configuration secures all traffic between the load balancer and the Gorouter.</p>
+<p>The following diagram illustrates communication between the client, load balancer, Gorouter, and app.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/lb-and-router.png" alt="TLS Termination at load balancer and router."><span class="img-wrapper"><img src="./images/lb-and-router.png" alt="TLS Termination at load balancer and router."></span></label></p>
+<p>Traffic starts at the encrypted client, moves through the load balancer to the router, and terminates at the unencrypted app.
+Traffic is encrypted between the client and load balancer, and between the load balancer and router.</p>
+<p>This option is less performant, but allows for termination at a load balancer, as well as secure traffic between the load balancer and the Gorouter.</p>
+<p>Traffic between the Gorouter and app is encrypted with TLS, unless a Windows stemcell is being used.</p>
+<h3 id="certificate-guidelines"><a class="header" href="#certificate-guidelines"><a id="cert_guidelines_lb_gorouter"></a> Certificate guidelines</a></h3>
+<p>In this deployment scenario, the following guidelines apply:</p>
+<ul>
+<li>
+<p>Certificates for the Cloud Foundry domains must be stored on the load balancer, as well as on the Gorouter.</p>
+</li>
+<li>
+<p>Generate certificates for your load balancer and the Gorouter with different keys. If the key for the certificate on the Gorouter is compromised, then the certificate on the load balancer is not at risk, and vice-versa.</p>
+</li>
+<li>
+<p>If you choose to host only one certificate on the Gorouter and many on your load balancer, configure your load balancer with the CA and host name with which to validate the certificate hosted by the Gorouter.</p>
+</li>
+</ul>
+<h3 id="about-host-name-verification"><a class="header" href="#about-host-name-verification"><a id="hostname_verfication"></a> About host name verification</a></h3>
+<p>Host name verification between the load balancer and the Gorouter is unnecessary when the load balancer is already configured with the Gorouter’s IP address to correctly route the request.</p>
+<p>If the load balancer uses DNS resolution to route requests to the Gorouters, then you should enable host name verification.</p>
+<h3 id="about-http-header-forwarding-2"><a class="header" href="#about-http-header-forwarding-2"><a id="http_header_lb_gorouter"></a> About HTTP header forwarding</a></h3>
+<p>If you terminate TLS at your load balancer, you must configure the load balancer to append the <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code> HTTP headers to requests it sends to the Gorouter.</p>
+<p>If you terminate TLS at your load balancer but it does not support HTTP, such that it cannot append HTTP headers, a workaround exists. You should use this workaround <strong>only if your load balancer does not accept unencrypted requests</strong>. Configure your load balancer to send the client IP address using the PROXY protocol, and enable PROXY in the Gorouter. As the <code>X-Forwarded-Proto</code> header is stripped, configure the Gorouter to force-set this header to ‘HTTPS’.</p>
+<p>For more information about HTTP headers in Cloud Foundry, see <a href="../concepts/http-routing.html#http-headers">HTTP Headers</a> in <em>HTTP Routing</em>. If you are configuring the forwarding of client certificates, see <a href="../concepts/http-routing.html#forward-client-cert">Forward Client Certificate to Apps</a> in <em>HTTP Routing</em>.</p>
+<h3 id="procedure-load-balancer-and-gorouter"><a class="header" href="#procedure-load-balancer-and-gorouter"><a id="lb-and-router"></a> Procedure: Load balancer and Gorouter</a></h3>
+<p>To enable this configuration, use the following steps:</p>
+<ol>
+<li>
+<p>Add your certificates to your load balancer and configure the listening port. The procedures vary depending on your IaaS.</p>
+</li>
+<li>
+<p>Configure your load balancer to append the <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto</code> headers to client requests.</p>
+<p><br />If the load balancer cannot be configured to provide the <code>X-Forwarded-For</code> header, the
+Gorouter appends it in requests that are forwarded to applications and system components, and sets the IP address of the load balancer.</p>
+ 
+<p>If the load balancer accepts unencrypted requests, it <strong>must</strong> provide the X-Forwarded-Proto header. Conversely, if the
+ load balancer cannot be configured to send the X-Forwarded-Proto header, it cannot not accept unencrypted requests.
+ Otherwise, applications and platform system components that depend on the X-Forwarded-Proto header to
+ reject unencrypted client requests and accept unencrypted requests.</p>
+
+</li>
+<li>
+<p>Insert the certificates into your deployment manifest for the Gorouter:</p>
+<ol>
+<li>
+<p>Open your release manifest with a text editor.</p>
+</li>
+<li>
+<p>Copy the contents of your certificate chain and private key that is associated with your certificate into the <code>properties.router.tls_pem</code> field.</p>
+</li>
+<li>
+<p>Set <code>enable_ssl</code> to <code>true</code>.</p>
+<pre><code>properties:
+  router:
+    tls_pem:
+    - cert_chain: |
+        -----BEGIN CERTIFICATE-----
+        SSL_CERTIFICATE_SIGNED_BY_PRIVATE_KEY
+        -----END CERTIFICATE-----
+      private_key: |
+        -----BEGIN EXAMPLE RSA PRIVATE KEY-----
+        RSA_PRIVATE_KEY
+        -----END EXAMPLE RSA PRIVATE KEY-----
+    enable_ssl: true
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../adminguide/troubleshooting-router-error-responses.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../devguide/deploy-apps/trusted-system-certificates.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../adminguide/troubleshooting-router-error-responses.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../devguide/deploy-apps/trusted-system-certificates.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

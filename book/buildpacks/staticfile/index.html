@@ -1,0 +1,527 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Staticfile buildpacks - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-staticfile-buildpack-owner-buildpacks"><a class="header" href="#title-staticfile-buildpack-owner-buildpacks">title: Staticfile buildpack
+owner: Buildpacks</a></h2>
+<p>You can configure and use the Staticfile buildpack in Cloud Foundry.</p>
+<p><strong>Staticfile app</strong>: An app or content that requires no backend code other than the
+NGINX webserver, which the buildpack provides.
+Examples of staticfile apps are front-end JavaScript apps, static HTML content, and HTML/JavaScript forms.</p>
+<p><strong>Staticfile buildpack</strong>: The buildpack that provides runtime support for staticfile apps and apps with back ends hosted elsewhere.
+To find which version of NGINX the current Staticfile buildpack uses, see <a href="https://github.com/cloudfoundry/staticfile-buildpack/releases">Staticfile buildpack release notes</a>.</p>
+<h2 id="staticfile-detection"><a class="header" href="#staticfile-detection"><a id="staticfile"></a> Staticfile detection</a></h2>
+<p>If you create a file named <code>Staticfile</code> and locate it in the build directory of your app, Cloud Foundry automatically uses
+the Staticfile buildpack when you push your app.</p>
+<p>The <code>Staticfile</code> file can be an empty file, or it can contain configuration settings for your app.
+For more information, see <a href="#configure">Configuring the buildpack</a> and <a href="#push_app">Pushing an App</a>.</p>
+<h2 id="memory-usage"><a class="header" href="#memory-usage"><a id="memory"></a> Memory usage</a></h2>
+<p>NGINX requires 20 MB of RAM to serve static assets. When using the Staticfile buildpack, Cloud Foundry push the apps with the <code>-m 64M</code> option to reduce RAM allocation from the default 1 GB that are allocated to containers by default.</p>
+<h2 id="configure-the-buildpack"><a class="header" href="#configure-the-buildpack"><a id="configure"></a>Configure the buildpack</a></h2>
+<p>This section describes configuration options that are available for the Staticfile buildpack.
+If you need to make configuration changes to NGINX that are not listed in the table, use the NGINX buildpack instead of the Staticfile buildpack. For more information, see <a href="../nginx/index.html">NGINX buildpack</a>.</p>
+<h3 id="staticfile-file-configuration"><a class="header" href="#staticfile-file-configuration"><a id="staticfile"></a> Staticfile file configuration</a></h3>
+<p>To configure these options, add the configuration property as a new line in your <code>Staticfile</code> file as described in the following table:</p>
+<table class="table">
+ 
+<thead>
+  
+<tr>
+    <th width="35%">Staticfile configuration property</th>
+    <th>Description</th>
+  </tr>
+
+  </thead>
+
+  
+<tr>
+    <td id="root">
+      <code>root: YOUR-DIRECTORY-NAME</code><br><br>
+      Example:<br>
+      <code>root: public</code>
+    </td>
+    <td><strong>Alternative root</strong>: Specifies a root directory other than the default. Use this option to serve <code>index.html</code> and other assets, such as HTML, CSS, or JavaScript files, from a location other than the root directory.<br><br>
+      For example, you can specify an alternate folder, <code>dist</code> or
+      <code>public</code>.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="dir-list">
+      <code>directory: visible</code>
+    </td>
+    <td><strong>Directory list</strong>: Displays an HTML page that shows a directory index for your site.<br>
+      If your site is missing an <code>index.html</code> file, your app displays a directory list instead of the standard 404 error page.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="ssi">
+      <code>ssi: enabled</code>
+    </td>
+    <td><strong>SSI</strong>: Activates Server Side Includes (SSI). You can embed the contents of one or more files into a web page on a web server. For general information about SSI, see <a href="https://en.wikipedia.org/wiki/Server_Side_Includes">Server Side Includes</a> entry on Wikipedia.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="pushstate">
+      <code>pushstate: enabled</code>
+    </td>
+    <td><strong>Pushstate routing</strong>: Keeps browser-visible URLs clean for client-side JavaScript apps that serve multiple routes. For example, pushState routing allows a single JavaScript file to route to multiple anchor tagged URLs that look like <code>/some/path1</code> instead of <code>/some#path1</code>.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="gzip">
+      <code>gzip: off</code>
+    </td>
+    <td><strong>GZip file serving and compression</strong>: Deactivate <a href="http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html">gzip_static</a> and <a href="http://nginx.org/en/docs/http/ngx_http_gunzip_module.html">gunzip</a> modules are activated by default. With these modules you can use NGINX to serve files stored in compressed GZ format and to decompress them for clients that do not support compressed content or responses.<br><br>
+      You might want to deactivate compression under certain circumstances. For example,when you serve content to very old browser clients.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="proxy-support">
+      <code>http_proxy: HTTP-URL</code><br>
+      <code>https_proxy: HTTPS-URL</code><br><br>
+      Example:<br>
+      <code>http_proxy: http://www.example.com/</code><br>
+      <code>https_proxy: https://www.example.com/</code>
+    </td>
+    <td><strong>Proxy support</strong>: You can use a proxy when downloading dependencies during the staging of your app.</td>
+  </tr>
+
+  
+<tr>
+    <td id="enable-http2">
+      <code>enable_http2: true</code><br><br>
+      Alternatively, set the <code>ENABLE_HTTP2</code> environment variable to <code>true</code>.
+    </td>
+    <td><strong>Enable HTTP/2</strong>: Serve requests over HTTP/2 instead of HTTP/1.1. This deactivates serving HTTP/1.1 traffic.</td>
+  </tr>
+
+  
+<tr>
+    <td id="force-https">
+      <code>force_https: true</code><br><br>
+      Alternatively, you can set the <code>FORCE_HTTPS</code> environment variable to <code>true</code>.
+    </td>
+    <td><strong>Force HTTPS</strong>: Forces all requests to be sent through HTTPS. This redirects non-HTTPS requests as HTTPS requests.
+      
+<p class="note important">
+      <span class="note__title"><strong>Important</strong></span>
+Do not activate <code>FORCE_HTTPS</code> if you have a proxy server or load balancer loops. For example, if you use <a href="https://support.cloudflare.com/hc/en-us/articles/200170416">Flexible SSL</a> with CloudFlare.
+</p>
+
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="host-dot-files">
+      <code>host_dot_files: true</code>
+    </td>
+    <td><strong>Dot files</strong>: By default, hidden files, which start with a <code>.</code>, are not served by this buildpack.</td>
+  </tr>
+
+  
+<tr>
+    <td id="status-codes">
+    <code>status_codes: </code> <br>
+    <code>  404: /404.html</code><br>
+    <code>  500: /500.html</code>
+    </td>
+    <td><strong>Status Codes</strong>: You can define custom pages for HTTP STATUS codes instead of the default NGINX pages.</td>
+  </tr>
+
+  
+<tr>
+    <td id="strict-security">
+      <code>http_strict_transport_security: true</code>
+    </td>
+    <td><strong>HTTP Strict Transport Security (HSTS)</strong>: Causes NGINX to respond to all requests with the header <code>Strict-Transport-Security: max-age=31536000</code>. This forces receiving browsers to make all subsequent requests over HTTPS. This setting defaults to a <code>max-age</code> of one year.
+      
+<p class="note important">
+      <span class="note__title"><strong>Important</strong></span>
+This setting persists in browsers for a long time, so you must enable this setting only <em>after</em> you ensure that you have completed your app configuration.
+</p>
+
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="strict-security-with-subdomains">
+      <code>http_strict_transport_security_include_subdomains: true</code>
+    </td>
+    <td><strong>HSTS includes subdomains</strong>: Causes NGINX to respond to all requests with the following header: <code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code><br> This forces browsers to make all subsequent requests over HTTPS including subdomains. This setting defaults to a <code>max-age</code> of one year.
+      
+<p class="note important">
+      <span class="note__title"><strong>Important</strong></span>
+Setting this property to <code>true</code> also makes <code>http_strict_transport_security</code> default to true.
+</p>
+
+    </td>
+  </tr>
+
+  
+<tr>
+    <td id="strict-security-with-preload">
+      <code>http_strict_transport_security_preload: true</code>
+    </td>
+    <td><strong>HSTS preload</strong>: Causes NGINX to respond to all requests with the following
+      header: <code>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code><br>
+      This forces browsers to make all subsequent requests over HTTPS including subdomains and requests inclusion in browser-managed HSTS preload lists. For more information, see <a href="https://hstspreload.org">https://hstspreload.org</a>. This setting defaults to a <code>max-age</code> of one year.
+      
+<p class="note important">
+      <span class="note__title"><strong>Important</strong></span>
+Setting this property to <code>true</code> also makes <code>http_strict_transport_security</code> and <code>http_strict_transport_security_include_subdomains</code> default to true.
+</p>
+
+    </td>
+  </tr>
+
+</table>
+
+<h3 id="other-configuration-changes"><a class="header" href="#other-configuration-changes"><a id="staticfile"></a>Other configuration changes</a></h3>
+<p>Use the following instructions to make other configuration changes.</p>
+<hr>
+<h4 id="basic-authentication"><a class="header" href="#basic-authentication"><a id="basic-authentication"></a> Basic authentication</a></h4>
+<p>You can enable basic authentication for your app or website.
+You can create a hashed username and password pair for each user by using a site like <a href="http://www.htaccesstools.com/htpasswd-generator/">Htpasswd Generator</a>.</p>
+<p><strong>Configuration</strong></p>
+<p>Add a new <code>Staticfile.auth</code> file to the root or alternative root directory. In the new file, add one or more username and password entries using the following format: <code>USERNAME:HASHED_PASSWORD</code></p>
+<p>Example:</p>
+<pre><code>pat:$example1$DuUQEQp8$ZccZCHQElNSjrgerwSFC0
+stevie:$example1$22derfaecZSJJRw4rKE$KKEWKSK
+</code></pre>
+<hr>
+<h4 id="custom-location"><a class="header" href="#custom-location"><a id="custom-location"></a> Custom location</a></h4>
+<p>You can specify custom location definitions with additional directives. For information about NGINX directives, see <a href="https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files">Creating NGINX Plus and NGINX Configuration Files</a> and <a href="https://nginx.org/en/docs/dirindex.html">Alphabetical index of directives</a> in the <em>NGINX documentation</em>.</p>
+<p><strong>Configuration</strong></p>
+<p>To customize the <code>location</code> block of the NGINX configuration file:</p>
+<ol>
+<li>
+<p>Set an alternative <code>root</code> directory. The <code>location_include</code> property only works in conjunction with an alternative <code>root</code>. See the following example that includes a static content file:</p>
+<ul>
+<li><strong>Directory</strong>: <code>public</code></li>
+<li><strong>File</strong>: <code>public/index.html</code></li>
+</ul>
+</li>
+<li>
+<p>Create a file with location-scoped NGINX directives. See the following example, which causes visitors of your site to receive the <code>X-MySiteName</code> HTTP header:</p>
+<ul>
+<li><strong>File</strong>: <code>nginx/conf/includes/custom_header.conf</code></li>
+<li><strong>Content</strong>: <code>add_header X-MySiteName BestSiteEver;</code></li>
+</ul>
+</li>
+<li>
+<p>Set the <code>location_include</code> variable in your <strong>Staticfile</strong> to the path of the file from the previous step. This path is relative to <code>nginx/conf</code>.</p>
+</li>
+</ol>
+<p>Example:</p>
+<pre><code>  ...
+  root: public
+  location_include: includes/*.conf
+  ...
+</code></pre>
+<hr>
+<h4 id="additional-mime-type-support"><a class="header" href="#additional-mime-type-support"><a id="additional-mime-type-support"></a> Additional MIME type support</a></h4>
+<p>You can configure additional MIME types on your NGINX server.</p>
+<p><strong>Configuration</strong></p>
+<p>To add MIME types, add a <code>mime.types</code> file to your root folder, or to the alternate root folder, if you specified one.</p>
+<p>For more information about the <code>mime.types</code> file, see <a href="https://www.nginx.com/resources/wiki/start/topics/examples/full/#mime-types&quot;">mime.types</a> in the <em>NGINX documentation</em>.</p>
+<p>Example MIME types file:</p>
+<pre><code>
+types {
+    text/html     html htm shtml;
+    text/css      css;
+    text/xml      xml rss;
+    image/gif     gif;
+    ...
+    }
+
+</code></pre>
+<hr>
+<h2 id="push-an-app"><a class="header" href="#push-an-app"><a id="push_app"></a> Push an app</a></h2>
+<p>To push your app, you can use either the system Staticfile buildpack or specify a Staticfile buildpack.</p>
+<h3 id="option-1-use-the-system-staticfile-buildpack"><a class="header" href="#option-1-use-the-system-staticfile-buildpack">Option 1: Use the system Staticfile buildpack</a></h3>
+<p>To use the Staticfile buildpack installed in your deployment, run the following command in the root directory of the app.
+The root directory of the app must contain a file named <code>Staticfile</code>.</p>
+<pre><code>
+cf push APP-NAME
+
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name you want to give your app.</p>
+<h3 id="option-2-specify-a-staticfile-buildpack"><a class="header" href="#option-2-specify-a-staticfile-buildpack">Option 2: Specify a Staticfile buildpack</a></h3>
+<p>To explicitly specify a Staticfile buildpack, run the following command in the root directory of the app. You might want to specify a buildpack if your deployment does not have the Staticfile buildpack installed or the installed version is outdated.</p>
+<pre><code>
+cf push APP-NAME -b BUILDPACK-NAME-OR-PATH
+
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>APP-NAME</code> is the name you want to give your app.</li>
+<li><code>BUILDPACK-NAME-OR-PATH</code> is either the name of a buildpack that is installed in your deployment or the path to a buildpack. You can find the Cloud Foundry Staticfile buildpack in the <a href="https://github.com/cloudfoundry/staticfile-buildpack.git">Staticfile repository</a> on GitHub.</li>
+</ul>
+<h3 id="verifying-the-push"><a class="header" href="#verifying-the-push">Verifying the push</a></h3>
+<p>After you push the app, follow these steps to verify that the push was successful:</p>
+<ol>
+<li>
+<p>Find the URL of your app in the output of the <code>cf push</code> command. For example, the URL in the terminal output above is <code>my-app.example.com</code>.</p>
+</li>
+<li>
+<p>In a browser, go to the URL to view your app.</p>
+</li>
+</ol>
+<h2 id="example-staticfile-buildpack-apps"><a class="header" href="#example-staticfile-buildpack-apps"><a id="examples"></a> Example Staticfile buildpack apps</a></h2>
+<p>For different examples of apps that use the Staticfile buildpack, see the <a href="https://github.com/cloudfoundry/staticfile-buildpack/tree/master/fixtures">fixtures</a> directory in the Staticfile buildpack GitHub repo.</p>
+<h2 id="help-and-support"><a class="header" href="#help-and-support"><a id="help"></a> Help and support</a></h2>
+<p>A number of channels exist where you can get more help when using the Staticfile buildpack, or with developing your own Staticfile buildpack.</p>
+<ul>
+<li>
+<p><strong>Staticfile Buildpack Repository in GitHub</strong>: Find more information about using and extending the Staticfile buildpack in <a href="https://github.com/cloudfoundry/staticfile-buildpack">GitHub repository</a>.</p>
+</li>
+<li>
+<p><strong>Release Notes</strong>: Find current information about this buildpack on the Staticfile buildpack <a href="https://github.com/cloudfoundry/staticfile-buildpack/releases">release page</a> in GitHub.</p>
+</li>
+<li>
+<p><strong>Slack</strong>: Join the #buildpacks channel in the <a href="http://slack.cloudfoundry.org/">Cloud Foundry Slack community</a>.</p>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../buildpacks/ruby/windows.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../buildpacks/custom.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../buildpacks/ruby/windows.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../buildpacks/custom.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

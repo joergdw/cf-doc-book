@@ -1,0 +1,536 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Enabling identity-aware routing - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-enabling-identity-aware-routing-owner-cf-for-vms-networking"><a class="header" href="#title-enabling-identity-aware-routing-owner-cf-for-vms-networking">title: Enabling identity-aware routing
+owner: CF for VMs Networking</a></h2>
+<p>This topic describes how an operator enables identity-aware routing—per-domain
+mutual TLS (mTLS) for the Gorouter—on a <code>cf-deployment</code>-based foundation by
+applying the <code>enable-identity-aware-routing.yml</code> ops file.</p>
+<p>For an overview of how identity-aware routing works, see
+<a href="../../concepts/identity-aware-routing.html">Identity-aware routing</a>.</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+After you deploy, you must register the identity-aware domain in
+Cloud Foundry with <code>cf create-shared-domain … --enforce-route-policies</code>
+(see <a href="#register-domain">Register the domain</a>). Developers then map routes
+on that domain and manage <a href="../../devguide/deploy-apps/identity-aware-routing.html">route policies</a>.
+</p>
+
+<p>Identity-aware routing lets the Gorouter require and verify a caller’s
+client certificate on a designated domain, so that app-to-app HTTP traffic is
+authenticated with mutual TLS. On a <code>cf-deployment</code> foundation, you enable it by
+applying a single ops file, which configures the Gorouter, generates the required
+certificates, and establishes trust between the Gorouter and app containers.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites"><a id="prerequisites"></a> Prerequisites</a></h2>
+<p>Before you enable identity-aware routing, ensure that:</p>
+<ul>
+<li>
+<p>You have a working <code>cf-deployment</code> foundation deployed with BOSH. See
+<a href="deploy-cf.html">Deploying Cloud Foundry</a>.</p>
+</li>
+<li>
+<p>Diego instance identity is enabled. This is the default in <code>cf-deployment</code>. The
+ops file reuses the existing <code>diego_instance_identity_ca</code> to validate caller
+certificates.</p>
+</li>
+<li>
+<p>BOSH DNS is in use. This is the default in <code>cf-deployment</code>. The ops file adds a
+BOSH DNS alias for the identity-aware domain.</p>
+</li>
+<li>
+<p>You have admin access to register the domain in Cloud Foundry
+after deploying.</p>
+</li>
+</ul>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Apps reach the Gorouter on port 443 when making requests on the
+identity-aware domain. The default <code>public_networks</code> ASG in
+<code>cf-deployment</code> covers public IP ranges but excludes private ranges such as
+<code>10.0.0.0/8</code>, <code>172.16.0.0–172.31.255.255</code>, and
+<code>192.168.0.0/16</code>. If your Gorouter instances are deployed on addresses in
+those ranges, create and bind a running security group that allows TCP to your Gorouter
+IPs on port 443. For more information, see
+<a href="../../concepts/asg.html">Application Security Groups</a>.
+</p>
+
+<h2 id="apply-the-ops-file"><a class="header" href="#apply-the-ops-file"><a id="apply"></a> Apply the ops file</a></h2>
+<p>Apply <code>enable-identity-aware-routing.yml</code> during your <code>bosh deploy</code>, the same way
+as any other <code>cf-deployment</code> ops file:</p>
+<pre class="terminal">
+$ bosh -e YOUR-ENV -d cf deploy cf-deployment/cf-deployment.yml \
+  -o cf-deployment/operations/enable-identity-aware-routing.yml \
+  --vars-store deployment-vars.yml \
+  -v system_domain=YOUR-SYSTEM-DOMAIN
+</pre>
+
+<p>The ops file generates new credentials into your vars-store on deploy, so no manual
+certificate creation is required for the default <code>*.apps.identity</code> domain. For more
+information, see <a href="#certificates">Certificates and certificate authorities</a>.</p>
+<p>Two companion ops files extend this configuration:</p>
+<ul>
+<li>
+<p>To trust the generated CA on the cflinuxfs5 stack, see
+<a href="#cflinuxfs5">Trusting the CA in cflinuxfs5</a>.</p>
+</li>
+<li>
+<p>To use a domain other than <code>*.apps.identity</code>, see
+<a href="#custom-domain">Use an operator-provided domain</a>.</p>
+</li>
+</ul>
+<p>You can view the ops file in the <code>cf-deployment</code> repository:
+<a href="https://github.com/cloudfoundry/cf-deployment/blob/master/operations/enable-identity-aware-routing.yml">enable-identity-aware-routing.yml</a>.</p>
+<h2 id="what-the-ops-file-configures"><a class="header" href="#what-the-ops-file-configures"><a id="what-it-configures"></a> What the ops file configures</a></h2>
+<p>The ops file applies the following changes to your deployment manifest:</p>
+<table>
+<tr>
+<th>Configures</th>
+<th>Details</th>
+</tr>
+
+<tr>
+<td>BOSH DNS alias</td>
+<td>Resolves the <code>*.apps.identity</code> wildcard to the Gorouter instances
+(alias label <code>_.apps.identity</code>, the BOSH DNS wildcard form).</td>
+</tr>
+
+<tr>
+<td>Gorouter <code>router.domains</code></td>
+<td>Adds <code>*.apps.identity</code> as an mTLS domain that validates caller
+certificates against <code>diego_instance_identity_ca</code>, with forwarding mode
+<code>sanitize_set</code> and XFCC format <code>envoy</code>.</td>
+</tr>
+
+<tr>
+<td>Gorouter server (SNI) certificate</td>
+<td>Appends a <code>*.apps.identity</code> server certificate to
+<code>router.tls_pem</code> (variable <code>apps_identity_router_tls</code>), served
+through SNI.</td>
+</tr>
+
+<tr>
+<td>CA trust</td>
+<td>Injects <code>apps_identity_ca</code> into the cflinuxfs4 rootfs trust store and
+the Diego <code>rep</code>, so app containers trust the Gorouter's server certificate
+on the domain.</td>
+</tr>
+
+</table>
+
+<p>The certificate and CA relationships are explained in
+<a href="#certificates">Certificates and certificate authorities</a>, and the per-domain
+property fields in <a href="#router-domains">The router.domains BOSH property</a>.</p>
+<h2 id="certificates-and-certificate-authorities"><a class="header" href="#certificates-and-certificate-authorities"><a id="certificates"></a> Certificates and certificate authorities</a></h2>
+<p>Identity-aware routing uses two certificate authorities: one to authenticate the
+caller to the Gorouter, and one to authenticate the Gorouter back to the caller.</p>
+<table>
+<tr>
+<th>Certificate / CA</th>
+<th>Role</th>
+</tr>
+
+<tr>
+<td><code>diego_instance_identity_ca</code> (existing)</td>
+<td>Validates the caller's client certificate at the Gorouter. The ops file sets it
+as the domain's <code>ca_certs</code>. This CA already exists in Cloud Foundry;
+the ops file does not generate it.</td>
+</tr>
+
+<tr>
+<td><code>apps_identity_ca</code> (generated)</td>
+<td>Signs the Gorouter's server certificate for <code>*.apps.identity</code>. It is
+trusted inside app containers and the Diego <code>rep</code>.</td>
+</tr>
+
+<tr>
+<td><code>apps_identity_router_tls</code> (generated)</td>
+<td>The Gorouter's server (SNI) certificate and key for <code>*.apps.identity</code>,
+signed by <code>apps_identity_ca</code> and appended to <code>router.tls_pem</code>.</td>
+</tr>
+
+</table>
+
+<p>Together these establish mutual authentication in both directions:</p>
+<ol>
+<li>
+<p><strong>Caller to Gorouter (client authentication):</strong> the calling app presents its Diego
+instance identity certificate, and the Gorouter validates it against
+<code>diego_instance_identity_ca</code>.</p>
+</li>
+<li>
+<p><strong>Gorouter to caller (server authentication):</strong> the Gorouter presents the
+<code>apps_identity_router_tls</code> server certificate, and the calling app validates it
+because <code>apps_identity_ca</code> is in its container trust store.</p>
+</li>
+</ol>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+The ops file generates <code>apps_identity_ca</code> and
+<code>apps_identity_router_tls</code> into the vars-store on deploy. Back up the
+vars-store as you would for any other generated credential.
+</p>
+
+<h2 id="the-routerdomains-bosh-property"><a class="header" href="#the-routerdomains-bosh-property"><a id="router-domains"></a> The router.domains BOSH property</a></h2>
+<p><code>router.domains</code> is the Gorouter BOSH property that the ops file populates. Each entry
+in the array designates a domain that requires mutual TLS and configures how the
+Gorouter handles the caller’s certificate.</p>
+<table>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Values (default)</th>
+</tr>
+
+<tr>
+<td><code>name</code></td>
+<td>The domain to require mTLS on. The wildcard must be the leftmost label
+(for example, <code>*.apps.identity</code>) and matches any single label; a
+non-wildcard domain must match the request host exactly.</td>
+<td>Domain string</td>
+</tr>
+
+<tr>
+<td><code>ca_certs</code></td>
+<td>PEM CA bundle used to validate caller (client) certificates on the domain.</td>
+<td>PEM</td>
+</tr>
+
+<tr>
+<td><code>forwarded_client_cert</code></td>
+<td>How the Gorouter forwards the client certificate in the
+<code>X-Forwarded-Client-Cert</code> (XFCC) header.</td>
+<td><code>always_forward</code> (default), <code>forward</code>,
+<code>sanitize_set</code></td>
+</tr>
+
+<tr>
+<td><code>xfcc_format</code></td>
+<td>Format of the XFCC header: <code>raw</code> is the full base64-encoded
+certificate (~1.5 KB); <code>envoy</code> is the compact
+<code>Hash=&lt;sha256&gt;;Subject="&lt;DN&gt;"</code> format (~300 bytes).</td>
+<td><code>raw</code> (default), <code>envoy</code></td>
+</tr>
+
+</table>
+
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+A domain listed in <code>router.domains</code> always requires a valid
+client certificate signed by the domain's configured CA, regardless of the global
+<code>router.client_cert_validation</code> setting.
+</p>
+
+<p>For <code>*.apps.identity</code>, the ops file sets <code>forwarded_client_cert: sanitize_set</code> and
+<code>xfcc_format: envoy</code>. Operators who add their own mTLS domains set these fields
+directly.</p>
+<h2 id="trusting-the-ca-in-cflinuxfs5"><a class="header" href="#trusting-the-ca-in-cflinuxfs5"><a id="cflinuxfs5"></a> Trusting the CA in cflinuxfs5</a></h2>
+<p>If your foundation uses the cflinuxfs5 stack, also apply
+<code>enable-identity-aware-routing-cflinuxfs5.yml</code> so that apps on cflinuxfs5 trust the
+Gorouter’s <code>*.apps.identity</code> server certificate. This companion ops file injects
+<code>apps_identity_ca</code> into the cflinuxfs5 rootfs trust store.</p>
+<p>Apply it after both the cflinuxfs5 stack ops file and the base
+<code>enable-identity-aware-routing.yml</code>:</p>
+<pre class="terminal">
+$ bosh -e YOUR-ENV -d cf deploy cf-deployment/cf-deployment.yml \
+  -o cf-deployment/operations/experimental/add-cflinuxfs5.yml \
+  -o cf-deployment/operations/enable-identity-aware-routing.yml \
+  -o cf-deployment/operations/enable-identity-aware-routing-cflinuxfs5.yml \
+  --vars-store deployment-vars.yml
+</pre>
+
+<p class="note caution">
+<span class="note__title"><strong>Caution</strong></span>
+This ops file requires <code>add-cflinuxfs5.yml</code> to be
+applied first. Applying it on a foundation without the cflinuxfs5 stack fails the
+deploy by design, signaling that the stack ops file is missing.
+</p>
+
+<p>You can view the ops file in the <code>cf-deployment</code> repository:
+<a href="https://github.com/cloudfoundry/cf-deployment/blob/master/operations/enable-identity-aware-routing-cflinuxfs5.yml">enable-identity-aware-routing-cflinuxfs5.yml</a>.</p>
+<h2 id="use-an-operator-provided-domain"><a class="header" href="#use-an-operator-provided-domain"><a id="custom-domain"></a> Use an operator-provided domain</a></h2>
+<p><code>*.apps.identity</code> is a convention, not a hard requirement. To use a different domain,
+also apply <code>use-operator-provided-identity-routing-domain.yml</code> and supply the
+<code>identity_routing_domain</code> variable:</p>
+<pre class="terminal">
+$ bosh -e YOUR-ENV -d cf deploy cf-deployment/cf-deployment.yml \
+  -o cf-deployment/operations/enable-identity-aware-routing.yml \
+  -o cf-deployment/operations/use-operator-provided-identity-routing-domain.yml \
+  -v identity_routing_domain=apps.example.com \
+  --vars-store deployment-vars.yml
+</pre>
+
+<p>This override applies to the BOSH DNS alias, the Gorouter domain name, and the
+generated server certificate’s common name and subject alternative name. The
+<code>cf-deployment</code> repository ships an example vars file you can adapt:
+<code>cf-deployment/operations/example-vars-files/vars-use-operator-provided-identity-routing-domain.yml</code>.</p>
+<p>Whatever domain you choose, you register that same domain in
+Cloud Foundry in the next section.</p>
+<h2 id="register-the-domain-in-cloud-foundry"><a class="header" href="#register-the-domain-in-cloud-foundry"><a id="register-domain"></a> Register the domain in Cloud Foundry</a></h2>
+<p>After the deploy succeeds, register the identity-aware domain in
+Cloud Foundry so that developers can map routes and add policies on it.
+The domain name must match the one configured in the ops file (<code>apps.identity</code> by
+default):</p>
+<pre class="terminal">
+$ cf create-shared-domain apps.identity --enforce-route-policies
+</pre>
+
+<p>The <code>--enforce-route-policies</code> flag turns on default-deny route-policy enforcement for
+the domain and is immutable once set. You can optionally add <code>--scope (any|org|space)</code>
+to narrow who may be named as a policy source; <code>--scope</code> is valid only together with
+<code>--enforce-route-policies</code>.</p>
+<p>After the domain exists, developers map routes on it and manage route policies. See
+<a href="../../devguide/deploy-apps/identity-aware-routing.html">Configuring identity-aware routing</a>.</p>
+<h2 id="related-reading"><a class="header" href="#related-reading"><a id="related-reading"></a> Related reading</a></h2>
+<ul>
+<li>
+<p><a href="../../concepts/identity-aware-routing.html">Identity-aware routing</a>—how
+identity-aware routing works.</p>
+</li>
+<li>
+<p><a href="../../devguide/deploy-apps/identity-aware-routing.html">Configuring identity-aware routing</a>—the
+developer how-to for mapping routes and managing route policies.</p>
+</li>
+<li>
+<p><a href="deploy-cf.html">Deploying Cloud Foundry</a>.</p>
+</li>
+<li>
+<p>The <code>cf-deployment</code> ops files:
+<a href="https://github.com/cloudfoundry/cf-deployment/tree/master/operations">operations</a>.</p>
+</li>
+<li>
+<p>RFC-0055:
+<a href="https://github.com/cloudfoundry/community/blob/main/toc/rfc/rfc-0055-identity-aware-routing-for-gorouter.md">Identity-Aware Routing for Gorouter</a>.</p>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../deploying/cf-deployment/deploy-cf.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../bbr/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../deploying/cf-deployment/deploy-cf.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../bbr/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

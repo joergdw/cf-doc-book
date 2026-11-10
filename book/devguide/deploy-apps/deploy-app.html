@@ -1,0 +1,517 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Pushing your app using Cloud Foundry CLI (cf push) - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-pushing-your-app-with-cloud-foundry-cli-cf-push-owner-capi"><a class="header" href="#title-pushing-your-app-with-cloud-foundry-cli-cf-push-owner-capi">title: Pushing your app with Cloud Foundry CLI (cf push)
+owner: CAPI</a></h2>
+<p>The cf CLI command <code>cf push</code> pushes apps to Cloud Foundry. There are two main ways to run the <code>cf push</code> command:</p>
+<ul>
+<li>
+<p>Run <code>cf push APP-NAME</code> to push an app using default settings. For more information, see <a href="#default-push">Push with defaults</a>.</p>
+</li>
+<li>
+<p>Run the <code>cf push</code> command with flags and helper files to customize:</p>
+<ul>
+<li>How the pushed app runs, including its route, instance count, disk size limits, memory limits, and log rate limits</li>
+<li>How push works: whether it’s configured with a manifest, runs a startup script, or limits files uploaded to the Cloud Controller</li>
+</ul>
+</li>
+</ul>
+<p>For more information about custom settings, see <a href="#custom-push">Push with custom settings</a>.</p>
+<p>For an explanation of what Cloud Foundry does when you run <code>cf push</code>, see <a href="../../concepts/how-applications-are-staged.html">How Apps are
+Staged</a>.</p>
+<p>For information about the life cycle of an app, see <a href="app-lifecycle.html">Application container life cycle</a>.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites"><a id="prepare"></a> Prerequisites</a></h2>
+<p>Before you push your app to Cloud Foundry, ensure that:</p>
+<ul>
+<li>
+<p>Your app is “cloud-ready.” Cloud Foundry behaviors related to file storage, HTTP sessions, and port usage might require modifications to your app. To prepare an app to be pushed to Cloud Foundry, see:</p>
+<ul>
+<li><a href="prepare-to-deploy.html">Considerations for designing and running an app in the cloud</a></li>
+<li>Any <a href="../../buildpacks/index.html">Buildpacks</a> guides specific to your app language or framework, such as <a href="../../buildpacks/ruby/gsg-ror.html">Getting started deploying Ruby on Rails apps</a></li>
+</ul>
+</li>
+<li>
+<p>Your Cloud Foundry deployment supports the type of app you are going to push, or you have the URL of an externally-available buildpack that can stage the app.</p>
+</li>
+<li>
+<p>All required app resources are uploaded. For example, you might need to include a database driver.</p>
+</li>
+<li>
+<p>You have your target and credentials:</p>
+<ul>
+<li>The API endpoint for your Cloud Foundry deployment. Also known as the target URL, this is the URL of the Cloud Controller in your Cloud Foundry instance.</li>
+<li>Your user name and password for the Cloud Foundry deployment.</li>
+</ul>
+</li>
+<li>
+<p>You are logged into your app’s target org and space.</p>
+<ol>
+<li>Decide the org and space where you want to push your app. You might have access to one or more org and space.</li>
+<li>Log in to this target org and space with <code>cf login</code>.</li>
+</ol>
+</li>
+<li>
+<p>Your app can access every service that it uses, because an instance of the service runs in, or is shared with, the app’s space.</p>
+<ul>
+<li>For information about sharing service instances across spaces, see <a href="../services/sharing-instances.html">Sharing service instances</a>.</li>
+<li>Typical services that cloud apps use include databases, message queues, and key-value stores.</li>
+</ul>
+</li>
+</ul>
+<h2 id="push-with-defaults"><a class="header" href="#push-with-defaults"><a id="default-push"></a> Push with defaults</a></h2>
+<p>To push an app with default settings:</p>
+<ol>
+<li>
+<p>Choose a name for the app. The app name must consist of alphanumeric characters and be unique to your Cloud Foundry deployment.</p>
+<ul>
+<li>To use an app name that is not unique, customize the app’s route as described in <a href="#custom-route">Customize the route</a>.</li>
+<li>Apps running at their default routes require unique names because default routes are based on app names, and all routes must be globally unique.</li>
+</ul>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf push APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of the app.</p>
+</li>
+</ol>
+<h3 id="default-route"><a class="header" href="#default-route"><a id="default-route"></a> Default route</a></h3>
+<p>An app’s route is the URL at which it runs. Cloud Foundry assembles the route for a pushed app from a host name and a domain.</p>
+<p>By default, Cloud Foundry sets the host name and domain as follows:</p>
+<ul>
+<li>
+<p><strong>Hostname:</strong> The name of the app name, as specified in the <code>cf push</code> command. If the app name contains underscores, Cloud Foundry converts them to hyphens when creating the app’s route.</p>
+</li>
+<li>
+<p><strong>Domain:</strong> The default apps domain for your Cloud Foundry deployment.</p>
+</li>
+</ul>
+<p>For example, an app named <code>example-app</code> running on Cloud Foundry with an apps domain <code>apps.example.com</code> runs at the URL
+<code>https://example-app.apps.example.com</code> by default.</p>
+<p>For more information about routes and domains, see <a href="routes-domains.html">Routes and domains</a>.</p>
+<h3 id="example-session"><a class="header" href="#example-session"><a id="example"></a> Example session</a></h3>
+<p>The following example output for <code>cf push example-app</code> demonstrates how Cloud Foundry assigns default values to an app you push:</p>
+<pre class="terminal">
+Creating app example-app in org example-org / space development as a.user@shared-domain.example.com...
+OK
+
+Creating route example-app.shared-domain.example.com...
+OK
+
+Binding example-app.shared-domain.example.com to example-app...
+OK
+
+Uploading example-app...
+Uploading app: 560.1K, 9 files
+OK
+
+Starting app example-app in org example-org / space development as a.user@shared-domain.example.com...
+-----&gt; Downloaded app package (552K)
+OK
+-----&gt; Using Ruby version: ruby-1.9.3
+-----&gt; Installing dependencies using Bundler version 1.3.2
+       Running: bundle install --without development:test --path
+         vendor/bundle --binstubs vendor/bundle/bin --deployment
+       Installing rack (1.5.1)
+       Installing rack-protection (1.3.2)
+       Installing tilt (1.3.3)
+       Installing sinatra (1.3.4)
+       Using bundler (1.3.2)
+       Updating files in vendor/cache
+       Your bundle is complete! It was installed into ./vendor/bundle
+       Cleaning up the bundler cache.
+-----&gt; Uploading droplet (23M)
+
+1 of 1 instances running
+
+App started
+
+Showing health and status for app example-app in org example-org / space development as a.user@shared-domain.example.com...
+OK
+
+requested state: started
+instances: 1/1
+usage: 1G x 1 instances
+urls: example-app.shared-domain.example.com
+
+     state     since                    cpu    memory        disk          logging
+#0   running   2022-09-14 05:07:18 PM   0.0%   18.5M of 1G   52.5M of 1G   3B/s of 1M/s
+</pre>
+
+<h2 id="push-with-custom-settings"><a class="header" href="#push-with-custom-settings"><a id="custom-push"></a> Push with custom settings</a></h2>
+<p>Pushing an app with custom settings typically proceeds as follows:</p>
+<ol>
+<li>
+<p><a href="#basic-settings">Customize Basic App Settings (Optional)</a></p>
+</li>
+<li>
+<p><a href="#custom-route">Customize the Route (Optional)</a></p>
+</li>
+<li>
+<p><a href="#exclude">Limit the Upload Files (Optional)</a></p>
+</li>
+<li>
+<p><a href="#profile">Configure App Initialization (Optional)</a></p>
+</li>
+<li>
+<p><a href="#custom-cf-push">Custom Push the App</a></p>
+</li>
+<li>
+<p><a href="#services">Configure App Services (Optional)</a></p>
+</li>
+</ol>
+<p>The following sections detail these steps.</p>
+<h3 id="customize-basic-app-settings-optional"><a class="header" href="#customize-basic-app-settings-optional"><a id="basic-settings"></a> Customize basic app settings (optional)</a></h3>
+<p>Basic settings to customize when pushing an app include:</p>
+<ul>
+<li>
+<p><strong>Name:</strong> You can use any series of alphanumeric characters as the name of your app.</p>
+</li>
+<li>
+<p><strong>Instances:</strong> Generally speaking, the more app instances you run, the less downtime your app experiences. If your app is still in development, running a single instance can simplify troubleshooting. For any production app, Cloud Foundry recommends a minimum of two instances.</p>
+</li>
+<li>
+<p><strong>Memory limit:</strong> The maximum amount of memory that each instance of your app can consume. If an app instance exceeds this limit,
+Cloud Foundry restarts the instance. If an app instance exceeds its memory limit repeatedly in a short period of time,
+Cloud Foundry delays restarting the app instance.</p>
+</li>
+<li>
+<p><strong>Disk space limit:</strong> The maximum amount of disk space that each instance of your app can consume. If an app instance exceeds this limit,
+Cloud Foundry restarts the instance. If an app instance exceeds its disk space limit repeatedly in a short period of time,
+Cloud Foundry delays restarting the app instance.</p>
+</li>
+<li>
+<p><strong>Log rate limit:</strong> The maximum number of logs that each instance of your app can send to Loggregator. If an app instance exceeds this limit,
+Cloud Foundry drops the excess logs and reports doing so.</p>
+</li>
+<li>
+<p><strong>Start command:</strong> This is the command that Cloud Foundry uses to start each instance of your app. This start command differs by app framework.</p>
+</li>
+</ul>
+<h3 id="limit-the-upload-files-optional"><a class="header" href="#limit-the-upload-files-optional"><a id="exclude"></a> Limit the upload files (optional)</a></h3>
+<p>By default, Cloud Foundry uploads all app files except version control files and directories with names such as <code>.svn</code>, <code>.git</code>, and <code>_darcs</code>.</p>
+<p>Cloud Foundry recommends that you explicitly exclude extraneous files residing within your app directory, particularly if your app is large. For example, if you build your app locally and push it as a binary, you can save resources by not uploading any of the app’s source code.</p>
+<p>To exclude files from upload:</p>
+<ol>
+<li>
+<p>Create a <code>.cfignore</code> file that lists the files to exclude.</p>
+</li>
+<li>
+<p>Save the <code>.cfignore</code> file to the directory where you run the <code>cf push</code> command.</p>
+</li>
+</ol>
+<p>For more information, see <a href="prepare-to-deploy.html#exclude">Ignore Unnecessary Files When Pushing</a> in <em>Considerations for Designing and Running an App in the
+Cloud</em>.</p>
+<h3 id="configure-app-initialization-optional"><a class="header" href="#configure-app-initialization-optional"><a id="profile"></a> Configure app initialization (optional)</a></h3>
+<p>You can configure the  <code>cf push</code> command to run custom initialization tasks for an app.</p>
+<p>These tasks run after Cloud Foundry loads the app droplet but before it starts the app to allow the initialization script to access the app language runtime environment. For example, your script can map values from <code>$VCAP_SERVICES</code> into other environment variables or a config file that the app uses.</p>
+<div class="note important">
+<span class="note__title"><strong>Important</strong></span>
+See the following important information about configuring app initialization when you use certain buildpacks:
+  
+<ul>
+    
+<li><strong>PHP:</strong> Cloud Foundry does not support initialization scripts for the PHP buildpack versions prior to v4.3.18. If you use
+      one of these buildpack versions, your app hosts the <code>.profile</code> script's contents. This means that any app staged using the affected buildpack
+      versions can leak credentials placed in the <code>.profile</code> script.
+    </li>
+
+  </ul>
+
+</div>
+
+<p>To run initialization tasks:</p>
+<ol>
+<li>
+<p>Create a <code>.profile</code> script that contains the initialization tasks.</p>
+</li>
+<li>
+<p>Save the <code>.profile</code> script to the directory where you run the <code>cf push</code> command.</p>
+</li>
+</ol>
+<p>The following example <code>.profile</code> file uses <code>bash</code> to set a value for the environment variable <code>LANG</code>:</p>
+<pre><code class="language-bash"># Set the default LANG for your apps
+export LANG=en_US.UTF-8
+</code></pre>
+<p>Setting this value at the operating system level allows the app to find out which language to use for error messages and instructions, collating sequences, and date formats.</p>
+<p>Your app root directory might also include a <code>.profile.d</code> directory that contains bash scripts that perform initialization tasks for the buildpack. Developers
+must not edit these scripts unless they are using a custom buildpack. For more information about custom buildpacks, see <a href="../../buildpacks/custom.html">Custom
+Buildpacks</a>.</p>
+<p>Initialization tasks as described here are also called <em>pre-runtime hooks</em> and <em><code>.profile</code> tasks</em>.</p>
+<h3 id="custom-push-the-app"><a class="header" href="#custom-push-the-app"><a id="custom-cf-push"></a> Custom push the app</a></h3>
+<p>To specify custom options when pushing an app with <code>cf push</code>, you can include them in one or both of the following:</p>
+<ul>
+<li>
+<p>The <code>cf push</code> command itself.</p>
+</li>
+<li>
+<p>A manifest file.</p>
+<ul>
+<li>The manifest file must be named <code>manifest.yml</code> and reside in the directory where you run <code>cf push</code>.</li>
+<li>The manifest can include the app name, which lets you run <code>cf push</code> with no arguments.</li>
+<li>The manifest can also include a <code>services</code> block that lists service instances for the app to bind. For more information, see
+<a href="manifest-attributes.html#services-block">Services</a> in <em>App Manifest Attribute Reference</em>.</li>
+</ul>
+</li>
+</ul>
+<p>For information about how app settings change from push to push, including how command-line options, manifests, and commands like <code>cf scale</code> interact, see
+<a href="manifest.html">Deploying with App Manifests</a>.</p>
+<p>For a full list of <code>cf push</code> options, enter <code>cf push --help</code>.</p>
+<h3 id="configure-app-services-optional"><a class="header" href="#configure-app-services-optional"><a id="services"></a> Configure app services (optional)</a></h3>
+<p>If a newly-pushed app has the same name and route as an older app version, the new app retains the service bindings and service configuration of the
+previously-pushed version.</p>
+<p>For apps that are not already set up for the services that they use:</p>
+<ol>
+<li>
+<p>Bind the services to the app. For more information about services, see <a href="../services/index.html">Services overview</a>.</p>
+</li>
+<li>
+<p>(Optional) Configure the app with the service URL and credentials, if needed. For more information, see <a href="../../buildpacks/java/configuring-service-connections.html">Configuring Service
+Connections</a>.</p>
+</li>
+</ol>
+<h3 id="build-custom-push-workflows-optional"><a class="header" href="#build-custom-push-workflows-optional"><a id="sub-steps"></a> Build custom push workflows (optional)</a></h3>
+<p>The CF CLI includes <a href="../push-sub-commands.html">composible push sub-step
+commands</a> that empower you to build your own push.
+These are useful if the default behavior of <code>cf push</code> does not match your
+needs, or if you want to implement more complicated app build, promotion, and
+run workflows.</p>
+<h2 id="app-updates-and-downtime"><a class="header" href="#app-updates-and-downtime"><a id="updates"></a> App updates and downtime</a></h2>
+<p>By default, when you push an app that is already running, Cloud Foundry stops all existing instances of that app. Users who try to access the app see a <code>404 Not Found</code> message while <code>cf push</code> runs.</p>
+<p>When old and new versions of your app can run simultaneously, you can avoid app downtime by using <a href="./rolling-deploy.html">Rolling deployments</a>. Alternatively, you can use the blue-green deployment method to swap routes between app versions running in parallel. For more information, see <a href="blue-green.html">Using blue-green deployment to reduce downtime and risk</a>.</p>
+<p>With some app updates, old and new versions of your code must never run at the same time. A worst-case example is if your app update migrates a database schema, causing old app instances to fail and lose user data. To prevent this, you must stop all running instances of your app before you push the new version.</p>
+<h2 id="troubleshoot-app-push-problems"><a class="header" href="#troubleshoot-app-push-problems"><a id="troubleshoot-push"></a> Troubleshoot app push problems</a></h2>
+<p>If your app does not start on Cloud Foundry, first ensure that the app can run locally.</p>
+<p>To troubleshoot your app in the cloud using the cf CLI, see <a href="troubleshoot-app-health.html">Troubleshoot app deployment and health</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../devguide/push.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../devguide/deploy-apps/manifest.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../devguide/push.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../devguide/deploy-apps/manifest.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

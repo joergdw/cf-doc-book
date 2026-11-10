@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Additional information on Ruby buildpacks in Cloud Foundry - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-tips-for-ruby-developers-owner-buildpacks"><a class="header" href="#title-tips-for-ruby-developers-owner-buildpacks">title: Tips for Ruby developers
+owner: Buildpacks</a></h2>
+<p>You can deploy Rack, Rails, or Sinatra apps with Cloud Foundry.</p>
+<h2 id="app-bundling"><a class="header" href="#app-bundling"><a id="bundler"></a> App bundling</a></h2>
+<p>You must run Bundler to create a <code>Gemfile</code> and a <code>Gemfile.lock</code>.
+These files must be in your app before you push to Cloud Foundry.</p>
+<p>To download Bundler, see <a href="http://gembundler.com/">Gem Bundler</a>.</p>
+<h2 id="rack-config-file"><a class="header" href="#rack-config-file"><a id="config"></a> Rack config file</a></h2>
+<p>For Rack and Sinatra, you must have a <code>config.ru</code> file. For example:</p>
+<pre><code>require './hello_world'
+run HelloWorld.new
+</code></pre>
+<h2 id="asset-pre-compilation"><a class="header" href="#asset-pre-compilation"><a id="precompile"></a> Asset pre compilation</a></h2>
+<p>Cloud Foundry supports the Rails asset pipeline. If you do not precompile assets before deploying your app, Cloud Foundry precompiles them when staging the app. Precompiling before deploying reduces the time it takes to stage an app.</p>
+<p>To precompile assets before deployment, run:</p>
+<pre><code>rake assets:precompile
+</code></pre>
+<p>The Rake precompile task re-initializes the Rails app. This could pose a problem if initialization requires service connections or environment checks that are unavailable during staging. To prevent re-initialization during pre-compilation, add the following line to <code>application.rb</code>:</p>
+<pre><code>config.assets.initialize_on_precompile = false
+</code></pre>
+<p>If the <code>assets:precompile</code> task fails, Cloud Foundry uses live compilation mode, the alternative to asset precompilation. In this mode, assets are compiled when they are loaded for the first time. You can force live compilation by adding the following line to <code>application.rb</code>.</p>
+<pre><code>Rails.application.config.assets.compile = true
+</code></pre>
+<h2 id="running-rake-tasks"><a class="header" href="#running-rake-tasks"><a id="rake"></a> Running Rake tasks</a></h2>
+<p>Cloud Foundry does not provide a mechanism for running a Rake task on a deployed app. If you need to run a Rake task that must be performed in the Cloud Foundry environment, rather than locally before deploying or redeploying, you can configure the command that Cloud Foundry uses to start the app to invoke the Rake task.</p>
+<p>An app start command is configured in the app manifest file, <code>manifest.yml</code>, using the <code>command</code> attribute.</p>
+<p>For more information about app manifests and supported attributes, see <a href="../../devguide/deploy-apps/manifest.html">Deploying with App Manifests</a>.</p>
+<h3 id="example-invoking-a-rake-database-migration-task-at-app-startup"><a class="header" href="#example-invoking-a-rake-database-migration-task-at-app-startup"><a id="migrate-ruby-db"></a> Example: Invoking a Rake database migration task at App startup</a></h3>
+<p>See the following example of migrating a database schema using a Rake task.</p>
+<p>For more information about migrating database schemas, see the <a href="../../devguide/services/index.html#migrating">Migrate a Database Schema</a> section of the <em>Services Overview</em> topic.</p>
+<p>To migrate a database schema using a Rake task:</p>
+<ol>
+<li>
+<p>If a Rakefile does not exist, create one and add it to your app directory.</p>
+</li>
+<li>
+<p>In your Rakefile, add a Rake task to limit an idempotent command to the first instance of a deployed app:</p>
+<pre><code>namespace :cf do
+  desc "Only run on the first application instance"
+  task :on_first_instance do
+    instance_index = JSON.parse(ENV["VCAP_APPLICATION"])["instance_index"] rescue nil
+    exit(0) unless instance_index == 0
+  end
+end
+</code></pre>
+</li>
+<li>
+<p>Add the task to the <code>manifest.yml</code> file, referencing the idempotent command <code>rake db:migrate</code> with the <code>command</code> attribute:</p>
+<pre><code>---
+applications:
+- name: my-rails-app
+  command: bundle exec rake cf:on_first_instance db:migrate &amp;&amp; bundle exec rails s -p $PORT -e $RAILS_ENV
+</code></pre>
+</li>
+<li>
+<p>Update the app by running:</p>
+<pre><code>cf push
+</code></pre>
+</li>
+</ol>
+<h2 id="rails-3-worker-tasks"><a class="header" href="#rails-3-worker-tasks"><a id="workers"></a> Rails 3 worker tasks</a></h2>
+<p>Learn how to create and deploy an example Rails app that uses a worker library to defer a task that a separate app runs. It also describes how to scale the resources available to the worker app.</p>
+<p>Most worker tasks do not serve external requests. Use the <code>–no-route</code> flag with the <code>cf push</code> command, or <code>no-route: true</code> in the app manifest, to suppress route creation. If you are using cf CLI v7 or later, be aware that the <code>–no-route</code> flag no longer unbinds all existing routes associated with the app.</p>
+<h3 id="choose-a-worker-task-library"><a class="header" href="#choose-a-worker-task-library"><a id="worker-libs"></a> Choose a worker task library</a></h3>
+<p>You must choose a worker task library.</p>
+<p>The following table summarizes the three main libraries
+available for Ruby/Rails:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Library</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://github.com/collectiveidea/delayed_job">Delayed::Job</a></td><td>A direct extraction from <a href="http://www.shopify.com/">Shopify</a> where the job table is responsible for a multitude of core tasks.</td></tr>
+<tr><td><a href="https://github.com/resque/resque">Resque</a></td><td>A Redis-backed library for creating background jobs, placing those jobs on multiple queues, and processing them later.</td></tr>
+<tr><td><a href="https://github.com/mperham/sidekiq">Sidekiq</a></td><td>Uses threads to handle many messages at the same time in the same process. It does not require Rails, but integrates tightly with Rails 3 to simplify background message processing. This library is Redis-backed and semi-compatible with Resque messaging.</td></tr>
+</tbody>
+</table>
+</div>
+<p>For other alternatives, see <a href="https://www.ruby-toolbox.com/categories/Background_Jobs">Background Jobs</a> on The Ruby Toolbox.</p>
+<h3 id="creating-an-example-app"><a class="header" href="#creating-an-example-app"><a id="example-app"></a> Creating an example app</a></h3>
+<p>The example app described in this section uses Sidekiq.</p>
+<p>To create an example app:</p>
+<ol>
+<li>
+<p>Create a Rails app with an arbitrary model named “Things” by running:</p>
+<pre><code>rails create rails-sidekiq
+cd rails-sidekiq
+rails g model Thing title:string description:string
+</code></pre>
+</li>
+<li>
+<p>Add <code>sidekiq</code> and <code>uuidtools</code> to the Gemfile:</p>
+<pre><code>source 'https://rubygems.org'
+
+gem 'rails', '3.2.9'
+gem 'mysql2'
+
+group :assets do
+  gem 'sass-rails',   '~&gt; 3.2.3'
+  gem 'coffee-rails', '~&gt; 3.2.1'
+  gem 'uglifier', '&gt;= 1.0.3'
+end
+
+gem 'jquery-rails'
+gem 'sidekiq'
+gem 'uuidtools'
+</code></pre>
+</li>
+<li>
+<p>Install the bundle by running:</p>
+<pre><code>bundle install
+</code></pre>
+</li>
+<li>
+<p>In <code>app/workers</code>, create a worker for Sidekiq to carry out its tasks by running:</p>
+<pre><code>touch app/workers/thing_worker.rb
+</code></pre>
+<p>Create the worker as follows:</p>
+<pre><code>class ThingWorker
+
+  include Sidekiq::Worker
+
+  def perform(count)
+
+    count.times do
+
+      thing_uuid = UUIDTools::UUID.random_create.to_s
+      Thing.create :title =&gt;"New Thing (#{thing_uuid})", :description =&gt;
+"Description for thing #{thing_uuid}"
+    end
+
+  end
+
+end
+</code></pre>
+<p>This worker create <code>n</code> number of things, where <code>n</code> is the value passed to the worker.</p>
+</li>
+<li>
+<p>Create a controller for “Things” by running:</p>
+<pre><code>rails g controller Thing
+</code></pre>
+<p>Create the controller as follows:</p>
+<pre><code>class ThingController &lt; ApplicationController
+
+  def new
+    ThingWorker.perform_async(2)
+    redirect_to '/thing'
+  end
+
+  def index
+    @things = Thing.all
+  end
+
+end
+</code></pre>
+</li>
+<li>
+<p>Add a view to inspect our collection of “Things” by running:</p>
+<pre><code>mkdir app/views/things
+touch app/views/things/index.html.erb
+</code></pre>
+<p>Create the view as follows:</p>
+ 
+<pre class="terminal">
+ &lt;%= @things.inspect %&gt;
+ </pre>
+
+</li>
+</ol>
+<h4 id="deploying-the-app"><a class="header" href="#deploying-the-app"><a id="deploy"></a> Deploying the app</a></h4>
+<p>You must deploy your example app twice for it to work, once as a Rails web app and once as a standalone Ruby app. One way to do this is to keep separate Cloud Foundry manifests for each app type.</p>
+<p>To create separate manifests for each app type:</p>
+<ol>
+<li>
+<p>Create a web manifest and save it as <code>web-manifest.yml</code>:</p>
+<pre><code>---
+applications:
+- name: sidekiq
+  memory: 256M
+  instances: 1
+  host: sidekiq
+  domain: ${target-base}
+  path: .
+  services:
+  - sidekiq-mysql:
+  - sidekiq-redis:
+</code></pre>
+</li>
+<li>
+<p>Create a worker manifest and save it as <code>worker-manifest.yml</code>:</p>
+<pre><code>---
+applications:
+- name: sidekiq-worker
+  memory: 256M
+  instances: 1
+  path: .
+  command: bundle exec sidekiq
+  no-route: true
+  services:
+  - sidekiq-redis:
+  - sidekiq-mysql:
+</code></pre>
+</li>
+<li>
+<p>Since the URL <code>sidekiq.cloudfoundry.com</code> is likely already taken, change it in <code>web-manifest.yml</code> first, then push the app with both manifest files by running:</p>
+<pre><code>cf push -f web-manifest.yml
+cf push -f worker-manifest.yml
+</code></pre>
+<p>If the cf CLI asks for a URL for the worker app, select <strong>none</strong>.</p>
+</li>
+</ol>
+<h3 id="testing-the-app"><a class="header" href="#testing-the-app"><a id="test"></a> Testing the app</a></h3>
+<p>To test the app:</p>
+<ol>
+<li>Visit the new action on the “Thing” controller at the assigned URL. In this example, the URL would be <code>http://sidekiq.cloudfoundry.com/thing/new</code>.</li>
+</ol>
+<p>This creates a new Sidekiq job which is queued in Redis, then picked up by the worker app. The browser is then redirected to <code>/thing</code>, which shows the collection of “Things”.</p>
+<h3 id="scale-workers"><a class="header" href="#scale-workers"><a id="scale"></a> Scale workers</a></h3>
+<p>To change the number of Sidekiq workers:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf scale sidekiq-worker -i WORKER-NUMBER
+</code></pre>
+<p>Where <code>WORKER-NUMBER</code> is the number of Sidekiq workers you want.</p>
+</li>
+</ol>
+<h2 id="use-rails_serve_static_assets-on-rails-4"><a class="header" href="#use-rails_serve_static_assets-on-rails-4"><a id="rails-4"></a> Use rails_serve_static_assets on Rails 4</a></h2>
+<p>By default, Rails 4 returns a 404 error if an asset is not handled via an external proxy such as Nginx. The <code>rails_serve_static_assets</code> gem enables your Rails server to deliver static assets directly, instead of returning a 404 error.</p>
+<p>You can use this capability to populate an edge cache CDN or serve files directly from your web app. The gem enables this behavior by setting the <code>config.serve_static_assets</code> option to <code>true</code>, so you do not need to configure it manually.</p>
+<h2 id="add-custom-libraries"><a class="header" href="#add-custom-libraries"><a id="custom-libraries"></a> Add custom libraries</a></h2>
+<p>If your app requires external shared libraries that are not provided by the rootfs or the buildpack, you must place the libraries in an <code>ld_library_path</code> directory at the app root.</p>
+<p>You must keep these libraries up-to-date. They do not update automatically.</p>
+<p>The Ruby buildpack automatically adds the directory <code>&lt;app-root&gt;/ld_library_path</code> to <code>LD_LIBRARY_PATH</code> so that your app can access these libraries at runtime.</p>
+<h2 id="environment-variables"><a class="header" href="#environment-variables"><a id="env-var"></a> Environment variables</a></h2>
+<p>You can access environments variable programmatically. For example, you can obtain <code>VCAP_SERVICES</code> by running:</p>
+<pre><code>ENV['VCAP_SERVICES']
+</code></pre>
+<p>Environment variables available to you include both those defined by the system and those defined by the Ruby buildpack, as described in the sections below. For more information about system environment variables, see the <a href="../../devguide/deploy-apps/environment-variable.html#app-system-env">App-Specific System Variables</a> section of the <em>Cloud Foundry Environment Variables</em> topic.</p>
+<h3 id="bundle_bin_path"><a class="header" href="#bundle_bin_path"><a id="BUNDLE-BIN-PATH"></a> BUNDLE_BIN_PATH</a></h3>
+<p>This variable specifies the location where Bundler installs binaries.</p>
+<p>For example: <code>BUNDLE_BIN_PATH:/home/vcap/app/vendor/bundle/ruby/1.9.1/gems/bundler-1.3.2/bin/bundle</code></p>
+<h3 id="bundle_gemfile"><a class="header" href="#bundle_gemfile"><a id="BUNDLE-GEMFILE"></a> BUNDLE_GEMFILE</a></h3>
+<p>This variable specifies the path to the app Gemfile.</p>
+<p>For example: <code>BUNDLE_GEMFILE:/home/vcap/app/Gemfile</code></p>
+<h3 id="bundle_without"><a class="header" href="#bundle_without"><a id="BUNDLE-WITHOUT"></a> BUNDLE_WITHOUT</a></h3>
+<p>The <code>BUNDLE_WITHOUT</code> environment variable instructs Cloud Foundry to skip gem installation in excluded groups.</p>
+<p>Use this with Rails apps, where “assets” and “development” gem groups typically contain gems that are not needed when the app runs in production.</p>
+<p>For example: <code>BUNDLE_WITHOUT=assets</code></p>
+<h3 id="database_url"><a class="header" href="#database_url"><a id="DATABASE-URL"></a> DATABASE_URL</a></h3>
+<p>Cloud Foundry examines the <code>database_uri</code> for bound services to see if they match known database types. If known relational database services are bound to the app, the <code>DATABASE_URL</code> environment variable is set using the first match in the list.</p>
+<p>If your app depends on <code>DATABASE_URL</code> to be set to the connection string for your service and Cloud Foundry does not set it, use the <code>cf set-env</code> command to can set this variable manually.</p>
+<p>For example:</p>
+<pre><code>cf set-env my-app-name DATABASE_URL mysql://example-database-connection-string
+</code></pre>
+<h3 id="gem_home"><a class="header" href="#gem_home"><a id="GEM-HOME"></a> GEM_HOME</a></h3>
+<p>This variable specifies the location where gems are installed.</p>
+<p>For example: <code>GEM_HOME:/home/vcap/app/vendor/bundle/ruby/1.9.1</code></p>
+<h3 id="gem_path"><a class="header" href="#gem_path"><a id="GEM-PATH"></a> GEM_PATH</a></h3>
+<p>This variable specifies the location where gems can be found.</p>
+<p>For example: <code>GEM_PATH=/home/vcap/app/vendor/bundle/ruby/1.9.1:</code></p>
+<h3 id="rack_env"><a class="header" href="#rack_env"><a id="RACK-ENV"></a> RACK_ENV</a></h3>
+<p>This variable specifies the Rack deployment environment. Valid values are <code>development</code>, <code>deployment</code>, and <code>none</code>. This governs which middleware is loaded to run the app.</p>
+<p>For example: <code>RACK_ENV=development</code></p>
+<h3 id="rails_env"><a class="header" href="#rails_env"><a id="RAILS-ENV"></a> RAILS_ENV</a></h3>
+<p>This variable specifies the Rails deployment environment. Valid values are <code>development</code>, <code>test</code>, and <code>production</code>. This controls which of the environment-specific configuration files governs how the app is run.</p>
+<p>For example: <code>RAILS_ENV=production</code></p>
+<h3 id="rubyopt"><a class="header" href="#rubyopt"><a id="RUBYOPT"></a> RUBYOPT</a></h3>
+<p>This Ruby environment variable defines command-line options passed to Ruby interpreter.</p>
+<p>For example: <code>RUBYOPT: -I/home/vcap/app/vendor/bundle/ruby/1.9.1/gems/bundler-1.3.2/lib -rbundler/setup</code></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../buildpacks/ruby/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../buildpacks/ruby/deploying-apps-index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../buildpacks/ruby/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../buildpacks/ruby/deploying-apps-index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

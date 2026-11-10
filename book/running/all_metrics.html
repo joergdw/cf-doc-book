@@ -1,0 +1,874 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cloud Foundry component metrics - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-cloud-foundry-component-metrics-owner-logging-and-metrics"><a class="header" href="#title-cloud-foundry-component-metrics-owner-logging-and-metrics">title: Cloud Foundry component metrics
+owner: Logging and Metrics</a></h2>
+<p><a id="top"></a> This topic lists and describes the metrics available for Cloud Foundry system components. These metrics are streamed from the Loggregator Firehose. For more information about the Firehose, see <a href="../loggregator/architecture.html">Loggregator architecture</a>.</p>
+<p>The Cloud Foundry component metric names and descriptions listed in this topic may be out of date because Cloud Foundry component metrics change often. If you have questions about Cloud Foundry component metrics, consider contacting the component teams directly on their respective channels in the <a href="https://cloudfoundry.slack.com">Cloud Foundry Slack</a> organization. For example, you can contact the Diego team at <strong>#diego</strong>.</p>
+<h2 id="cloud-controller"><a class="header" href="#cloud-controller"><a id="cc"></a> Cloud Controller</a></h2>
+<p>Cloud Controller metrics have the following origin names:</p>
+<ul>
+<li><a href="#cc">cc</a></li>
+<li><a href="#cc_worker">cc_worker</a></li>
+</ul>
+<p>Default Origin Name: cc</p>
+<p>Statsd/Prometheus metrics for Cloud Controller API Server</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Statsd Metric Name</th><th>Prometheus Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>NA</td><td>cc_puma_worker_count</td><td>Worker count<br /> <strong>Puma-Only Metric</strong></td></tr>
+<tr><td>NA</td><td>cc_puma_worker_started_at</td><td>Worker, started_at<br /> <strong>Puma-Only Metric</strong></td></tr>
+<tr><td>NA</td><td>cc_puma_worker_thread_count</td><td>Worker thread count<br /> <strong>Puma-Only Metric</strong></td></tr>
+<tr><td>NA</td><td>cc_puma_worker_backlog</td><td>Worker backlog<br /> <strong>Puma-Only Metric</strong></td></tr>
+<tr><td>deployments.deploying</td><td>cc_deployments_in_progress_total</td><td>Number of deployments in the DEPLOYING state. Emitted every 30 seconds.</td></tr>
+<tr><td>NA</td><td>cc_acquired_db_connections_total</td><td>Number of acquired DB connections (blocked by threads).</td></tr>
+<tr><td>NA</td><td>cc_open_db_connections_total</td><td>Number of open DB connections (acquired + available).</td></tr>
+<tr><td>NA</td><td>cc_db_connection_hold_duration_seconds</td><td>Durations of connections held by threads.</td></tr>
+<tr><td>NA</td><td>cc_db_connection_wait_duration_seconds</td><td>Durations of threads which waited for an available DB connection.</td></tr>
+<tr><td>NA</td><td>cc_db_connection_pool_timeouts_total</td><td>Number of threads which failed to acquire a free DB connection from the pool within the timeout.</td></tr>
+<tr><td>deployments.update.duration</td><td>NA</td><td>Time in milliseconds that it took to complete an update of app deployments. Emitted every 5 seconds.</td></tr>
+<tr><td>diego_sync.invalid_desired_lrps</td><td>NA</td><td>Number of invalid DesiredLRPs found during Cloud Foundry apps and Diego DesiredLRPs periodic synchronization. Emitted every 30 seconds.</td></tr>
+<tr><td>diego_sync.duration</td><td>NA</td><td>Time in milliseconds that it took to synchronize Cloud Foundry apps and Diego DesiredLRPs. Emitted every 30 seconds.</td></tr>
+<tr><td>failed_job_count.total</td><td>cc_failed_job_count_total</td><td>Number of failed jobs in all queues. By default, Cloud Controller deletes failed jobs after 31 days. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>http_status.1XX</td><td>NA</td><td>Number of HTTP response status codes of type 1xx (informational). This resets when the Cloud Controller process is restarted and is incremented at the end of each request cycle.</td></tr>
+<tr><td>http_status.2XX</td><td>NA</td><td>Number of HTTP response status codes of type 2xx (success). This resets when the Cloud Controller process is restarted and is incremented at the end of each request cycle. Emitted for each Cloud Controller request.</td></tr>
+<tr><td>http_status.3XX</td><td>NA</td><td>Number of HTTP response status codes of type 3xx (redirection). This resets when the Cloud Controller process is restarted and is incremented at the end of each request cycle. Emitted for each Cloud Controller request.</td></tr>
+<tr><td>http_status.4XX</td><td>NA</td><td>Number of HTTP response status codes of type 4xx (client error). This resets when the Cloud Controller process is restarted and is incremented at the end of each request cycle. Emitted for each Cloud Controller request.</td></tr>
+<tr><td>http_status.5XX</td><td>NA</td><td>Number of HTTP response status codes of type 5xx (server error). This resets when the Cloud Controller process is restarted and is incremented at the end of each request cycle.</td></tr>
+<tr><td></td><td>NA</td><td>Number of background jobs in the cc-generic queue that have yet to run for the first time. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>job_queue_length.total</td><td>cc_job_queues_length_total</td><td>Total number of background jobs in the queues that have yet to run for the first time. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>job_queue_load.total</td><td>cc_job_queues_load_total</td><td>Total number of background jobs in the queues that are ready to run now. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.all</td><td>NA</td><td>Total number of log messages, sum of messages of all severity levels. The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.debug</td><td>NA</td><td>Number of log messages of severity “debug.” The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.debug1</td><td>NA</td><td>Not used.</td></tr>
+<tr><td>log_count.debug2</td><td>NA</td><td>Number of log messages of severity “debug2.” The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.error</td><td>NA</td><td>Number of log messages of severity “error.” Error is the most severe level. It is used for failures and during error handling. Most errors can be found under this log level, eg. failed unbinding a service, failed to cancel a task, Diego app crashed error, staging completion errors, staging errors, and resource not found. The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.fatal</td><td>NA</td><td>Number of log messages of severity “fatal.” The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.info</td><td>NA</td><td>Number of log messages of severity “info.” Examples of info messages are droplet created, copying package, uploading package, access denied due to insufficient scope, job logging, blobstore actions, staging requests, and app running requests. The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.off</td><td>NA</td><td>Number of log messages of severity “off.” The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>log_count.warn</td><td>NA</td><td>Number of log messages of severity “warn.”  Warn is also used for failures and during error handling, eg. diagnostics written to file, failed to capture diagnostics, app rollback failed, service broker already deleted, and UAA token problems. The count resets when the Cloud Controller process is restarted. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>requests.completed</td><td>cc_requests_completed_total</td><td>Number of requests that have been processed. Emitted for each Cloud Controller request.</td></tr>
+<tr><td>requests.outstanding</td><td>NA</td><td>DEPRECATED in favor of requests.outstanding.gauge</td></tr>
+<tr><td>requests.outstanding.gauge</td><td>cc_requests_outstanding_total</td><td>Number of requests that are currently being processed. Emitted for each Cloud Controller request.</td></tr>
+<tr><td>staging.requested</td><td>cc_staging_requests_total</td><td>Cumulative number of requests to start a staging task handled by each Cloud Controller.</td></tr>
+<tr><td>staging.succeeded</td><td>NA</td><td>Cumulative number of successful staging tasks handled by each Cloud Controller. Emitted every time a staging task completes successfully.</td></tr>
+<tr><td>staging.succeeded_duration</td><td>NA</td><td>Time in milliseconds that the successful staging task took to run. Emitted each time a staging task completes successfully.</td></tr>
+<tr><td>NA</td><td>cc_staging_succeeded_duration_seconds</td><td>Histogram - Time in seconds that the successful staging task took to run. <strong>Puma-Only Metric</strong></td></tr>
+<tr><td>staging.failed</td><td>NA</td><td>Cumulative number of failed staging tasks handled by each Cloud Controller. Emitted every time a staging task fails.</td></tr>
+<tr><td>staging.failed_duration</td><td>NA</td><td>Time in milliseconds that the failed staging task took to run. Emitted each time a staging task fails.</td></tr>
+<tr><td>NA</td><td>cc_staging_failed_duration_seconds</td><td>Histogram - Time in seconds that the failed staging task took to run. <strong>Puma-Only Metric</strong></td></tr>
+<tr><td>tasks_running.count</td><td>cc_running_tasks_total</td><td>Number of currently running tasks. Emitted every 30 seconds per VM. This metric is only seen in version 3 of the Cloud Foundry API.</td></tr>
+<tr><td>tasks_running.memory_in_mb</td><td>cc_running_tasks_memory_bytes</td><td>Memory being consumed by all currently running tasks. Emitted every 30 seconds per VM. This metric is only seen in version 3 of the Cloud Foundry API</td></tr>
+<tr><td>thread_info.event_machine.connection_count</td><td>cc_thread_info_event_machine_connection_count</td><td>Number of open connections to event machine. Emitted every 30 seconds per VM.<br /> <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>thread_info.event_machine.resultqueue.num_waiting</td><td>cc_thread_info_event_machine_resultqueue_num_waiting</td><td>Number of scheduled tasks in the result. Emitted every 30 seconds per VM. <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>thread_info.event_machine.resultqueue.size</td><td>cc_thread_info_event_machine_resultqueue_size</td><td>Number of unscheduled tasks in the result. Emitted every 30 seconds per VM.<br /> <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>thread_info.event_machine.threadqueue.num_waiting</td><td>cc_thread_info_event_machine_threadqueue_num_waiting</td><td>Number of scheduled tasks in the threadqueue. Emitted every 30 seconds per VM<br />. <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>thread_info.event_machine.threadqueue.size</td><td>cc_thread_info_event_machine_threadqueue_size</td><td>Number of unscheduled tasks in the threadqueue. Emitted every 30 seconds per VM.<br /> <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>thread_info.thread_count</td><td>cc_thread_info_thread_count</td><td>Total number of threads that are either runnable or stopped. Emitted every 30 seconds per VM.<br /> <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>total_users</td><td>cc_users_total</td><td>Total number of users ever created, including inactive users. Emitted every 10 minutes per VM.<br /> <strong>Thin Only, Not available in Puma</strong></td></tr>
+<tr><td>vcap_sinatra.recent_errors</td><td>NA</td><td>50 most recent errors. DEPRECATED</td></tr>
+<tr><td>NA</td><td>cc_vitals_started_at</td><td>CloudController Vitals: started_at</td></tr>
+<tr><td>vitals.cpu</td><td>NA</td><td>Average lifetime CPU% utilization of the Cloud Controller process according to ps. Usually misleading, prefer <code>vitals.cpu_load_average</code>. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>vitals.cpu_load_avg</td><td>cc_vitals_cpu_load_avg</td><td>System CPU load averaged over the last 1 minute according to the OS’s vmstat metrics. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>vitals.mem_bytes</td><td>cc_vitals_mem_bytes</td><td>The RSS bytes (resident set size) or real memory of the Cloud Controller process. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>vitals.mem_free_bytes</td><td>cc_vitals_mem_free_bytes</td><td>Total memory available according to the OS. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>vitals.mem_used_bytes</td><td>cc_vitals_mem_used_bytes</td><td>Total memory used (active + wired) according to the OS. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>vitals.num_cores</td><td>cc_vitals_num_cores</td><td>The number of CPUs of a host machine. Emitted every 30 seconds per VM.</td></tr>
+<tr><td>vitals.uptime</td><td>NA</td><td>The uptime of the Cloud Controller process in seconds. Emitted every 30 seconds per VM.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: cc_worker</p>
+<p>Statsd/Prometheus metrics for Cloud Controller Workers</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Prometheus Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>cc_acquired_db_connections_total</td><td>Number of acquired DB connections (blocked by threads).</td></tr>
+<tr><td>cc_open_db_connections_total</td><td>Number of open DB connections (acquired + available).</td></tr>
+<tr><td>cc_db_connection_hold_duration_seconds</td><td>Durations of connections held by threads.</td></tr>
+<tr><td>cc_db_connection_wait_duration_seconds</td><td>Durations of threads which waited for an available DB connection.</td></tr>
+<tr><td>cc_db_connection_pool_timeouts_total</td><td>Number of threads which failed to acquire a free DB connection from the pool within the timeout.</td></tr>
+<tr><td>cc_job_pickup_delay_seconds</td><td>Time between scheduled run time (<code>run_at</code>) and actual start (<code>locked_at</code>). Labeled by queue and worker.</td></tr>
+<tr><td>cc_job_duration_seconds</td><td>Time between actual start (<code>locked_at</code>) and end of execution. Labeled by queue and worker.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="diego"><a class="header" href="#diego"><a id="diego"></a> Diego</a></h2>
+<p>Diego metrics have the following origin names:</p>
+<ul>
+<li><a href="#auctioneer">auctioneer</a></li>
+<li><a href="#bbs">bbs</a></li>
+<li><a href="#fileserver">file_server</a></li>
+<li><a href="#locket">locket</a></li>
+<li><a href="#rep">rep</a></li>
+<li><a href="#routeemitter">route_emitter</a></li>
+<li><a href="#sshproxy">ssh_proxy</a><a id="auctioneer"></a></li>
+<li><a href="#garden-linux">garden-linux</a><a id="garden-linux"></a></li>
+</ul>
+<p>Default Origin Name: auctioneer</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>AuctioneerFailedCellStateRequests</td><td>Cumulative number of cells the auctioneer failed to query for state. Emitted during each auction.</td></tr>
+<tr><td>AuctioneerFetchStatesDuration</td><td>Time in nanoseconds that the auctioneer took to fetch state from all the cells when running its auction. Emitted every 30 seconds during each auction.</td></tr>
+<tr><td>AuctioneerLRPAuctionsFailed</td><td>Cumulative number of LRP instances that the auctioneer failed to place on Diego Cells. Emitted every 30 seconds during each auction.</td></tr>
+<tr><td>AuctioneerLRPAuctionsStarted</td><td>Cumulative number of LRP instances that the auctioneer successfully placed on Diego Cells. Emitted every 30 seconds during each auction.</td></tr>
+<tr><td>AuctioneerTaskAuctionsFailed</td><td>Cumulative number of Tasks that the auctioneer failed to place on Diego Cells. Emitted every 30 seconds during each auction.</td></tr>
+<tr><td>AuctioneerTaskAuctionsStarted</td><td>Cumulative number of Tasks that the auctioneer successfully placed on Diego Cells. Emitted every 30 seconds during each auction.</td></tr>
+<tr><td>LockHeld</td><td>Whether an auctioneer holds the auctioneer lock (in locket): 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active auctioneer.</td></tr>
+<tr><td>LockHeld.v1-locks-auctioneer_lock</td><td>Whether an auctioneer holds the auctioneer lock: <code>1</code> means the lock is held, and <code>0</code> means the lock was lost. Emitted every 30 seconds by the active auctioneer.</td></tr>
+<tr><td>LockHeldDuration.v1-locks-auctioneer_lock</td><td>Time in nanoseconds that the active auctioneer has held the auctioneer lock. Emitted every 30 seconds by the active auctioneer.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process.</td></tr>
+<tr><td>RequestCount</td><td>Cumulative number of requests the auctioneer has handled through its API. Emitted periodically.</td></tr>
+<tr><td>RequestLatency</td><td>Time the auctioneer took to handle requests to its API endpoints. Emitted when the auctioneer handles requests<a id="bbs"></a>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: bbs</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>BBSMasterElected</td><td>Emitted once when the BBS is elected as master.</td></tr>
+<tr><td>ConvergenceLRPDuration</td><td>Time in nanoseconds that the BBS took to run its LRP convergence pass. Emitted every 30 seconds when LRP convergence runs.</td></tr>
+<tr><td>ConvergenceLRPRuns</td><td>Cumulative number of times BBS has run its LRP convergence pass. Emitted every 30 seconds.</td></tr>
+<tr><td>ConvergenceTaskDuration</td><td>Time in nanoseconds that the BBS took to run its Task convergence pass. Emitted every 30 seconds when Task convergence runs.</td></tr>
+<tr><td>ConvergenceTaskRuns</td><td>Cumulative number of times the BBS has run its Task convergence pass. Emitted every 30 seconds.</td></tr>
+<tr><td>ConvergenceTasksKicked</td><td>Cumulative number of times the BBS has updated a Task during its Task convergence pass. Emitted every 30 seconds.</td></tr>
+<tr><td>ConvergenceTasksPruned</td><td>Cumulative number of times the BBS has deleted a malformed Task during its Task convergence pass. Emitted every 30 seconds.</td></tr>
+<tr><td>CrashedActualLRPs</td><td>Total number of LRP instances that have crashed. Emitted every 30 seconds.</td></tr>
+<tr><td>CrashingDesiredLRPs</td><td>Total number of DesiredLRPs that have at least one crashed instance. Emitted every 30 seconds.</td></tr>
+<tr><td>DBOpenConnections</td><td>Number of open connections to the SQL database. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesFailed</td><td>Cumulative number of SQL queries that failed. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesInFlight</td><td>Maximum number of concurrent in flight queries in the last 60 seconds. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesTotal</td><td>Cumulative number of SQL queries executed, including <code>BEGIN</code>, <code>COMMIT</code>, and <code>ROLLBACK</code> statements. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesSucceeded</td><td>Cumulative number of SQL queries that finished successfully. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueryDurationMax</td><td>Maximum duration of all queries that have run in the last 60 seconds. Emitted every 60 seconds.</td></tr>
+<tr><td>DBWaitDuration</td><td>The total time blocked waiting for a new connection. Emitted every 60 seconds.</td></tr>
+<tr><td>DBWaitCount</td><td>The total number of connections waited for. Emitted every 60 seconds.</td></tr>
+<tr><td>Domain.<domain-name></domain-name></td><td>Whether the <code>&lt;domain-name&gt;</code> domain is up-to-date, so that instances from that domain have been synchronized with DesiredLRPs for Diego to run. 1 means the domain is up-to-date, no data means it is not. Emitted periodically.</td></tr>
+<tr><td>EncryptionDuration</td><td>Time the BBS took to ensure all BBS records are encrypted with the current active encryption key. Emitted each time a BBS becomes the active master.</td></tr>
+<tr><td>LockHeld</td><td>Whether a BBS holds the BBS lock (in locket): 1 means the lock is held, and 0 means the lock was lost. Emitted periodically by the active BBS server.</td></tr>
+<tr><td>LockHeld.v1-locks-bbs_lock</td><td>Whether a BBS holds the BBS lock: <code>1</code> means the lock is held, and <code>0</code> means the lock was lost. Emitted every 30 seconds by the active BBS server.</td></tr>
+<tr><td>LockHeldDuration.v1-locks-bbs_lock</td><td>Time in nanoseconds that the active BBS has held the BBS lock. Emitted every 30 seconds by the active BBS server.</td></tr>
+<tr><td>LRPsClaimed</td><td>Total number of LRP instances that have been claimed by some cell. Emitted every 30 seconds.</td></tr>
+<tr><td>LRPsDesired</td><td>Total number of LRP instances desired across all LRPs. Emitted periodically.</td></tr>
+<tr><td>LRPsExtra</td><td>Total number of LRP instances that are no longer desired but still have a BBS record. Emitted every 30 seconds.</td></tr>
+<tr><td>LRPsMissing</td><td>Total number of LRP instances that are desired but have no record in the BBS. Emitted every 30 seconds.</td></tr>
+<tr><td>LRPsRunning</td><td>Total number of LRP instances that are running on cells. Emitted every 30 seconds.</td></tr>
+<tr><td>LRPsUnclaimed</td><td>Total number of LRP instances that have not yet been claimed by a cell. Emitted every 30 seconds.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>MigrationDuration</td><td>Time in nanoseconds that the BBS took to run migrations against its persistence store. Emitted each time a BBS becomes the active master.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process.</td></tr>
+<tr><td>OpenFileDescriptors</td><td>Current (non-cumulative) number of open file descriptors held by the BBS. Emitted periodically.</td></tr>
+<tr><td>PresentCells</td><td>Total number of Diego Cells that are maintaining presence with Locket. Emitted periodically.</td></tr>
+<tr><td>RequestCount</td><td>Cumulative number of requests the BBS has handled through its API. Emitted for each BBS request.</td></tr>
+<tr><td>RequestLatency</td><td>Time in nanoseconds that the BBS took to handle requests to its API endpoints. Emitted when the BBS API handles requests.</td></tr>
+<tr><td>SuspectCells</td><td>Total number of cells that are not maintaining their presences with Locket but for which the BBS has a record of at least one ActualLRP. Emitted periodically.</td></tr>
+<tr><td>SuspectClaimedActualLRPs</td><td>Total number of Suspect LRP instances that have been claimed by some Diego Cell. Emitted periodically.</td></tr>
+<tr><td>SuspectRunningActualLRPs</td><td>Total number of Suspect LRP instances that are running on Diego Cells. Emitted periodically.</td></tr>
+<tr><td>TasksCompleted</td><td>Total number of Tasks that have completed. Emitted every 30 seconds.</td></tr>
+<tr><td>TasksPending</td><td>Total number of Tasks that have not yet been placed on a Diego Cell. Emitted every 30 seconds.</td></tr>
+<tr><td>TasksResolving</td><td>Total number of Tasks locked for deletion. Emitted every 30 seconds.</td></tr>
+<tr><td>TasksRunning</td><td>Total number of Tasks running on Diego Cells. Emitted every 30 seconds.</td></tr>
+<tr><td>TasksSucceeded</td><td>Cumulative number of tasks completed successfully. This metric has a <code>cell-id</code> tag that can be used to get the per Cell metric.</td></tr>
+<tr><td>TasksFailed</td><td>Cumulative number of tasks that failed. This metric has a <code>cell-id</code> tag that can be used to get the per Cell metric.</td></tr>
+<tr><td>TasksStarted</td><td>Cumulative number of tasks that has started so far. This metric has a <code>cell-id</code> tag that can be used to get the per Cell metric<a id="fileserver"></a>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: file_server</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process<a id="locket"></a>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: locket</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>ActiveLocks</td><td>Total number of active locks. Emitted periodically.</td></tr>
+<tr><td>ActivePresences</td><td>Total number of active presences. Emitted periodically.</td></tr>
+<tr><td>DBOpenConnections</td><td>Number of open connections to the SQL database. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesFailed</td><td>Cumulative number of SQL queries that failed. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesInFlight</td><td>Maximum number of concurrent in flight queries in the last 60 seconds. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesTotal</td><td>Cumulative number of SQL queries executed, including <code>BEGIN</code>, <code>COMMIT</code>, and <code>ROLLBACK</code> statements. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueriesSucceeded</td><td>Cumulative number of SQL queries that finished successfully. Emitted every 60 seconds.</td></tr>
+<tr><td>DBQueryDurationMax</td><td>Maximum duration of all queries that have run in the last 60 seconds. Emitted every 60 seconds.</td></tr>
+<tr><td>LocksExpired</td><td>Cumulative number of locks that have expired. Emitted every 60 seconds.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process.</td></tr>
+<tr><td>PresenceExpired</td><td>Cumulative number of presences that have expired. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsCancelled</td><td>Cumulative number of requests of a particular type that have been cancelled by the client. Currently tracking <code>Lock</code>, <code>Release</code>, <code>Fetch</code>, and <code>FetchAll</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsStarted</td><td>Cumulative number of requests of a particular type that have been made. Currently tracking <code>Lock</code>, <code>Release</code>, <code>Fetch</code>, and <code>FetchAll</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsSucceeded</td><td>Cumulative number of requests of a particular type that have completed successfully. Currently tracking <code>Lock</code>, <code>Release</code>, <code>Fetch</code>, and <code>FetchAll</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsFailed</td><td>Cumulative number of requests of a particular type that have failed for any reason. Currently tracking <code>Lock</code>, <code>Release</code>, <code>Fetch</code>, and <code>FetchAll</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsInFlight</td><td>Number of requests of a particular type currently being handled by locket. Currently tracking <code>Lock</code>, <code>Release</code>, <code>Fetch</code>, and <code>FetchAll</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestLatencyMax</td><td>Maximum request latency emitted by a request of a particular type in the last 60 seconds. Currently tracking <code>Lock</code>, <code>Release</code>, <code>Fetch</code>, and <code>FetchAll</code> requests. Emitted every 60 seconds<a id="rep"></a>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: rep (applies to rep and rep_windows jobs)</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>AppInstanceExceededLogRateLimitCount</td><td>Number of application instances that have exceeded the app log rate limit. Emitted once for each application instance that exceeds the log rate limit within the last 5 minute interval. This metric is only emitted if an operator has configured an app log rate limit and an app instance has exceeded that limit.</td></tr>
+<tr><td>CapacityAllocatedDisk</td><td>Amount of disk allocated to containers on this Diego Cell. Emitted periodically.</td></tr>
+<tr><td>CapacityAllocatedMemory</td><td>Amount of memory allocated to containers on this Diego Cell. Emitted periodically.</td></tr>
+<tr><td>CapacityRemainingContainers</td><td>Remaining number of containers this Diego Cell can host. Emitted periodically.</td></tr>
+<tr><td>CapacityRemainingDisk</td><td>Remaining amount of disk available for this Diego Cell to allocate to containers. Emitted periodically.</td></tr>
+<tr><td>CapacityRemainingMemory</td><td>Remaining amount of memory available for this Diego Cell to allocate to containers. Emitted periodically.</td></tr>
+<tr><td>CapacityTotalContainers</td><td>Total number of containers this Diego Cell can host. Emitted periodically.</td></tr>
+<tr><td>CapacityTotalDisk</td><td>Total amount of disk available for this Diego Cell to allocate to containers. Emitted periodically.</td></tr>
+<tr><td>CapacityTotalMemory</td><td>Total amount of memory available for this Diego Cell to allocate to containers. Emitted periodically.</td></tr>
+<tr><td>ContainerCompletedCount</td><td>Number of containers exited on this Diego Cell. Emitted after container exits.</td></tr>
+<tr><td>ContainerCount</td><td>Number of containers hosted on the Diego Cell. Emitted periodically.</td></tr>
+<tr><td>ContainerExitedOnTimeoutCount</td><td>Number of containers on this Diego Cell exited after graceful shutdown interval. Emitted after container exits.</td></tr>
+<tr><td>ContainerUsageDisk</td><td>Amount of disk used by containers on this Diego Cell. Emitted periodically.</td></tr>
+<tr><td>ContainerUsageMemory</td><td>Amount of memory used by containers on this Diego Cell. Emitted periodically.</td></tr>
+<tr><td>CredCreationFailedCount</td><td>Count of failed instance identity credential creations. Emitted after every failed credential creation.</td></tr>
+<tr><td>CredCreationSucceededCount</td><td>Count of successful instance identity credential creations. Emitted after every successful credential creation.</td></tr>
+<tr><td>CredCreationSucceededDuration</td><td>Time the rep took to create instance identity credentials. Emitted after every successful credential creation.</td></tr>
+<tr><td>ContainerSetupSucceededDuration</td><td>Time the rep took to setup a container with the Garden back end. Emitted after every successful container setup.</td></tr>
+<tr><td>ContainerSetupFailedDuration</td><td>Time the rep took to setup a container with the Garden back end. Emitted after every failed container setup.</td></tr>
+<tr><td>GardenContainerCreationFailedDuration</td><td>Time the rep’s Garden back end took to create a container. Emitted after every failed container creation.</td></tr>
+<tr><td>GardenContainerCreationSucceededDuration</td><td>Time the rep’s Garden back end took to create a container. Emitted after every successful container creation.</td></tr>
+<tr><td>GardenContainerDestructionFailedDuration</td><td>Time the rep’s Garden back end took to destroy a container. Emitted after every failed container destruction.</td></tr>
+<tr><td>GardenContainerDestructionSucceededDuration</td><td>Time the rep’s Garden back end took to destroy a container. Emitted after every successful container destruction.</td></tr>
+<tr><td>GardenHealthCheckFailed</td><td>Whether the cell has failed to pass its healthcheck against the garden back end. 0 signifies healthy, and 1 signifies unhealthy. Emitted periodically.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process.</td></tr>
+<tr><td>RepBulkSyncDuration</td><td>Time the Diego Cell rep took to synchronize the ActualLRPs it has claimed with its actual Garden containers. Emitted periodically by each rep.</td></tr>
+<tr><td>RequestsStarted</td><td>Cumulative number of requests of a particular type that have been made. Currently tracking <code>CancelTask</code>, <code>ContainerMetrics</code>, <code>Perform</code>, <code>Reset</code>, <code>State</code>, and <code>StopLRPInstance</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsSucceeded</td><td>Cumulative number of requests of a particular type that have completed successfully. Currently tracking <code>CancelTask</code>, <code>ContainerMetrics</code>, <code>Perform</code>, <code>Reset</code>, <code>State</code>, and <code>StopLRPInstance</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsFailed</td><td>Cumulative number of requests of a particular type that have failed for any reason. Currently tracking <code>CancelTask</code>, <code>ContainerMetrics</code>, <code>Perform</code>, <code>Reset</code>, <code>State</code>, and <code>StopLRPInstance</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestsInFlight</td><td>Cumulative number of requests of a particular type that are in-flight by rep. Currently tracking <code>CancelTask</code>, <code>ContainerMetrics</code>, <code>Perform</code>, <code>Reset</code>, <code>State</code>, and <code>StopLRPInstance</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>RequestLatencyMax</td><td>Maximum request latency emitted by a request of a particular type in the last 60 seconds. Currently tracking <code>CancelTask</code>, <code>ContainerMetrics</code>, <code>Perform</code>, <code>Reset</code>, <code>State</code>, and <code>StopLRPInstance</code> requests. Emitted every 60 seconds.</td></tr>
+<tr><td>StalledGardenDuration</td><td>Time the rep is waiting on its Garden back end to become healthy during startup. Emitted only if garden not responsive when the rep starts up.</td></tr>
+<tr><td>StartingContainerCount</td><td>Number of containers currently in a Reserved, Initializing, or Created state. Emitted periodically.</td></tr>
+<tr><td>StrandedEvacuatingActualLRPs</td><td>Evacuating ActualLPRs that timed out during the evacuation process. Emitted when evacuation does not complete successfully.</td></tr>
+<tr><td>VolmanMountDuration</td><td>Time volman took to mount a volume. Emitted by each rep when volumes are mounted.</td></tr>
+<tr><td>VolmanMountDurationFor</td><td>Time volman took to mount a volume with a specific volume driver. Emitted by each rep when volumes are mounted.</td></tr>
+<tr><td>VolmanMountErrors</td><td>Count of failed volume mounts. Emitted periodically by each rep.</td></tr>
+<tr><td>VolmanUnmountDuration</td><td>Time volman took to unmount a volume. Emitted by each rep when volumes are mounted.</td></tr>
+<tr><td>VolmanUnmountDurationFor</td><td>Time volman took to unmount a volume with a specific volume driver. Emitted by each rep when volumes are mounted.</td></tr>
+<tr><td>VolmanUnmountErrors</td><td>Count of failed volume unmounts. Emitted periodically by each rep<a id="routeemitter"></a>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: route_emitter (applies to route_emitter and route_emitter_windows jobs)</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>AddressCollisions</td><td>Number of detected conflicting routes. A conflicting route is a set of two distinct instances with the same IP address on the routing table.</td></tr>
+<tr><td>HTTPRouteCount</td><td>Number of HTTP route associations (route-endpoint pairs) in the route-emitter’s routing table. Emitted periodically when emitter is in local mode.</td></tr>
+<tr><td>HTTPRouteNATSMessagesEmitted</td><td>Cumulative number of HTTP routing messages the route-emitter sends over NATS to the gorouter.</td></tr>
+<tr><td>InternalRouteNATSMessagesEmitted</td><td>Cumulative number of internal routing messages the route-emitter sends over NATS to the service discovery controller.</td></tr>
+<tr><td>LockHeld.v1-locks-route_emitter_lock</td><td>Whether a route-emitter holds the route-emitter lock: <code>1</code> means the lock is held, and <code>0</code> means the lock was lost. Emitted every 30 seconds by the active route-emitter.</td></tr>
+<tr><td>LockHeldDuration.v1-locks-route_emitter_lock</td><td>Time in nanoseconds that the active route-emitter has held the route-emitter lock. Emitted every 30 seconds by the active route-emitter.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process.</td></tr>
+<tr><td>RouteEmitterSyncDuration</td><td>Time in nanoseconds that the active route-emitter took to perform its synchronization pass. Emitted every 60 seconds.</td></tr>
+<tr><td>RoutesRegistered</td><td>Cumulative number of route registrations emitted from the route-emitter as it reacts to changes to LRPs. Emitted every 30 seconds.</td></tr>
+<tr><td>RoutesSynced</td><td>Cumulative number of route registrations emitted from the route-emitter during its periodic route-table synchronization. Emitted every 30 seconds.</td></tr>
+<tr><td>RoutesTotal</td><td>Number of routes in the route-emitter’s routing table. Emitted every 30 seconds.</td></tr>
+<tr><td>RoutesUnregistered</td><td>Cumulative number of route unregistrations emitted from the route-emitter as it reacts to changes to LRPs. Emitted every 30 seconds.</td></tr>
+<tr><td>TCPRouteCount</td><td>Number of TCP route associations (route-endpoint pairs) in the route-emitter’s routing table. Emitted periodically when emitter is in local mode<a id="sshproxy"></a>.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: ssh_proxy</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>ssh-connections</td><td>Total number of SSH connections an SSH proxy has established. Emitted periodically by each SSH proxy.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration in nanoseconds of the last garbage collector pause.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the process.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Default Origin Name: garden-linux</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>UnkillableContainers</td><td>Total number of containers that could not be killed/cleaned up on a Diego Cell. If this is non-zero, that cell MUST be rebooted before the next BOSH deploy. Typically this is a result of apps losing connection to NFS when using volume services. Diego cell logs can be searched for <code>failed-deleting-container</code> to find App IDs responsible.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="dopplerserver"><a class="header" href="#dopplerserver"><a id="doppler"></a> DopplerServer</a></h2>
+<p>Default Origin Name: DopplerServer</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>dropsondeListener.currentBufferCount</td><td>DEPRECATED</td></tr>
+<tr><td>dropsondeListener.receivedByteCount</td><td>DEPRECATED in favor of DopplerServer.udpListener.receivedByteCount.</td></tr>
+<tr><td>dropsondeListener.receivedMessageCount</td><td>DEPRECATED in favor of DopplerServer.udpListener.receivedMessageCount.</td></tr>
+<tr><td>dropsondeUnmarshaller.containerMetricReceived</td><td>Lifetime number of ContainerMetric messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.counterEventReceived</td><td>Lifetime number of CounterEvent messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.errorReceived</td><td>Lifetime number of Error messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.heartbeatReceived</td><td>DEPRECATED</td></tr>
+<tr><td>dropsondeUnmarshaller.httpStartStopReceived</td><td>Lifetime number of HttpStartStop messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.logMessageTotal</td><td>Lifetime number of LogMessage messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.unmarshalErrors</td><td>Lifetime number of errors when unmarshalling messages.</td></tr>
+<tr><td>dropsondeUnmarshaller.valueMetricReceived</td><td>Lifetime number of ValueMetric messages unmarshalled.</td></tr>
+<tr><td>httpServer.receivedMessages</td><td>Number of messages received by Doppler’s internal MessageRouter. Emitted every 5 seconds.</td></tr>
+<tr><td>LinuxFileDescriptor</td><td>Number of file handles for the Doppler’s process.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations.</td></tr>
+<tr><td>messageRouter.numberOfContainerMetricSinks</td><td>Instantaneous number of container metric sinks known to the SinkManager. Emitted every 5 seconds.</td></tr>
+<tr><td>messageRouter.numberOfDumpSinks</td><td>Instantaneous number of dump sinks known to the SinkManager. Emitted every 5 seconds.</td></tr>
+<tr><td>messageRouter.numberOfFirehoseSinks</td><td>Instantaneous number of Firehose sinks known to the SinkManager. Emitted every 5 seconds.</td></tr>
+<tr><td>messageRouter.numberOfSyslogSinks</td><td>Instantaneous number of syslog sinks known to the SinkManager.</td></tr>
+<tr><td>messageRouter.numberOfWebsocketSinks</td><td>Instantaneous number of WebSocket sinks known to the SinkManager. Emitted every 5 seconds.</td></tr>
+<tr><td>messageRouter.totalDroppedMessages</td><td>Lifetime number of messages dropped inside Doppler for various reasons (downstream consumer cannot keep up internal object was not ready for message, etc.).</td></tr>
+<tr><td>sentMessagesFirehose.&lt;SUBSCRIPTION_ID&gt;</td><td>Number of sent messages through the firehose per subscription ID. Emitted every 5 seconds.</td></tr>
+<tr><td>udpListener.receivedByteCount</td><td>Lifetime number of bytes received by Doppler’s UDP Listener.</td></tr>
+<tr><td>udpListener.receivedMessageCount</td><td>Lifetime number of messages received by Doppler’s UDP Listener.</td></tr>
+<tr><td>udpListener.receivedErrorCount</td><td>Lifetime number of errors encountered by Doppler’s UDP Listener while reading from the connection.</td></tr>
+<tr><td>tcpListener.receivedByteCount</td><td>Lifetime number of bytes received by Doppler’s TCP Listener. Emitted every 5 seconds.</td></tr>
+<tr><td>tcpListener.receivedMessageCount</td><td>Lifetime number of messages received by Doppler’s TCP Listener. Emitted every 5 seconds.</td></tr>
+<tr><td>tcpListener.receivedErrorCount</td><td>Lifetime number of errors encountered by Doppler’s TCP Listener while handshaking, decoding or reading from the connection.</td></tr>
+<tr><td>tlsListener.receivedByteCount</td><td>Lifetime number of bytes received by Doppler’s TLS Listener. Emitted every 5 seconds.</td></tr>
+<tr><td>tlsListener.receivedMessageCount</td><td>Lifetime number of messages received by Doppler’s TLS Listener. Emitted every 5 seconds.</td></tr>
+<tr><td>tlsListener.receivedErrorCount</td><td>Lifetime number of errors encountered by Doppler’s TLS Listener while handshaking, decoding or reading from the connection.</td></tr>
+<tr><td>TruncatingBuffer.DroppedMessages</td><td>Number of messages intentionally dropped by Doppler from the sink for the specific sink. This counter event corresponds with log messages “Log message output is too high.” Emitted every 5 seconds.</td></tr>
+<tr><td>TruncatingBuffer.totalDroppedMessages</td><td>Lifetime total number of messages intentionally dropped by Doppler from all of its sinks due to back pressure. Emitted every 5 seconds.</td></tr>
+<tr><td>listeners.totalReceivedMessageCount</td><td>Total number of messages received across all of Doppler’s listeners (UDP, TCP, TLS).</td></tr>
+<tr><td>numCpus</td><td>Number of CPUs on the machine.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the Doppler process.</td></tr>
+<tr><td>signatureVerifier.invalidSignatureErrors</td><td>Lifetime number of messages received with an invalid signature.</td></tr>
+<tr><td>signatureVerifier.missingSignatureErrors</td><td>Lifetime number of messages received that are too small to contain a signature.</td></tr>
+<tr><td>signatureVerifier.validSignatures</td><td>Lifetime number of messages received with valid signatures.</td></tr>
+<tr><td>Uptime</td><td>Uptime for the Doppler’s process.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="metron-agent"><a class="header" href="#metron-agent"><a id="metron"></a> Metron Agent</a></h2>
+<p>Default Origin Name: MetronAgent</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>MessageAggregator.counterEventReceived</td><td>Lifetime number of CounterEvents aggregated in Metron.</td></tr>
+<tr><td>MessageBuffer.droppedMessageCount</td><td>Lifetime number of intentionally dropped messages from Metron’s batch writer buffer. Batch writing is performed over TCP/TLS only.</td></tr>
+<tr><td>DopplerForwarder.sentMessages</td><td>Lifetime number of messages sent to Doppler regardless of protocol. Emitted every 30 seconds.</td></tr>
+<tr><td>dropsondeAgentListener.currentBufferCount</td><td>Instantaneous number of Dropsonde messages read by UDP socket  but not yet unmarshalled.</td></tr>
+<tr><td>dropsondeAgentListener.receivedByteCount</td><td>Lifetime number of bytes of Dropsonde messages read by UDP socket.</td></tr>
+<tr><td>dropsondeAgentListener.receivedMessageCount</td><td>Lifetime number of Dropsonde messages read by UDP socket.</td></tr>
+<tr><td>dropsondeMarshaller.containerMetricMarshalled</td><td>Lifetime number of ContainerMetric messages marshalled.</td></tr>
+<tr><td>dropsondeMarshaller.counterEventMarshalled</td><td>Lifetime number of CounterEvent messages marshalled.</td></tr>
+<tr><td>dropsondeMarshaller.errorMarshalled</td><td>Lifetime number of Error messages marshalled.</td></tr>
+<tr><td>dropsondeMarshaller.heartbeatMarshalled</td><td>Lifetime number of Heartbeat messages marshalled.</td></tr>
+<tr><td>dropsondeMarshaller.httpStartStopMarshalled</td><td>Lifetime number of HttpStartStop messages marshalled.</td></tr>
+<tr><td>dropsondeMarshaller.logMessageMarshalled</td><td>Lifetime number of LogMessage messages marshalled.</td></tr>
+<tr><td>dropsondeMarshaller.marshalErrors</td><td>Lifetime number of errors when marshalling messages.</td></tr>
+<tr><td>dropsondeMarshaller.valueMetricMarshalled</td><td>Lifetime number of ValueMetric messages marshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.containerMetricReceived</td><td>Lifetime number of ContainerMetric messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.counterEventReceived</td><td>Lifetime number of CounterEvent messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.errorReceived</td><td>Lifetime number of Error messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.heartbeatReceived</td><td>DEPRECATED</td></tr>
+<tr><td>dropsondeUnmarshaller.httpStartStopReceived</td><td>Lifetime number of HttpStartStop messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.logMessageTotal</td><td>Lifetime number of LogMessage messages unmarshalled.</td></tr>
+<tr><td>dropsondeUnmarshaller.unmarshalErrors</td><td>Lifetime number of errors when unmarshalling messages.</td></tr>
+<tr><td>dropsondeUnmarshaller.valueMetricReceived</td><td>Lifetime number of ValueMetric messages unmarshalled.</td></tr>
+<tr><td>legacyAgentListener.currentBufferCount</td><td>Instantaneous number of Legacy messages read by UDP socket but not yet unmarshalled.</td></tr>
+<tr><td>legacyAgentListener.receivedByteCount</td><td>Lifetime number of bytes of Legacy messages read by UDP socket.</td></tr>
+<tr><td>legacyAgentListener.receivedMessageCount</td><td>Lifetime number of Legacy messages read by UDP socket.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations.</td></tr>
+<tr><td>numCpus</td><td>Number of CPUs on the machine.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the Doppler process.</td></tr>
+<tr><td>tcp.sendErrorCount</td><td>Lifetime number of errors if writing to Doppler over TCP fails.</td></tr>
+<tr><td>tcp.sentByteCount</td><td>Lifetime number of sent bytes to Doppler over TCP.</td></tr>
+<tr><td>tcp.sentMessageCount</td><td>Lifetime number of sent messages to Doppler over TCP.</td></tr>
+<tr><td>tls.sendErrorCount</td><td>Lifetime number of errors if writing to Doppler over TLS fails.</td></tr>
+<tr><td>tls.sentByteCount</td><td>Lifetime number of sent bytes to Doppler over TLS. Emitted every 30 seconds.</td></tr>
+<tr><td>tls.sentMessageCount</td><td>Lifetime number of sent messages to Doppler over TLS. Emitted every 30 seconds.</td></tr>
+<tr><td>udp.sendErrorCount</td><td>Lifetime number of errors if writing to Doppler over UDP fails.</td></tr>
+<tr><td>udp.sentByteCount</td><td>Lifetime number of sent bytes to Doppler over UDP.</td></tr>
+<tr><td>udp.sentMessageCount</td><td>Lifetime number of sent messages to Doppler over UDP.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="routing"><a class="header" href="#routing"><a id="routing"></a> Routing</a></h2>
+<p>Routing Release metrics have following origin names:</p>
+<ul>
+<li><a href="#gorouter">gorouter</a></li>
+<li><a href="#routing_api">routing_api</a></li>
+<li><a href="#tcp_emitter">tcp_emitter</a></li>
+<li><a href="#tcp_router">tcp_router</a></li>
+</ul>
+<p><a id="gorouter"></a>Default Origin Name: gorouter</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations. Emitted every 10 seconds.</td></tr>
+<tr><td>numCPUS</td><td>Number of CPUs on the machine. Emitted every 10 seconds.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the gorouter process. Emitted every 10 seconds.</td></tr>
+<tr><td>logSenderTotalMessagesRead</td><td>Lifetime number of application log messages. Emitted every 5 seconds.</td></tr>
+<tr><td>backend_exhausted_conns</td><td>Lifetime number of requests that have been rejected due to the limit on number of connections per back end having been reached for all back ends tried. Emitted every 5 seconds.</td></tr>
+<tr><td>bad_gateways</td><td>Lifetime number of bad gateways at the Gorouter. Emitted every 5 seconds.</td></tr>
+<tr><td>latency</td><td>Total round trip time, in milliseconds, for requests through the Gorouter. This includes time spent by back end app to process requests. Emitted per router request.</td></tr>
+<tr><td>gorouter_time</td><td>Total time, in seconds, that the Gorouter spent processing and forwarding the HTTP request. Emitted per router request.</td></tr>
+<tr><td>latency.{component}</td><td>Time in milliseconds that the Gorouter took to handle requests from each component to its endpoints. Emitted per router request.</td></tr>
+<tr><td>route_registration_latency</td><td>Time in milliseconds between when an actual LRP is started and when the app is routable via Gorouter. Emitted per route-register message of new LRPs. This metric might be a negative value up to ~30 ms due to clock skew between the machines this metric is derived from.</td></tr>
+<tr><td>registry_message.{component}</td><td>Lifetime number of route register messages received for each component. Emitted per route-register message.</td></tr>
+<tr><td>unregistry_message.{component}</td><td>Lifetime number of route unregister messages received for each component. Emitted per route-unregister message.</td></tr>
+<tr><td>rejected_requests</td><td>Lifetime number of bad requests received on the Gorouter. Bad requests occur when the route does not exist, when the value of the <code>X-Cf-App-Instance</code> header is invalid, or when the host header on the request is empty. Emitted every 5 seconds.</td></tr>
+<tr><td>requests.{component}</td><td>Lifetime number of requests received for each component. Emitted per router request.</td></tr>
+<tr><td>responses</td><td>Lifetime number of HTTP responses returned by the back end app. Emitted every 5 seconds.</td></tr>
+<tr><td>responses.2xx</td><td>Lifetime number of 2xx HTTP responses returned by the back end app. Emitted every 5 seconds.</td></tr>
+<tr><td>responses.3xx</td><td>Lifetime number of 3xx HTTP responses returned by the back end app. Emitted every 5 seconds.</td></tr>
+<tr><td>responses.4xx</td><td>Lifetime number of 4xx HTTP responses returned by the back end app. Emitted every 5 seconds.</td></tr>
+<tr><td>responses.5xx</td><td>Lifetime number of 5xx HTTP responses returned by the back end app. Emitted every 5 seconds.</td></tr>
+<tr><td>responses.xxx</td><td>Lifetime number of other(non-(2xx-5xx)) HTTP responses returned by the back end app. Emitted every 5 seconds.</td></tr>
+<tr><td>route_lookup_time</td><td>Time in nanoseconds to look up a request URL in the route table. Emitted per router request.</td></tr>
+<tr><td>websocket_upgrades</td><td>Lifetime number of WebSocket upgrades. Emitted every 5 seconds.</td></tr>
+<tr><td>websocket_failures</td><td>Lifetime number of WebSocket failures. Emitted every 5 seconds.</td></tr>
+<tr><td>routed_app_requests</td><td>The collector sums up requests for all dea-{index} components for its output metrics. Emitted every 5 seconds.</td></tr>
+<tr><td>total_requests</td><td>Lifetime number of requests received. Emitted every 5 seconds.</td></tr>
+<tr><td>ms_since_last_registry_update</td><td>Time in millisecond since the last route register has been been received. Emitted every 30 seconds.</td></tr>
+<tr><td>total_routes</td><td>Current number of routes registered. Emitted every 30 seconds.</td></tr>
+<tr><td>uptime</td><td>Uptime for router. Emitted every second.</td></tr>
+<tr><td>file_descriptors</td><td>Number of file descriptors currently used by the Gorouter. Emitted every 5 seconds.</td></tr>
+<tr><td>routes_pruned</td><td>Lifetime number of stale routes that have been automatically pruned by the Gorouter. Emitted every 5 seconds.</td></tr>
+<tr><td>backend_tls_handshake_failed</td><td>Lifetime number of failed TLS handshakes when connecting to a back end registered with TLS port. Corresponds to HTTP 525 error response from the Gorouter. Emitted every 5 seconds.</td></tr>
+<tr><td>backend_invalid_id</td><td>Lifetime number of requests that were rejected because the back end presents a certificate with an invalid ID. Corresponds to HTTP 503 error response from the Gorouter. Emitted every 5 seconds.</td></tr>
+<tr><td>backend_invalid_tls_cert</td><td>Lifetime number of requests that were rejected because the back end presents a certificate that is not trusted by the Gorouter. Corresponds to HTTP 526 error response from Gorouter. Emitted every 5 seconds.</td></tr>
+<tr><td>buffered_messages</td><td>Current number of messages in the Gorouter’s NATS client’s buffer. Emitted every 5 seconds.</td></tr>
+<tr><td>total_dropped_messages</td><td>Lifetime number of messages that have been dropped by the Gorouter’s NATS client due to a full buffer. Emitted every 5 seconds.</td></tr>
+<tr><td>endpoints_per_pool</td><td>Current number of endpoints in a route pool using hash-based load balancing. Prometheus gauge with labels <code>route</code> and <code>lb_algorithm</code>. Only present for routes configured with hash-based routing. The gauge is updated on endpoint registration, unregistration, and pruning of stale endpoints.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a id="routing_api"></a>Default Origin Name: routing_api</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations. Emitted every 10 seconds.</td></tr>
+<tr><td>numCPUS</td><td>Number of CPUs on the machine. Emitted every 10 seconds.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the routing_api process. Emitted every 10 seconds.</td></tr>
+<tr><td>key_refresh_events</td><td>Total number of events when fresh token was fetched from UAA. Emitted every 30 seconds.</td></tr>
+<tr><td>total_http_routes</td><td>Number of HTTP routes in the routing table. Emitted every 30 seconds, or when there is a new HTTP route added. Interval for emitting this metric can be configured with manifest property <code>metrics_reporting_interval</code>.</td></tr>
+<tr><td>total_http_subscriptions</td><td>Number of HTTP routes subscriptions. Emitted every 30 seconds. Interval for emitting this metric can be configured with manifest property <code>metrics_reporting_interval</code>.</td></tr>
+<tr><td>total_tcp_routes</td><td>Number of TCP routes in the routing table. Emitted every 30 seconds, or when there is a new TCP route added. Interval for emitting this metric can be configured with manifest property <code>metrics_reporting_interval</code>.</td></tr>
+<tr><td>total_tcp_subscriptions</td><td>Number of TCP routes subscriptions. Emitted every 30 seconds. Interval for emitting this metric can be configured with manifest property <code>metrics_reporting_interval</code>.</td></tr>
+<tr><td>total_token_errors</td><td>Total number of UAA token errors. Emitted every 30 seconds. Interval for emitting this metric can be configured with manifest property <code>metrics_reporting_interval</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a id="tcp_emitter"></a>Default Origin Name: tcp_emitter</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations. Emitted every 10 seconds.</td></tr>
+<tr><td>numCPUS</td><td>Number of CPUs on the machine. Emitted every 10 seconds.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the tcp_emitter process. Emitted every 10 seconds.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a id="tcp_router"></a>Default Origin Name: tcp-router</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations. Emitted every 10 seconds.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations. Emitted every 10 seconds.</td></tr>
+<tr><td>numCPUS</td><td>Number of CPUs on the machine. Emitted every 10 seconds.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the tcp_router process. Emitted every 10 seconds.</td></tr>
+<tr><td>{session_id}.ConnectionTime</td><td>Average connection time to back end in current session. Emitted every 60 seconds per session ID. Interval value for this metric can be configured with manifest property <code>tcp_router.tcp_stats_collection_interval</code>.</td></tr>
+<tr><td>{session_id}.CurrentSessions</td><td>Total number of current sessions. Emitted every 60 seconds per session ID. Interval value for this metric can be configured with manifest property <code>tcp_router.tcp_stats_collection_interval</code>.</td></tr>
+<tr><td>AverageConnectTimeMs</td><td>Average back end response time (in ms). Emitted every 60 seconds. Interval value for this metric can be configured with manifest property <code>tcp_router.tcp_stats_collection_interval</code>.</td></tr>
+<tr><td>AverageQueueTimeMs</td><td>Average time spent in queue (in ms). Emitted every 60 seconds. Interval value for this metric can be configured with manifest property <code>tcp_router.tcp_stats_collection_interval</code>.</td></tr>
+<tr><td>TotalBackendConnectionErrors</td><td>Total number of back end connection errors. Emitted every 60 seconds. Interval value for this metric can be configured with manifest property <code>tcp_router.tcp_stats_collection_interval</code>.</td></tr>
+<tr><td>TotalCurrentQueuedRequests</td><td>Total number of requests unassigned in queue. Emitted every 60 seconds. Interval value for this metric can be configured with manifest property <code>tcp_router.tcp_stats_collection_interval</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="syslog-binding-cache"><a class="header" href="#syslog-binding-cache"><a id="syslog"></a> Syslog Binding Cache</a></h2>
+<p>Default Origin Name: syslog_binding_cache</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>binding_refresh_error</td><td>Total number of failed requests to the binding provider.</td></tr>
+<tr><td>last_binding_refresh_count</td><td>Current number of bindings received from binding provider during last refresh.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="traffic-controller"><a class="header" href="#traffic-controller"><a id="traffic"></a> Traffic Controller</a></h2>
+<p>Default Origin Name: LoggregatorTrafficController</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>dopplerProxy.containermetricsLatency</td><td>Duration for serving container metrics via the containermetrics endpoint (milliseconds). Emitted every 30 seconds.</td></tr>
+<tr><td>dopplerProxy.recentlogsLatency</td><td>Duration for serving recent logs via the recentLogs endpoint (milliseconds). Emitted every 30 seconds.</td></tr>
+<tr><td>memoryStats.lastGCPauseTimeNS</td><td>Duration of the last Garbage Collector pause in nanoseconds.</td></tr>
+<tr><td>memoryStats.numBytesAllocated</td><td>Instantaneous count of bytes allocated and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedHeap</td><td>Instantaneous count of bytes allocated on the main heap and still in use.</td></tr>
+<tr><td>memoryStats.numBytesAllocatedStack</td><td>Instantaneous count of bytes used by the stack allocator.</td></tr>
+<tr><td>memoryStats.numFrees</td><td>Lifetime number of memory deallocations.</td></tr>
+<tr><td>memoryStats.numMallocs</td><td>Lifetime number of memory allocations.</td></tr>
+<tr><td>numCPUS</td><td>Number of CPUs on the machine.</td></tr>
+<tr><td>numGoRoutines</td><td>Instantaneous number of active goroutines in the Doppler process.</td></tr>
+<tr><td>Uptime</td><td>Uptime for the Traffic Controller’s process. Emitted every 30 seconds.</td></tr>
+<tr><td>LinuxFileDescriptor</td><td>Number of file handles for the TrafficController’s process.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<h2 id="user-account-and-authentication-uaa"><a class="header" href="#user-account-and-authentication-uaa"><a id="uaa"></a> User Account and Authentication (UAA)</a></h2>
+<p>Default Origin Name: uaa</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Metric Name</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>audit_service.client_authentication_count</td><td>Number of successful client authentication attempts since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.client_authentication_failure_count</td><td>Number of failed client authentication attempts since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.principal_authentication_failure_count</td><td>Number of failed non-user authentication attempts since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.principal_not_found_count</td><td>Number of times non-user was not found since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.user_authentication_count</td><td>Number of successful authentications by the user since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.user_authentication_failure_count</td><td>Number of failed user authentication attempts since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.user_not_found_count</td><td>Number of times the user was not found since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.user_password_changes</td><td>Number of successful password changes by the user since the last startup. Emitted every 30 seconds.</td></tr>
+<tr><td>audit_service.user_password_failures</td><td>Number of failed password changes by the user since the last startup. Emitted every 30 seconds.</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#top">Top</a></p>
+<p>For information about metrics related to UAA’s performance, see <a href="../uaa/uaa-metrics.html">UAA performance metrics</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../loggregator/app-log-rate-limits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../loggregator/container-metrics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../loggregator/app-log-rate-limits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../loggregator/container-metrics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,970 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Configuring app deployments - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-configuring-app-deployments-owner-capi"><a class="header" href="#title-configuring-app-deployments-owner-capi">title: Configuring app deployments
+owner: CAPI</a></h2>
+<p>This page describes how to use the Cloud Foundry Command Line Interface (cf CLI) or API (CAPI) to push apps to Cloud Foundry using rolling deployment or canary deployment strategies, which update apps safely and avoid downtime.</p>
+<p>For information about the older method for avoiding app downtime while pushing app updates,
+see <a href="./blue-green.html">Using blue-green deployment to reduce downtime and risk</a>.</p>
+<p>For more information about CAPI, see the
+<a href="https://v3-apidocs.cloudfoundry.org/">Cloud Foundry API (CAPI) documentation</a>.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites"><a id="prerequisites"></a> Prerequisites</a></h2>
+<p>The procedures in this topic require one of the following:</p>
+<ul>
+<li>
+<p><strong>cf CLI v7 or later</strong> (Note that v7 is now deprecated; upgrade to cf CLI v8 as soon as you can.)</p>
+</li>
+<li>
+<p><strong>CAPI V3:</strong> If you use CAPI V3 API, you must install the cf CLI.</p>
+</li>
+</ul>
+<p>Or for canary deployments:</p>
+<ul>
+<li>
+<p><strong>cf CLI v8.8.0 or later</strong></p>
+</li>
+<li>
+<p><strong>CAPI V3.173.0 or later</strong></p>
+</li>
+</ul>
+<h2 id="how-deployment-strategies-work"><a class="header" href="#how-deployment-strategies-work"><a id="how-deployment-strategies-work"></a> How Deployment Strategies Work</a></h2>
+<p>Cloud Foundry provides two different strategies for deployments:</p>
+<ul>
+<li>A <strong>Rolling</strong> deployment brings up one or more web processes for the new app version, with the number set by <code>max-in-flight</code>, which defaults to 1. After those instances report as healthy and routable, it brings down the same number of instances of the old version. The deployment repeats this process to replace all web process instances, and then updates all old non-web processes.</li>
+<li>A <strong>Canary</strong> deployment brings up one or more web processes for the new app version, defaulting to one. It then pauses to let app operators or developers evaluate the health of new version instances. App operators can then choose to either <code>cancel</code> or <code>continue</code> the deployment. When the deployment is continued, the canary deployment proceeds in the same way as a rolling deployment.
+<ul>
+<li>To gradually increase instance counts and check app health in multiple steps, the latest cf CLI v8 supports an <code>--instance-steps</code> option that sets a series of increasing instance counts.</li>
+</ul>
+</li>
+</ul>
+<p>Each rolling or canary deployment increments the <code>revision</code> count for the new app deployment, as listed by the <code>cf revisions</code> command described in <a href="../revisions.html">App Revisions Overview</a>.</p>
+<p>The following sections describe the rolling and canary deployment strategies and their limitations.</p>
+<h3 id="rolling-deployments"><a class="header" href="#rolling-deployments"><a id="rolling"></a> Rolling Deployments</a></h3>
+<p>This section describes pushing an app with the rolling deployment strategy.</p>
+<ol>
+<li>
+<p>The <code>cf push APP-NAME --strategy rolling</code> command:</p>
+<ol>
+<li>Stages the updated app package.</li>
+<li>Creates a droplet with the updated app package.</li>
+<li>Creates a deployment with the new droplet and any new configuration.
+<ul>
+<li>This starts up to <code>max_in_flight</code> processes that shares the route with the old process.</li>
+<li>If you run <code>cf app</code> on your app at this point, you see multiple <code>web</code> processes.
+<br>
+For more information about the deployment object, see the <a href="http://v3-apidocs.cloudfoundry.org/index.html#deployments">Deployments</a> section of the CAPI V3 documentation.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>After the command creates the deployment, the <code>cc_deployment_updater</code> BOSH job runs in the
+background, updating deployments as follows:</p>
+<ol>
+<li>Adds up to <code>max_in_flight</code> instances of the new web process and removes instances from the old web process. This step repeats until the new web process reaches the required number of instances. 
+<p class="note important">
+ <span class="note__title"><strong>Important</strong></span>
+ This happens only if all instances of the new web process are running.
+ </p>
+
+</li>
+<li>Removes the old web process. The new web process now fully replaces the old web process.</li>
+<li>Restarts all non-web processes of the app.</li>
+<li>Sets the deployment to <code>DEPLOYED</code>.</li>
+</ol>
+</li>
+</ol>
+<h3 id="canary-deployments"><a class="header" href="#canary-deployments"><a id="canary"></a> Canary Deployments</a></h3>
+<p>This section describes pushing an app with the default canary deployment strategy, without specifying specific step weights as described in <a href="#canary-step">Canary Deployments with Step Weights</a>.</p>
+<ol>
+<li>
+<p>The <code>cf push APP-NAME --strategy canary</code> command:</p>
+<ol>
+<li>Stages the updated app package.</li>
+<li>Creates a droplet with the updated app package.</li>
+<li>Creates a deployment with the new droplet and any new configuration.
+<br>
+For more information about the deployment object, see the <a href="http://v3-apidocs.cloudfoundry.org/index.html#deployments">Deployments</a> section of the CAPI V3 documentation.</li>
+</ol>
+</li>
+<li>
+<p>After the command creates the deployment, the <code>cc_deployment_updater</code> BOSH job runs in the
+background, updating deployments as follows:</p>
+<ol>
+<li>Adds one instance of the new web process (the <code>canary</code> instance).
+<ul>
+<li>This process shares routes with the old process.</li>
+<li>If you run <code>cf app</code> on your app at this point, you see multiple <code>web</code> processes.</li>
+</ul>
+</li>
+<li>Sets the deployment to <code>PAUSED</code>.</li>
+</ol>
+</li>
+<li>
+<p>After validating that the canary instance is running as expected, execute the command <code>cf continue-deployment APP-NAME</code>:</p>
+<ul>
+<li>Changes the deployment reason to <code>DEPLOYING</code> and resumes following the same process as a rolling deployment.</li>
+</ul>
+</li>
+<li>
+<p>After the command changes the status of the deployment, the <code>cc_deployment_updater</code> BOSH job runs in the
+background, updating deployments as follows:</p>
+<ol>
+<li>Adds MaxInFlight number of instances (<strong>by default it is 1</strong>) of the new web process and removes MaxInFlight number of instances from the old web process. This step repeats until the new web process reaches the required number of instances. 
+<p class="note important">
+ <span class="note__title"><strong>Important</strong></span>
+ This happens only if all instances of the new web process are running.
+ </p>
+
+</li>
+<li>Removes the old web process. The new web process now fully replaces the old web process.</li>
+<li>Restarts all non-web processes of the app.</li>
+<li>Sets the deployment to <code>DEPLOYED</code>.</li>
+</ol>
+</li>
+</ol>
+<h3 id="canary-deployments-with-step-weights"><a class="header" href="#canary-deployments-with-step-weights"><a id="canary-step"></a> Canary Deployments with Step Weights</a></h3>
+<p>By default, as described in <a href="#canary">Canary Deployments</a>, when you push an app with the canary deployment strategy, the process pauses after it deploys one canary instance, and you manually continue as described in <a href="#continue">Continue a canary deployment</a> to update the remaining instances to the full-scale deployment.</p>
+<p>To run a canary deployment more gradually, you can pass a series of step weights to the <code>--instance-steps</code> option of <code>cf push</code>.</p>
+<ul>
+<li>The series specifies increasing numbers of canary instances to deploy.
+<ul>
+<li>The deployment will pause after each step, allowing you to manually <a href="#continue">continue</a> the deployment and proceed to the next step, or <a href="#cancel">cancel</a> the deployment.</li>
+<li>Each value represents a <strong>percentage</strong> or <strong>weight</strong> of the web process’s instances to be rolled out as canary instances.</li>
+</ul>
+</li>
+<li>Separate step weights with commas and without spaces, for example <code>5,10,20</code>.</li>
+<li>For each canary instance created after the first, a pre-deployment instance is torn down.</li>
+<li>Canary deployments use one extra instance than is normally allocated throughout the deployment process, until the target number of instances has been reached.</li>
+<li>Continuing after the last canary step proceeds to the full-scale deployment.</li>
+<li>As with the default canary deployment process, a rolling deployment strategy updates instances to the new instance count at each step.</li>
+</ul>
+<p>For example, to update gradually in four steps, running 5, 10, and 20 percent of an app’s instances as canary instances before replacing all running instances of an app:</p>
+<pre><code>cf push APP-NAME --strategy canary --instance-steps 5,10,20
+</code></pre>
+<h4 id="detailed-example"><a class="header" href="#detailed-example"><a id="canary-step-detail"></a> Detailed Example</a></h4>
+<p>Steps are configured as a percentage of instances rather than as an explicit instance value. This allows the deployment definition to be independent of the number of instances used by a process.</p>
+<p><strong>Cloud Controller matches a step weight to the nearest non-zero instance number, rounding down.</strong></p>
+<p>For example, take an application with 10 instances and the following step configuration:</p>
+<pre><code>cf push APP-NAME --strategy canary --instance-steps 1,20,45,80,100
+</code></pre>
+<p>This results in the following deployment plan:</p>
+<table class="table">
+  
+<thead>
+<tr>
+    <th>Step</th>
+    <th>Step Weight</th>
+    <th>Original Instances</th>
+    <th>Canary Instances</th>
+    <th>Actual Weighting</th>
+  </tr>
+</thead>
+
+  
+<tr>
+    <td>Pre-deploy</td>
+    <td>n/a</td>
+    <td>10</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+
+  
+<tr>
+    <td>1</td>
+    <td>1%</td>
+    <td>10</td>
+    <td>1</td>
+    <td>9%</td>
+  </tr>
+
+  
+<tr>
+    <td>2</td>
+    <td>20%</td>
+    <td>9</td>
+    <td>2</td>
+    <td>18%</td>
+  </tr>
+
+   
+<tr>
+    <td>3</td>
+    <td>45%</td>
+    <td>6</td>
+    <td>5</td>
+    <td>45%</td>
+  </tr>
+
+  
+<tr>
+    <td>4</td>
+    <td>80%</td>
+    <td>3</td>
+    <td>8</td>
+    <td>72%</td>
+  </tr>
+
+  
+<tr>
+    <td>5</td>
+    <td>100%</td>
+    <td>0</td>
+    <td>10</td>
+    <td>100%</td>
+  </tr>
+
+  
+<tr>
+    <td>Post-deploy</td>
+    <td>n/a</td>
+    <td>0</td>
+    <td>10</td>
+    <td>100%</td>
+  </tr>
+
+</table>
+
+<p>A <strong>Step Weight</strong> of <code>100</code> allows app operators to use the <code>cancel-deployment</code> command even after all instances have been replaced.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The cancel command is designed to revert the app to its
+original state as quickly as possible and does not guarantee zero downtime.
+<br>It is important to note that changes
+to environment variables and service bindings are not reverted.
+</p>
+
+<h3 id="testing-canary-deployments"><a class="header" href="#testing-canary-deployments"><a id="canary-testing"></a> Testing Canary Deployments</a></h3>
+<p>To test an in-progress canary deployment, you can route HTTP requests to the canary process, or to an individual canary instance using the <code>X-Cf-Process-Instance</code> header, as described in <a href="../../concepts/http-routing.html#process-instance-routing">HTTP headers for process instance routing</a>.</p>
+<p>Alternatively, you can use session affinity to force a particular client to persistently make requests to a canary instance as described in <a href="../../concepts/http-routing.html#sessions">Session affinity</a>.</p>
+<h3 id="limitations"><a class="header" href="#limitations"><a id="limitations"></a> Limitations</a></h3>
+<p>The following table describes the limitations when using these deployments.</p>
+<table class="table">
+  
+<thead>
+<tr>
+    <th>Limitation</th>
+    <th>Description</th>
+  </tr>
+</thead>
+
+  
+<tr>
+    <td>Multiple app versions</td>
+    <td>During a deployment, Cloud Foundry serves both the old and new version of your app at the
+    same route. This can lead to user issues if you push API changes that are not backwards-compatible.</td>
+  </tr>
+
+  
+<tr>
+    <td>Database migrations</td>
+    <td>Deployments do not handle database migrations. Migrating an app database when the existing
+    app is not compatible with the migration can result in downtime.</td>
+  </tr>
+
+  
+<tr>
+    <td>Non-web processes</td>
+    <td>Deployments only run web processes through the update sequence described
+    earlier. The commands restart worker and other non-web processes in bulk after updating all web
+    processes.<br><br>
+		The CAPI V3 API introduces the concept of processes as runnable units of an app. Each app has a
+    web process by default. You can specify additional processes with a Procfile, and in some cases
+    buildpacks create additional processes. For more information about processes, see
+    <a href="http://v3-apidocs.cloudfoundry.org/index.html#processes">Processes</a> in the CAPI V3
+    documentation.</td>
+  </tr>
+
+  
+<tr>
+    <td>Quotas</td>
+    <td>Pushing updates to your app using a deployment strategy creates up to <code>max_in_flight</code> new instances (defaults to 1).
+    Additionally, canary deployments use an extra instance when pausing with the canary instance deployed.
+    If you lack sufficient quota, the deployment fails. Administrators might need to increase quotas to accommodate deployments.</td>
+  </tr>
+
+  
+<tr>
+    <td>Simultaneous apps when interrupting a push</td>
+    <td>If you push an app before your previous push command for the same app has completed, your
+    first push gets interrupted. Until the last deployment completes, there might be many versions
+    of the app running at the same time. Eventually, the app runs the code from your most recent
+    push.</td>
+  </tr>
+
+  
+<tr>
+    <td>V3 APIs</td>
+    <td>During a rolling deploy for an app, requests to the V3 APIs for scaling or updating a process fail with an error message
+    like <code>Cannot scale this process while a deployment is in flight</code>. For more information, see <a href="https://v3-apidocs.cloudfoundry.org/version/3.109.0/index.html#scale-a-process">Scale a process</a>
+    or <a href="https://v3-apidocs.cloudfoundry.org/version/3.109.0/index.html#update-a-process">Update a process</a> in the CAPI V3 documentation.</td>
+  </tr>
+
+  
+<tr>
+    <td>New or stopped applications</td>
+    <td>
+      When pushing an application for the first time, or if the app is stopped, no deployment strategy is used and all application instances are started immediately.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td>Evaluating the canary instance option 1</td>
+    <td>
+      Because the current processes share the same route, the best way to validate that traffic is reaching the canary instance is by looking at the logs.
+      If app revision logging is enabled, the logs for all instances will be tagged with <code>process_id</code> and <code>revision_version</code> values. e.g. <code>APP/REV/4/PROC/WEB/1</code>
+      <br>
+      <br>
+      Retrieve the logs by running the cf CLI command <code>cf logs APP_NAME</code>.
+    </td>
+  </tr>
+
+  
+<tr>
+    <td>Evaluating the canary instance option 2</td>
+    <td>
+      This method only works with routing-release 0.332.0 or higher.
+      <br>
+      <br>
+      Get the canary process guid via <code>cf curl /v3/deployments?status_values=ACTIVE&amp;app_guid=$(cf app APP_NAME --guid)</code>.
+      Add the <code>X-CF-PROCESS-INSTANCE:<canary_process_guid> header to traffic
+      to the app. Optionally, to send traffic to one specific canary instance,
+      add an index:
+      <code>X-CF-PROCESS-INSTANCE:<canary_process_guid>:<canary_index>.
+    
+  
+
+<h2 id="commands"><a class="header" href="#commands"><a id="commands"></a> Commands</a></h2>
+<p>This section describes the commands for working with rolling app deployments.</p>
+<h3 id="deploy-an-app"><a class="header" href="#deploy-an-app"><a id="deploy"></a> Deploy an app</a></h3>
+<p>To deploy an app without incurring downtime:</p>
+<p>Run:</p>
+<pre><code>cf push APP-NAME --strategy rolling
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name that you want to give your app.</p>
+<p class="note caution">
+<span class="note__title"><strong>Caution</strong></span>
+Review the limitations of this feature before running the command. For more information, see
+<a href="#limitations">Limitations</a>.
+</p>
+
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+cf CLI v7 exits when one instance of each process is healthy.
+It also includes a <code>--no-wait</code> flag for users who don't want to wait
+for the operation to complete.
+When <code>cf push</code> is used with the <code>--no-wait</code> flag, the process exits as soon as one instance is healthy.
+</p>
+
+<p>If the deployment stops and doesn’t restart, cancel it and run it again as described in an earlier step.
+To cancel, see <a href="#cancel">Cancel a deployment</a>.</p>
+<h4 id="for-cf-cli-v880-and-capi-v31730-or-later"><a class="header" href="#for-cf-cli-v880-and-capi-v31730-or-later">For cf CLI v8.8.0+ and CAPI V3.173.0 or later</a></h4>
+<p>Run:</p>
+<pre><code>cf push APP-NAME --strategy STRATEGY --max-in-flight MAX_IN_FLIGHT
+</code></pre>
+<p>Where:</p>
+<ul>
+  
+<li><code>APP-NAME</code> is the name that you want to give your app.</li>
+
+  
+<li><code>MAX_IN_FLIGHT</code> specifies the maximum number of new instances to start up simultaneously until the deployment is complete. This parameter is optional and defaults to 1.</li>
+
+  
+<li><code>STRATEGY</code> is the strategy you want to use for the deployment. Valid strategies are <code>rolling</code> and <code>canary</code>.</li>
+
+</ul>
+
+<h4 id="for-capi-v3"><a class="header" href="#for-capi-v3">For CAPI V3</a></h4>
+<ol>
+<li>
+<p>Log in to the cf CLI.</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Create an empty app by running the following <code>curl</code> command  with <code>POST /v3/apps</code>. <br>Record the
+app GUID from the output.</p>
+<pre><code>cf curl /v3/apps \
+  -X POST \
+  -H "Content-type: application/json" \
+  -d '{
+    "name": "APP-NAME",
+    "relationships": {
+      "space": {
+        "data": {
+          "guid": "SPACE-GUID"
+        }
+      }
+    }
+  }'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>APP-NAME</code> is the name that you want to give your app.</li>
+
+   
+<li><code>SPACE-GUID</code> is the space identifier that you want to associate with your app.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Create a package with the following <code>curl</code> command with <code>POST /v3/packages</code>. Record the package
+GUID from the output.</p>
+<pre><code>cf curl /v3/packages \
+  -X POST \
+  -H "Content-type: application/json" \
+  -d '{
+    "type": "bits",
+    "relationships": {
+      "app": {
+        "data": {
+          "guid": "APP-GUID"
+        }
+      }
+    }
+  }'
+</code></pre>
+<p>Where <code>APP-GUID</code> is the app GUID that you recorded in an earlier step. This app GUID is a
+unique identifier for your app.</p>
+</li>
+<li>
+<p>Upload the package bits by running the following <code>curl</code> command with
+<code>POST /v3/packages/PACKAGE-GUID/upload</code>.</p>
+<pre><code>cf curl /v3/packages/PACKAGE-GUID/upload \
+-X POST \
+-F bits=@"PACKAGED-APP" \
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>PACKAGE-GUID</code> is the package GUID that you recorded in an earlier step.</li>
+
+   
+<li><code>PACKAGED-APP</code> is your app packaged in a file such as <code>.zip</code>.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Create the build by running the following <code>curl</code> command with <code>POST /v3/builds</code>. Record the
+droplet GUID from the output.</p>
+<pre><code>cf curl /v3/builds \
+  -X POST \
+  -H "Content-type: application/json" \
+  -d '{
+    "package": {
+      "guid": "PACKAGE-GUID"
+    }
+  }'
+</code></pre>
+<p>Where <code>PACKAGE-GUID</code> is the package GUID that you recorded in an earlier step.</p>
+</li>
+<li>
+<p>Deploy your app by running the following <code>curl</code> command with <code>POST /v3/deployments</code>. To verify
+the status of the deployment or take action on the deployment, record the deployment GUID from the
+output.</p>
+<pre><code>cf curl /v3/deployments \
+-X POST \
+-H "Content-type: application/json" \
+-d '{
+  "droplet": {
+    "guid": "DROPLET-GUID"
+  },
+  "strategy": "STRATEGY",
+  "options": {
+    "max_in_flight": MAX_IN_FLIGHT
+  },
+  "relationships": {
+    "app": {
+      "data": {
+        "guid": "APP-GUID"
+      }
+    }
+  }
+}'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>DROPLET-GUID</code> and <code>APP-GUID</code> are the GUIDs that you recorded in earlier steps.</li>
+
+   
+<li><code>MAX_IN_FLIGHT</code> is an integer that specifies the maximum number of new instances to start up simultaneously until the deployment is complete. Optional and defaults to 1.</li>
+
+   
+<li><code>STRATEGY</code> is the strategy you would like to use for the deployment. Valid strategies are <code>rolling</code> and <code>canary</code>.</li>
+
+ </ul>
+
+</li>
+</ol>
+<p>For more information about this command, see <a href="#how-deployment-strategies-work">How Deployment Strategies Work</a>.</p>
+<h3 id="cancel-a-deployment"><a class="header" href="#cancel-a-deployment"><a id="cancel"></a> Cancel a deployment</a></h3>
+<p>To stop the deployment of an app that you pushed:</p>
+<ul>
+<li>
+<p><strong>For cf CLI v7+, run:</strong></p>
+<pre><code>cf cancel-deployment APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of the app.</p>
+</li>
+<li>
+<p><strong>For CAPI V3, run:</strong></p>
+<pre><code>cf curl /v3/deployments/DEPLOYMENT-GUID/actions/cancel -X POST
+</code></pre>
+<p>Where <code>DEPLOYMENT-GUID</code> is the GUID of the deployment that you recorded after following the
+CAPI procedure in <a href="#deploy">Deploy an app</a>.</p>
+</li>
+</ul>
+<p>This reverts the app to its state from before the deployment started by:</p>
+<ul>
+<li>Scaling up the original web process</li>
+<li>Removing any deployment artifacts</li>
+<li>Resetting the <code>current_droplet</code> on the app</li>
+</ul>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The cancel command is designed to revert the app to its
+original state as quickly as possible and does not guarantee zero downtime.
+<br>It is important to note that changes
+to environment variables and service bindings are not reverted.
+</p>
+
+<h3 id="continue-a-canary-deployment"><a class="header" href="#continue-a-canary-deployment"><a id="continue"></a> Continue a canary deployment</a></h3>
+<p>To finish a canary deployment after the deployment has paused and the canary instance has been validated:</p>
+<ul>
+<li>
+<p><strong>For cf CLI v8+, run:</strong></p>
+<pre><code>cf continue-deployment APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of the app.</p>
+</li>
+<li>
+<p><strong>For CAPI V3, run:</strong></p>
+<pre><code>cf curl /v3/deployments/DEPLOYMENT-GUID/actions/continue -X POST
+</code></pre>
+<p>Where <code>DEPLOYMENT-GUID</code> is the GUID of the deployment that you recorded after following the
+CAPI procedure in <a href="#deploy">Deploy an app</a>.</p>
+</li>
+</ul>
+<p>This continues the deployment of the app, following the same process as a rolling deployment.</p>
+<h3 id="restart-an-app"><a class="header" href="#restart-an-app"><a id="restart"></a> Restart an app</a></h3>
+<p>Restart your app to apply configuration updates that require a restart, such as environment variables or service bindings.</p>
+<p>To restart your app without downtime, run the appropriate command as shown here.</p>
+<ul>
+<li>
+<p><strong>For cf CLI v7+, run:</strong></p>
+<pre><code>cf restart APP-NAME --strategy STRATEGY
+</code></pre>
+<p>Where:</p>
+  
+<ul>
+    
+<li><code>APP-NAME</code> is the name of the app.</li>
+
+    
+<li><code>STRATEGY</code> is the strategy you would like to use for the deployment. Valid strategies are <code>rolling</code> and <code>canary</code>.</li>
+
+  </ul>
+
+</li>
+<li>
+<p><strong>For cf CLI v8.8.0+ and CAPI V3.173.0 or later, run:</strong></p>
+<pre><code>cf restart APP-NAME --strategy STRATEGY --max-in-flight MAX_IN_FLIGHT
+</code></pre>
+<p>Where:</p>
+  
+<ul>
+    
+<li><code>APP-NAME</code> is the name of the app.</li>
+
+    
+<li><code>MAX_IN_FLIGHT</code> specifies the maximum number of new instances to restart simultaneously until the deployment is complete. Optional and defaults to 1.</li>
+
+    
+<li><code>STRATEGY</code> is the strategy you would like to use for the deployment. Valid strategies are <code>rolling</code> and <code>canary</code>.</li>
+
+  </ul>
+
+</li>
+<li>
+<p><strong>For CAPI V3, run:</strong></p>
+<pre><code>cf curl /v3/deployments \
+-X POST \
+-H "Content-type: application/json" \
+-d '{
+  "droplet": {
+    "guid": "DROPLET-GUID"
+  },
+  "strategy": "STRATEGY",
+  "options": {
+    "max_in_flight": MAX_IN_FLIGHT
+  },
+  "relationships": {
+    "app": {
+      "data": {
+        "guid": "APP-GUID"
+      }
+    }
+  }
+}'
+</code></pre>
+<p>Where:
+<ul>
+<li><code>DROPLET-GUID</code> and <code>APP-GUID</code> are the GUIDs that you recorded in earlier steps.</li>
+
+<li><code>MAX_IN_FLIGHT</code> is an integer that specifies the maximum number of new instances to start up simultaneously until the deployment is complete. Optional and defaults to 1.</li>
+
+<li><code>STRATEGY</code> is the strategy you would like to use for the deployment. Valid strategies are <code>rolling</code> and <code>canary</code>.</li>
+
+</ul>
+</p>
+</li>
+</ul>
+<h2 id="view-the-status-of-deployments"><a class="header" href="#view-the-status-of-deployments"><a id="status"></a> View the status of deployments</a></h2>
+<p>You can use CAPI to view the status of deployments.</p>
+<p>To view the status of a deployment:</p>
+<ol>
+<li>
+<p>Log in to the cf CLI:</p>
+<pre><code>cf login
+</code></pre>
+</li>
+<li>
+<p>Find the GUID of your app by running:</p>
+<pre><code>cf app APP-NAME --guid
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of the app.</p>
+</li>
+<li>
+<p>Find the deployment for that app by running:</p>
+<pre><code>cf curl GET /v3/deployments?app_guids=APP-GUID&amp;status_values=ACTIVE
+</code></pre>
+<p>Where <code>APP-GUID</code> is the GUID of the app. Deployments are listed in chronological order, with
+the latest deployment displayed as the last in the list.</p>
+</li>
+<li>
+<p>Run:</p>
+<pre><code>cf curl GET /v3/deployments/DEPLOYMENT-GUID
+</code></pre>
+<p>Where <code>DEPLOYMENT-GUID</code> is the GUID of the deployment.</p>
+</li>
+</ol>
+<p>The <code>cf curl GET /v3/deployments/DEPLOYMENT-GUID</code> command returns the following status properties:</p>
+<ul>
+<li>
+<p><code>status.value</code>: Indicates if the deployment is <code>ACTIVE</code> or <code>FINALIZED</code>.</p>
+</li>
+<li>
+<p><code>status.reason</code>: Provides detail about the deployment status.</p>
+</li>
+<li>
+<p><code>status.details</code>: Provides the timestamp for the most recent successful health check.
+The value of the <code>status.details</code> property can be <code>nil</code> with no successful health check
+for the deployment. For example, there might be no successful health check if the deployment was
+cancelled.</p>
+</li>
+</ul>
+<p>The following table describes the possible values for the <code>status.value</code> and <code>status.reason</code>
+properties:</p>
+<table class="table">
+  
+<thead>
+    <th width="20%">status.value</th>
+    <th width="20%">status.reason</th>
+    <th width="60%">Description</th></thead>
+
+  
+<tr>
+    <td><code>ACTIVE</code></td>
+    <td><code>DEPLOYING</code></td>
+    <td>The deployment is deploying.</td>
+  </tr>
+
+  
+<tr>
+    <td><code>ACTIVE</code></td>
+    <td><code>PAUSED</code></td>
+    <td>The deployment is paused waiting for the user to continue with the deployment. Used only for canary Deployments.</td>
+  </tr>
+
+  
+<tr>
+    <td><code>ACTIVE</code></td>
+    <td><code>CANCELLING</code></td>
+    <td>The deployment is cancelling.</td>
+  </tr>
+
+  
+<tr>
+    <td><code>FINALIZED</code></td>
+    <td><code>DEPLOYED</code></td>
+    <td>The deployment is complete.</td>
+  </tr>
+
+  
+<tr>
+    <td><code>FINALIZED</code></td>
+    <td><code>CANCELLED</code></td>
+    <td>The deployment was cancelled.</td>
+  </tr>
+
+  
+<tr>
+    <td><code>FINALIZED</code></td>
+    <td><code>SUPERSEDED</code></td>
+    <td>The deployment was stopped and did not finish deploying because another
+    deployment was created for the app.
+    </td>
+  </tr>
+
+</table>
+
+<h2 id="scaling-with-deployments"><a class="header" href="#scaling-with-deployments"><a id="scaling"></a> Scaling with Deployments</a></h2>
+<p>Traditionally, all scaling actions are taken at once among all instances. This meant that all instances are restarted at once to enact changes to memory, disk, or other scaling configurations <em>before</em> the Deployment starts rolling out new instances.</p>
+<p>With CAPI 1.205.0 and cf CLI v8.16.0, Deployments can optionally take scaling parameters when using <code>cf push</code>.  For example:</p>
+<pre><code>cf push myapp --strategy=rolling -i 5 -m 256M -k 500M
+</code></pre>
+<p>Scaling changes will no longer affect the current instances; they will apply only to new instances created by the deployment, leaving your current application instances unaltered until all instances are replaced by the new instances with the new scaling parameters.</p>
+</canary_index></canary_process_guid></code></canary_process_guid></code></td></tr>
+</table>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../devguide/push-sub-commands.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../devguide/sidecars.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../devguide/push-sub-commands.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../devguide/sidecars.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

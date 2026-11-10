@@ -1,0 +1,540 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Container security in Cloud Foundry - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-container-security-owner-security"><a class="header" href="#title-container-security-owner-security">title: Container security
+owner: Security</a></h2>
+<p>This topic tells you about how Cloud Foundry secures the containers
+that host app instances on Linux.</p>
+<p>For an overview of other Cloud Foundry security features, see <a href="security.html">Cloud Foundry Security</a>.</p>
+<p>The sections in this topic provide the following information:</p>
+<ul>
+<li>
+<p><a href="#mechanics">Container Mechanics</a> provides an overview of container isolation.</p>
+</li>
+<li>
+<p><a href="#networking">Inbound and Outbound Traffic from Cloud Foundry</a> provides an overview of container networking and describes how Cloud Foundry admins customize container network traffic rules for their deployment.</p>
+</li>
+<li>
+<p><a href="#security">Container Security</a> describes how Cloud Foundry secures containers by running app instances in unprivileged containers and by hardening them.</p>
+</li>
+</ul>
+<h2 id="container-mechanics"><a class="header" href="#container-mechanics"><a id="mechanics"></a> Container mechanics</a></h2>
+<p>Each instance of an app deployed to Cloud Foundry runs within its own self-contained environment, a Garden container. This container isolates processes, memory, and the filesystem using operating system features and the characteristics of the virtual and physical infrastructure where Cloud Foundry is deployed. For more information about Garden containers, see <a href="./architecture/garden.html">Garden</a>.</p>
+<p>Cloud Foundry achieves container isolation by namespacing kernel resources that would otherwise be shared. The intended level of isolation is set to prevent multiple containers that are present on the same host from detecting each other. Every container includes a private root filesystem, which includes a Process ID (PID), namespace, network namespace, and mount namespace.</p>
+<p>Cloud Foundry creates container filesystems using the Garden Rootfs (GrootFS) tool. It stacks the following using OverlayFS:</p>
+<ul>
+<li>
+<p>A <strong>read-only base filesystem</strong>: This filesystem has the minimal set of operating system packages and Garden-specific modifications common to all containers. Containers can share the same read-only base filesystem because all writes are applied to the read-write layer.</p>
+</li>
+<li>
+<p>A <strong>container-specific read-write layer</strong>: This layer is unique to each container and its size is limited by XFS project quotas. The quotas prevent the read-write layer from overflowing into unallocated space.</p>
+</li>
+</ul>
+<p>For more information about GrootFS, see <a href="./architecture/garden.html#garden-rootfs">Garden RootFS (GrootFS)</a> in <em>Garden</em>.</p>
+<p>Resource control is managed using Linux control groups. Associating each container with its own cgroup or job object limits the amount of memory that the container might use. Linux cgroups also require the container to use a fair share of CPU compared to the relative CPU share of other containers.</p>
+<p>Cloud Foundry does not support a RedHat Enterprise Linux OS stemcell. This is due to an
+inherent security issue with the way RedHat handles user namespacing and container isolation.</p>
+<h3 id="cpu"><a class="header" href="#cpu"><a id="cpu"></a> CPU</a></h3>
+<p>Each container is placed in its own cgroup. Cgroups make each container use a fair share of CPU relative to the other containers. This prevents oversubscription on the host VM where one or more containers hog the CPU and leave no computing resources to the others.</p>
+<p>The way cgroups allocate CPU time is based on shares. CPU shares do not work as direct percentages of total CPU usage. Instead, a share is relative in a given time window to the shares held by the other containers. The total amount of CPU that can be overall divided among the cgroups is what is left by other processes that might run in the host VM.</p>
+<p>Generally, cgroups offers two possibilities for limiting the CPU usage: <em>CPU affinity</em> and <em>CPU bandwidth</em>, the latter of which is used in Cloud Foundry.</p>
+<ul>
+<li>
+<p>CPU affinity consists of binding a cgroup to certain CPU cores. The actual amount of CPU cycles that can be consumed by the cgroup is thus limited to what is available on the bound CPU cores.</p>
+</li>
+<li>
+<p>CPU bandwidth sets the weight of a cgroup with the process scheduler. The process scheduler divides the available CPU cycles among cgroups depending on the shares held by each cgroup, relative to the shares held by the others.
+For example, consider two cgroups, one holding two shares and one holding four. Assuming the process scheduler gets to administer 60 CPU cycles, the first cgroup with two shares will get one third of those available CPU cycles, as it holds one third of the overall shares. Similarly, the second cgroup will get 40 cycles, as it holds two thirds of the collective shares.</p>
+</li>
+</ul>
+<p>The calculation of the CPU usage based on the percentage of the total CPU power available is quite sophisticated and is performed regularly as the CPU demands of the various containers fluctuates. Specifically, the percentage of CPU cycles a cgroup gets can be calculated by dividing the <code>cpu.shares</code> it holds by the sum of the <code>cpu.shares</code> of all the cgroups that are currently doing CPU activity, as shown in the following calculation:</p>
+<pre><code>process_cpu_share_percent = cpu.shares / sum_cpu_shares * 100
+</code></pre>
+<p>In Cloud Foundry, cgroup shares range from 10 to 1024. The actual number of shares a cgroup gets can be read from the <code>cpu.shares</code> file of the cgroup configurations pseudo-file-system available in the container at <code>/sys/fs/cgroup/cpu</code>. The number of shares given to an apps cgroup depends on the amount of memory the app declares to need in the manifest.</p>
+<h4 id="cpu-shares-algorithm-1"><a class="header" href="#cpu-shares-algorithm-1">CPU Shares Algorithm 1</a></h4>
+<p>When the <a href="https://github.com/cloudfoundry/diego-release/blob/d051f8f94f652369d02db4cf66712645600d5b4a/jobs/rep/spec#L311-L313">Diego <code>containers.set_cpu_weight</code> bosh property</a> is set to false, then Cloud Foundry scales the number of allocated shares linearly with the amount of memory, until the upper limit of 1024 shares (by default).</p>
+<p>In this case, there are a handful of variables that play into the CPU shares calculation.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>variable name</th><th>default value</th><th>configurable?</th><th>link to property</th></tr>
+</thead>
+<tbody>
+<tr><td>cc.cpu_weight_min_memory</td><td>128</td><td>yes</td><td><a href="https://github.com/cloudfoundry/capi-release/blob/e68034308a57296ac12debf05de012c2a14d4c4c/jobs/cloud_controller_ng/spec#L782-L784">bosh property</a></td></tr>
+<tr><td>cc.cpu_weight_max_memory</td><td>8192</td><td>yes</td><td><a href="https://github.com/cloudfoundry/capi-release/blob/e68034308a57296ac12debf05de012c2a14d4c4c/jobs/cloud_controller_ng/spec#L785-L787">bosh property</a></td></tr>
+<tr><td>app_memory_in_mb</td><td>1024</td><td>yes</td><td>this is set in the app manifest</td></tr>
+<tr><td>base_weight</td><td>8192</td><td>no</td><td>n/a</td></tr>
+<tr><td>diego.executor.container_max_cpu_shares</td><td>1024</td><td>yes</td><td><a href="https://github.com/cloudfoundry/diego-release/blob/d051f8f94f652369d02db4cf66712645600d5b4a/jobs/rep/spec#L122-L124C14">bosh property</a></td></tr>
+</tbody>
+</table>
+</div>
+<p>These variables are used in the following algorithm to determine the number of CPU shares for an app:</p>
+<pre><code>app_memory_for_calculation = min( max(cc.cpu_weight_min_memory, app_memory_in_mb), cc.cpu_weight_max_memory)
+app_cpu_weight = int( (100 * app_memory_for_calculation) / base_weight)
+process_cpu.shares = int( (diego.executor.container_max_cpu_shares * app_cpu_weight) / 100)
+</code></pre>
+<p>For example:</p>
+<pre><code>cc.cpu_weight_min_memory = 128
+cc.cpu_weight_max_memory = 8192
+app_memory_in_mb = 32
+base_weight = 8192
+diego.executor.container_max_cpu_shares = 1024
+
+app_memory_for_calculation = min(max(cc.cpu_weight_min_memory, app_memory_in_mb)
+app_memory_for_calculation = min(max(128, 32), 8192) = min(128, 8192) = 128
+
+app_cpu_weight = int((100 * app_memory_for_calculation)/base_weight))
+app_cpu_weight = int((100 * 128) / 8192) = int(12800 / 8192) = int(1.56) = 1
+
+process_cpu.shares = int( (diego.executor.container_max_cpu_shares * app_cpu_weight) / 100)
+process_cpu.shares = int( (1024 * 1) / 100) = int(10.24) = 10
+</code></pre>
+<h4 id="cpu-shares-algorithm-2"><a class="header" href="#cpu-shares-algorithm-2">CPU Shares Algorithm 2</a></h4>
+<p>When the <a href="https://github.com/cloudfoundry/diego-release/blob/d051f8f94f652369d02db4cf66712645600d5b4a/jobs/rep/spec#L311-L313">Diego containers.set_cpu_weight BOSH property</a>
+is set to true, then Cloud Foundry scales the number of
+allocated shares linearly with the amount of memory</p>
+<p>In this case, there are two variables that play into the CPU shares calculation.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>variable name</th><th>default value</th><th>configurable?</th><th>link to property</th></tr>
+</thead>
+<tbody>
+<tr><td>app_memory_in_mb</td><td>1024</td><td>yes</td><td>this is set in the app manifest</td></tr>
+<tr><td>containers.proxy.additional_memory_allocation_mb</td><td>32</td><td>yes</td><td><a href="https://github.com/cloudfoundry/diego-release/blob/3496e1be97844d9813a52665239e14ae89c5db3b/jobs/rep/spec#L250-L252">bosh property</a></td></tr>
+</tbody>
+</table>
+</div>
+<p>In this case, the following algorithm is used to determine the number of CPU shares for an app:</p>
+<pre><code>process_cpu.shares = app_memory_in_mb + containers.proxy.additional_memory_allocation_mb
+</code></pre>
+<h4 id="cpu-share-interaction"><a class="header" href="#cpu-share-interaction">CPU Share Interaction</a></h4>
+<p>The next example helps to illustrate this better. Consider three processes: P1, P2 and P3, which are assigned <code>cpu.shares</code> of 5, 20 and 30, respectively.</p>
+<p>P1 is active, while P2 and P3 require no CPU. Hence, P1 might use the whole CPU. When P2 joins in and is doing some actual work, such as when a request comes in, the CPU share between P1 and P2 is calculated as follows:</p>
+<ul>
+<li>P1 -&gt; 5 / (5+20) = 0.2 = 20%</li>
+<li>P2 -&gt; 20 / (5+20) = 0.8 = 80%</li>
+<li>P3 (idle)</li>
+</ul>
+<p>At some point, process P3 joins in. Then the distribution is recalculated again:</p>
+<ul>
+<li>P1 -&gt; 5 / (5+20+30) = 0.0909 = ~9%</li>
+<li>P2 -&gt; 20 / (5+20+30) = 0.363 = ~36%</li>
+<li>P3 -&gt; 30 / (5+20+30) = 0.545 = ~55%</li>
+</ul>
+<p>If P1 become idle, the following recalculation between P2 and P3 takes place:</p>
+<ul>
+<li>P1 (idle)</li>
+<li>P2 -&gt; 20 / (20+30) = 0.4 = 40%</li>
+<li>P3 -&gt; 30 / (20+30) = 0.6 = 60%</li>
+</ul>
+<p>If P3 finishes or becomes idle, then P2 can consume all the CPU, as another recalculation is performed.</p>
+<p>In summary, the cgroup shares are the minimum guaranteed CPU share that the process can get. This limitation becomes effective only when processes on the same host compete for resources.</p>
+<h2 id="inbound-and-outbound-traffic-from-cloud-foundry"><a class="header" href="#inbound-and-outbound-traffic-from-cloud-foundry"><a id="networking"></a> Inbound and outbound traffic from Cloud Foundry</a></h2>
+<p>Learn about container networking and how Cloud Foundry admins customize
+container network traffic rules for their deployment.</p>
+<h3 id="networking-overview"><a class="header" href="#networking-overview"><a id="net-overview"></a> Networking overview</a></h3>
+<p>A host VM has a single IP address. If you configure the deployment with the cluster on a VLAN, as Cloud Foundry recommends, then all traffic goes through the following levels of network address translation, as shown in the following diagram:</p>
+<ul>
+<li>
+<p><strong>Inbound</strong> requests flow from the load balancer through the router to the host Diego Cell, then into the app container. The router determines which app instance receives each request.</p>
+</li>
+<li>
+<p><strong>Outbound</strong> traffic flows from the app container to the Diego Cell, then to the gateway on the Diego Cell’s virtual network interface. Depending on your IaaS, this gateway might be a NAT to external networks.</p>
+</li>
+</ul>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="images/security/sysbound2.png" alt="Networking Architecture diagram"><span class="img-wrapper"><img src="images/security/sysbound2.png" alt="Networking Architecture diagram"></span></label></p>
+<p>The networking diagram shows the following:</p>
+<ul>
+<li>
+<p>Inbound requests go to Load Balancer</p>
+</li>
+<li>
+<p>Outbound traffic comes from NAT</p>
+</li>
+</ul>
+<p>Cloud Foundry vLAN (on right side):</p>
+<ul>
+<li>
+<p>Load balancer goes to router and to the app container inside the Diego Cell</p>
+</li>
+<li>
+<p>App container response goes to NAT</p>
+</li>
+</ul>
+<h3 id="network-traffic-rules"><a class="header" href="#network-traffic-rules"><a id="config-traffic"></a> Network traffic rules</a></h3>
+<p>Admins configure rules to govern container network traffic. This is how containers send traffic outside of Cloud Foundry and receive traffic from outside, the Internet. These rules can prevent system access from external networks and between internal components and determine if apps can establish connections over the virtual network interface.</p>
+<p>Admins configure these rules at two levels:</p>
+<ul>
+<li>
+<p>Application Security Groups (ASGs) apply network traffic rules at the container level. For more information about ASGs, see <a href="../adminguide/app-sec-groups.html">App Security Groups</a>.</p>
+</li>
+<li>
+<p>Container-to-container networking policies determine app-to-app communication. Within Cloud Foundry, apps can communicate directly with each other, but the containers are isolated from outside Cloud Foundry. For information about administering container-to-container network policies, see <a href="../devguide/deploy-apps/cf-networking.html">Configuring Container-to-Container Networking</a>.</p>
+</li>
+</ul>
+<h2 id="container-security"><a class="header" href="#container-security"><a id="security"></a> Container security</a></h2>
+<p>Cloud Foundry secures containers through the following measures:</p>
+<ul>
+<li>
+<p>Running app instances in unprivileged containers by default. For more information about app instances, see <a href="#types">Types</a>.</p>
+</li>
+<li>
+<p>Hardening containers by limiting function and access rights. For more information about hardening containers, see <a href="#hardening">Hardening</a>.</p>
+</li>
+<li>
+<p>Only allowing outbound connections to public addresses from app containers. This is the original default. Admins can change this behavior by configuring ASGs. For more information about ASGs, see <a href="../adminguide/app-sec-groups.html">App Security Groups</a>.</p>
+</li>
+</ul>
+<h3 id="types"><a class="header" href="#types"><a id="types"></a> Types</a></h3>
+<p>Garden has the following container types:</p>
+<ul>
+<li>unprivileged</li>
+<li>privileged</li>
+</ul>
+<p>Currently, Cloud Foundry runs all app instances and staging tasks in unprivileged containers by default. This measure increases security by eliminating the threat of root escalation inside the container.</p>
+<p>Although all application instances and staging tasks now run by default in unprivileged containers,
+operators can override these defaults by customizing their Diego deployment manifest and redeploying.</p>
+<ul>
+<li>To enable privileged containers for buildpack-based apps, set the <code>cc.diego.use_privileged_containers_for_running</code> property
+to <code>true</code> in the Diego manifest (default is <code>false</code>).</li>
+<li>To enable privileged containers for staging tasks, set the <code>cc.diego.use_privileged_containers_for_staging</code> property
+to <code>true</code> in the Diego manifest (default is <code>false</code>).</li>
+</ul>
+<h3 id="hardening"><a class="header" href="#hardening"><a id="hardening"></a> Hardening</a></h3>
+<p>Cloud Foundry mitigates against container breakout and denial of service attacks in
+the following ways:</p>
+<ul>
+<li>
+<p>Cloud Foundry uses the full set of Linux namespaces - IPC, Network, Mount, PID, User, UTS - to provide isolation between containers running on the same host. The User namespace is not used for privileged containers. For more information about Linux namespaces, see <a href="http://manpages.ubuntu.com/manpages/xenial/en/man7/namespaces.7.html">namespaces - overview of Linux namespaces</a> in the Ubuntu documentation.</p>
+</li>
+<li>
+<p>In unprivileged containers, Cloud Foundry maps UID/GID 0 (root) inside the container user namespace to a different UID/GID on the host to prevent an app from inheriting UID/GID 0 on the host if it breaks out of the container.</p>
+<ul>
+<li>Cloud Foundry uses the same UID/GID for all containers.</li>
+<li>Cloud Foundry maps all UIDs except UID 0 to themselves. Cloud Foundry maps UID 0 inside the container namespace to <code>MAX_UID-1</code> outside of the container namespace.</li>
+<li>Container Root does not grant Host Root permissions.</li>
+</ul>
+</li>
+<li>
+<p>Cloud Foundry mounts <code>/proc</code> and <code>/sys</code> as read-only inside containers.</p>
+</li>
+<li>
+<p>Cloud Foundry disallows <code>dmesg</code> access for unprivileged users and all users in unprivileged containers.</p>
+</li>
+<li>
+<p>Cloud Foundry uses <code>chroot</code> when importing docker images from docker registries.</p>
+</li>
+<li>
+<p>Cloud Foundry establishes a container-specific overlay filesystem mount. Cloud Foundry uses <code>pivot_root</code> to move the root filesystem into this overlay, in order to isolate the container from the host system’s filesystem. For more information about <code>pivot_root</code>, see <a href="http://manpages.ubuntu.com/manpages/trusty/man2/pivot_root.2.html">pivot_root - change the root filesystem</a> in the Ubuntu documentation.</p>
+</li>
+<li>
+<p>Cloud Foundry does not call any binary or script inside the container filesystem, in order to eliminate any dependencies on scripts and binaries inside the root filesystem.</p>
+</li>
+<li>
+<p>Cloud Foundry avoids side-loading binaries in the container through bind mounts or other methods. Instead, it runs the same binary again by reading it from <code>/proc/self/exe</code> whenever it needs to run a binary in a container.</p>
+</li>
+<li>
+<p>Cloud Foundry establishes a virtual ethernet pair for each container for network traffic. For more information, see <a href="#config-traffic">Container Network Traffic</a>. The virtual ethernet pair has the following features:</p>
+<ul>
+<li>One interface in the pair is inside the container’s network namespace, and is the only non-loopback interface accessible inside the container.</li>
+<li>The other interface remains in the host network namespace and is bridged to the container-side interface.</li>
+<li>Egress allow list rules are applied to these interfaces according to ASGs configured by the admin.</li>
+<li>First-packet logging rules might also be activated on the TCP allow list rules.</li>
+<li>DNAT rules are established on the host to enable traffic ingress from the host interface to allowed ports on the container-side interface.</li>
+</ul>
+</li>
+<li>
+<p>Cloud Foundry applies disk quotas using container-specific XFS quotas with the specified disk-quota capacity.</p>
+</li>
+<li>
+<p>Cloud Foundry applies a total memory usage quota through the memory cgroup and destroys the container if the memory usage exceeds the quota.</p>
+</li>
+<li>
+<p>Cloud Foundry applies a fair-use limit to CPU usage for processes inside the container through the <code>cpu.shares</code> control group.</p>
+</li>
+<li>
+<p>Cloud Foundry allows admins to rate limit the maximum bandwidth consumed by single-app containers, configuring <code>rate</code> and <code>burst</code> properties on the <code>silk-cni</code> job.</p>
+</li>
+<li>
+<p>Cloud Foundry limits access to devices using cgroups but explicitly allows the following safe device nodes:</p>
+<ul>
+<li><code>/dev/full</code></li>
+<li><code>/dev/fuse</code></li>
+<li><code>/dev/null</code></li>
+<li><code>/dev/ptmx</code></li>
+<li><code>/dev/pts/*</code></li>
+<li><code>/dev/random</code></li>
+<li><code>/dev/tty</code></li>
+<li><code>/dev/tty0</code></li>
+<li><code>/dev/tty1</code></li>
+<li><code>/dev/urandom</code></li>
+<li><code>/dev/zero</code></li>
+<li><code>/dev/tap</code></li>
+<li><code>/dev/tun</code></li>
+</ul>
+</li>
+<li>
+<p>Cloud Foundry drops the following Linux capabilities for all container processes. Every dropped capability limits the actions the root user can perform.</p>
+<ul>
+<li><code>CAP_DAC_READ_SEARCH</code></li>
+<li><code>CAP_LINUX_IMMUTABLE</code></li>
+<li><code>CAP_NET_BROADCAST</code></li>
+<li><code>CAP_NET_ADMIN</code></li>
+<li><code>CAP_IPC_LOCK</code></li>
+<li><code>CAP_IPC_OWNER</code></li>
+<li><code>CAP_SYS_MODULE</code></li>
+<li><code>CAP_SYS_RAWIO</code></li>
+<li><code>CAP_SYS_PTRACE</code></li>
+<li><code>CAP_SYS_PACCT</code></li>
+<li><code>CAP_SYS_BOOT</code></li>
+<li><code>CAP_SYS_NICE</code></li>
+<li><code>CAP_SYS_RESOURCE</code></li>
+<li><code>CAP_SYS_TIME</code></li>
+<li><code>CAP_SYS_TTY_CONFIG</code></li>
+<li><code>CAP_LEASE</code></li>
+<li><code>CAP_AUDIT_CONTROL</code></li>
+<li><code>CAP_MAC_OVERRIDE</code></li>
+<li><code>CAP_MAC_ADMIN</code></li>
+<li><code>CAP_SYSLOG</code></li>
+<li><code>CAP_WAKE_ALARM</code></li>
+<li><code>CAP_BLOCK_SUSPEND</code></li>
+<li><code>CAP_SYS_ADMIN</code> for unprivileged containers
+<br>
+<br>
+For more information about Linux capabilities, see <a href="http://manpages.ubuntu.com/manpages/xenial/en/man7/capabilities.7.html">capabilities - overview of Linux capabilities</a> in the Ubuntu documentation.</li>
+</ul>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/security.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../concepts/understand-cf-networking.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/security.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../concepts/understand-cf-networking.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

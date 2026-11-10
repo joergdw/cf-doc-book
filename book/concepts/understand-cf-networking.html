@@ -1,0 +1,473 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Container-to-container networking - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-container-to-container-networking-owner-cf-for-vms-networking"><a class="header" href="#title-container-to-container-networking-owner-cf-for-vms-networking">title: Container-to-container networking
+owner: CF for VMs Networking</a></h2>
+<p>This topic provides you with an overview of how container-to-container networking works in Cloud Foundry.</p>
+<p>Container-to-container networking is not available for apps hosted on Microsoft Windows.</p>
+<p>The container-to-container networking feature enables app instances to communicate with each other directly.
+For more information about how to enable and use container-to-container networking, see <a href="../devguide/deploy-apps/cf-networking.html">Configuring Container-to-Container Networking</a>.
+<p>When the container-to-container networking feature is disabled, all app-to-app traffic must go through the Gorouter.</p>
+</p>
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+To route app-to-app traffic <strong>through the Gorouter</strong> with platform-enforced, identity-based authorization (rather than a direct overlay network), see <a href="identity-aware-routing.html">Identity-aware routing</a>.
+</p>
+
+<h2 id="architecture"><a class="header" href="#architecture"><a id="architecture"></a> Architecture</a></h2>
+<p>Container-to-container networking integrates with [Garden-runC] in a Diego deployment. The CF Networking Release includes several core components, as well as swappable components. For more information about Garden-runC, see <a href="./architecture/garden.html#garden-runc">Garden-runC</a> in <em>Garden</em>. For more information about Diego, see <a href="./diego/diego-architecture.html">Diego Components and Architecture</a>. For more information about the CF Networking release, see <a href="https://github.com/cloudfoundry-incubator/cf-networking-release">CF Networking Release</a> on GitHub.</p>
+<p>To understand the components and how they work, see the following diagram and tables.
+The diagram highlights Cloud Foundry components in blue and green. The diagram also highlights swappable components in red.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/c2c-arch.png" alt="The c2c architecture diagram"><span class="img-wrapper"><img src="./images/c2c-arch.png" alt="The c2c architecture diagram"></span></label></p>
+<h3 id="core-components"><a class="header" href="#core-components"><a id="core"></a> Core components</a></h3>
+<p>The container-to-container networking BOSH release has the following core components:</p>
+<table>
+<thead>
+  
+<tr>
+    <th>Part</th>
+    <th>Function</th>
+  </tr>
+
+</thead>
+
+<tbody>
+  
+<tr>
+    <td>Policy Server</td>
+    <td>A central management node that:
+      
+<ul>
+        
+<li>Maintains a database of policies for traffic between apps. The cf CLI calls an API to create or update a record in the policy database whenever you create or remove a policy.</li>
+
+        
+<li>Exposes a JSON REST API used by the cf CLI. This API serves traffic using TLS.</li>
+
+      </ul>
+
+    </td>
+  </tr>
+
+  
+<tr>
+    <td>Garden External Networker</td>
+    <td>
+      A Garden-runC add-on deployed to every Diego Cell that:
+      
+<ul>
+        
+<li>Runs the CNI plug-in component to set up the network for each app.</li>
+
+        
+<li>Forwards ports to support incoming connections from the Gorouter, TCP Router, and Diego SSH Proxy. This keeps apps externally reachable.</li>
+
+        
+<li>Installs outbound allow list rules to support Application Security Groups (ASGs).</li>
+
+      </ul>
+
+    </td>
+  </tr>
+
+</tbody>
+
+</table>
+
+<h3 id="swappable-components"><a class="header" href="#swappable-components"><a id="swap"></a> Swappable components</a></h3>
+<table>
+<thead>
+  
+<tr>
+    <th>Part</th>
+    <th>Function</th>
+  </tr>
+
+</thead>
+
+<tbody>
+  
+<tr>
+    <td>Silk CNI plug-in<br></td>
+    <td>A plug-in that provides IP address management and network connectivity to app instances as follows:
+      
+<ul>
+        
+<li>Uses a shared VXLAN overlay network to assign each container a unique IP address.</li>
+
+        
+<li>Installs network interface in container using the Silk VXLAN back end. This is a shared, flat L3 network.</li>
+
+      </ul>
+
+    </td>
+  </tr>
+
+  
+<tr>
+    <td>VXLAN Policy Agent<br></td>
+    <td>Enforces network policy for traffic between apps as follows:
+      
+<ul>
+        
+<li>Discovers network policies from the Policy Server Internal API.</li>
+
+        
+<li>Updates iptables rules on the Diego Cell to allow approved inbound traffic.</li>
+
+        
+<li>Tags outbound traffic with the unique identifier of the source app using the VXLAN Group-Based Policy (GBP) header.</li>
+
+      </ul>
+
+    </td>
+  </tr>
+
+</tbody>
+
+</table>
+
+<h2 id="app-instance-communication"><a class="header" href="#app-instance-communication"><a id="app-comm"></a> App instance communication</a></h2>
+<p>The following diagram illustrates how app instances communicate in a deployment with container-to-container networking enabled. In this example, the operator creates two policies to regulate the flow of traffic between <strong>App A</strong>, <strong>App B</strong>, and <strong>App C</strong>.</p>
+<ul>
+<li>Allow traffic from <strong>App A</strong> to <strong>App B</strong></li>
+<li>Allow traffic from <strong>App A</strong> to <strong>App C</strong></li>
+</ul>
+<p>If traffic and its direction is not explicitly allowed, it is denied. For example, <strong>App B</strong> cannot send traffic to <strong>App C</strong>.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/post-c2c.png" alt="Post Container-to-Container Networking"><span class="img-wrapper"><img src="./images/post-c2c.png" alt="Post Container-to-Container Networking"></span></label></p>
+<h3 id="overlay-network"><a class="header" href="#overlay-network"><a id="overlay-network"></a> Overlay network</a></h3>
+<p>Container-to-container networking uses an overlay network to manage communication between app instances.</p>
+<p>Overlay networks are not externally routable, and traffic sent between containers does not exit the overlay. You can use the same overlay network range for different Cloud Foundry deployments in your environment.</p>
+<p>In older versions of Cloud Foundry, the overlay network had to be one contiguous address range expressed as a single CIDR, for example <code>"10.255.0.0/18"</code>.
+Current versions also support setting the overlay network to a comma-separated list of multiple CIDR ranges, for example <code>["10.255.0.0/20", "10.255.96.0/21"]</code>, in addition to single CIDRs.</p>
+<p>The overlay network defaults to <code>"10.255.0.0/16"</code>. You can modify the setting to include any <a href="https://tools.ietf.org/html/rfc1918">RFC 1918</a> range or ranges that meet the following requirements:</p>
+<ul>
+<li>The ranges are not used by services that app containers access.</li>
+<li>The ranges are not used by the underlying Cloud Foundry infrastructure.</li>
+<li>The ranges do not overlap with each other.</li>
+</ul>
+<p>All Diego Cells in your Cloud Foundry deployment share this overlay network. By default, each Diego Cell is allocated a /24 range that supports 254 containers per Diego Cell, one container for each of the usable IP addresses, <code>.1</code> through <code>.254</code>. To modify the number of Diego Cells your overlay network supports, see <a href="../devguide/deploy-apps/cf-networking.html#overlay">Overlay Network</a> in <em>Configuring Container-to-Container Networking</em>.</p>
+<p>Cloud Foundry container networking is currently supported only on Linux.</p>
+<p class="note caution">
+<span class="note__title"><strong>Caution</strong></span>
+The overlay network IP address range must not conflict with any other IP addresses in the network. If a
+conflict exists, Diego Cells cannot reach any endpoint that has a conflicting IP address.
+</p>
+
+<p class="note caution">
+<span class="note__title"><strong>Caution</strong></span>
+Updating the overlay network causes container-to-container networking
+downtime during the deploy while the network update is rolling out across Diego
+Cells.
+</p>
+
+<p>Traffic to app containers from the Gorouter or from app containers to external services uses
+Diego Cell IP addresses and NAT, not the overlay network.</p>
+<h3 id="policies"><a class="header" href="#policies"><a id="policies"></a> Policies</a></h3>
+<p>Enabling container-to-container networking for your deployment allows you to create policies for communication between app instances. The container-to-container networking feature also provides a unique IP address to each app container and provides direct IP reachability between app instances.</p>
+<p>The policies you create specify a source app, destination app, protocol, and port so that app instances can communicate directly without going through the Gorouter, a load balancer, or a firewall. Container-to-container networking supports UDP and TCP, and you can configure policies for multiple ports. These policies apply immediately without having to restart the app.</p>
+<p>Additionally, policies use and and track the GUIDs of the apps. The policies continue to work when apps redeploy, or if they crash and Diego places them in a new container. Pushing a brand new app requires a new policy, but not updates to an existing app because an app always retains its GUID.</p>
+<h2 id="app-service-discovery"><a class="header" href="#app-service-discovery"><a id="service-discovery"></a> App service discovery</a></h2>
+<p>The Cloud Foundry platform supports DNS-based service discovery that lets apps find each other’s internal addresses. For example, a front end app instance can use the service discovery mechanism to establish communications with a back end app instance. To set up and use app service discovery, see <a href="../devguide/deploy-apps/cf-networking.html#discovery">App service discovery</a> in <em>Configuring container-to-container networking</em>.</p>
+<p>Container-to-container app service discovery does not provide client-side load balancing or circuit-breaking, and it does not apply to <code>cf marketplace</code> services or require app binding. It just lets apps publish service endpoints to each other, unbrokered and unmediated.</p>
+<h2 id="alternative-network-stacks"><a class="header" href="#alternative-network-stacks"><a id="alt-stack"></a> Alternative network stacks</a></h2>
+<p>The BOSH release that contains the container-to-container networking feature that is composed of a plug-in network stack. Advanced users or third party vendors can integrate a different network stack. For more information about third party plug-ins, see <a href="https://github.com/cloudfoundry/cf-networking-release/blob/develop/docs/11-3rd-party.md">3rd Party Plug-in Development for Container Networking</a> in the CF Networking Release repository on GitHub.</p>
+<h2 id="container-to-container-networking-versus-asgs"><a class="header" href="#container-to-container-networking-versus-asgs"><a id="c2cvsasg"></a> Container-to-container networking versus ASGs</a></h2>
+<p>Both app security groups (ASGs) and container-to-container networking policies affect traffic from app instances. The following table highlights differences between ASGs and container-to-container networking policies.</p>
+<table>
+<thead>
+  
+<tr>
+   <th></th>
+   <th>ASGs</th>
+   <th>Container-to-Container Networking Policies</th>
+  </tr>
+
+</thead>
+
+<tbody>
+  
+<tr>
+   <th>Policy granularity</th>
+   <td>From a space to an IP address range</td>
+   <td>From a source app to a destination app</td>
+  </tr>
+
+  
+<tr>
+   <th>Scope</th>
+   <td>For a space, org, or deployment</td>
+   <td>For app to app only</td>
+  </tr>
+
+  
+<tr>
+   <th>Traffic direction</th>
+   <td>Outbound control</td>
+   <td>Policies apply for incoming packets from other app instances</td>
+  </tr>
+
+  
+<tr>
+   <th>Source app</th>
+   <td>Is not known</td>
+   <td>Is identified because of direct addressability</td>
+  </tr>
+
+  
+<tr>
+   <th>Policies take affect</th>
+   <td>Immediately</td>
+   <td>Immediately</td>
+  </tr>
+
+</tbody>
+
+</table>
+
+<h2 id="securing-container-to-container-traffic"><a class="header" href="#securing-container-to-container-traffic"><a id="securing-traffic"></a> Securing container-to-container traffic</a></h2>
+<p>The platform provides a TLS encapsulation for container-to-container network traffic.</p>
+<p>To utilize TLS capabilities, the client application can connect to port 61443 on the destination application over HTTPS. Traffic to application
+container port 61443 is proxied to application port 8080 inside of the container. In this case:</p>
+<ul>
+<li>The platform provides certificates for each app.</li>
+<li>The platform makes sure that TLS ends within the destination container and passes cleartext traffic to the app.</li>
+<li>The destination app does not need special configuration.</li>
+</ul>
+<p>Additionally, applications can implement TLS termination in their destination applications. Use this option if your application needs to use more TLS capabilities, like verifying client certificates and rejecting service for those that are not permitted, or if your application needs TLS termination on a different port than the default port, 8080.</p>
+<p>Specific Cloud Foundry vendors might provide additional methods for securing container-to-container traffic.</p>
+<p>For information about how the platform can encrypt public traffic to apps, see
+<a href="http-routing.html#tls-to-back-end">TLS to Apps and Other Back End Services</a> in
+<em>HTTP Routing</em>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../concepts/container-security.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../concepts/identity-aware-routing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../concepts/container-security.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../concepts/identity-aware-routing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

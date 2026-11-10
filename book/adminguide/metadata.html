@@ -1,0 +1,839 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Using metadata - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-using-metadata-in-cloud-foundry-owner-capicli"><a class="header" href="#title-using-metadata-in-cloud-foundry-owner-capicli">title: Using metadata in Cloud Foundry
+owner: CAPI/CLI</a></h2>
+<p>You can use metadata in Cloud Foundry and gives you instructions for adding, updating, removing, and viewing metadata.</p>
+<h2 id="about-metadata"><a class="header" href="#about-metadata"><a id="about"></a> About metadata</a></h2>
+<p>Cloud Foundry allows you to add metadata to resources such as spaces and apps. You can use metadata to provide additional information about the resources in your Cloud Foundry deployment. This can help with operating, monitoring, and auditing.</p>
+<p>For example, you can tag resources with metadata that describes the type of environment they belong to. You can also use metadata to describe app characteristics, such as front end or back end. Other examples include billing codes, points of contact, resource consumption, and information about security or risk.</p>
+<h3 id="methods-of-adding-metadata"><a class="header" href="#methods-of-adding-metadata"><a id="methods"></a> Methods of adding metadata</a></h3>
+<p>You can add metadata to resources using any of the following methods:</p>
+<ul>
+<li>
+<p><strong>Cloud Foundry Command Line Interface (cf CLI) v8:</strong> For procedures using this method of adding metadata, see <a href="#cf-cli-procedures">cf CLI Procedures</a>. For more information about cf CLI v8, see <a href="../cf-cli/v8.html">Upgrading to cf CLI v8</a>.</p>
+</li>
+<li>
+<p><strong>Cloud Foundry API (CAPI):</strong> For procedures using this method of adding metadata, see <a href="#api-procedures">API procedures</a>. For more information about adding metadata with CAPI, see <a href="http://v3-apidocs.cloudfoundry.org/version/3.78.0/index.html#metadata">Metadata</a> in the CAPI documentation.</p>
+</li>
+</ul>
+<h3 id="types-of-metadata"><a class="header" href="#types-of-metadata"><a id="types"></a> Types of metadata</a></h3>
+<p>You can add two types of metadata to resources in Cloud Foundry:</p>
+<ul>
+<li>
+<p><strong>Labels:</strong> Labels allow you to identify and select Cloud Foundry resources. For example, if you label all apps running in production or all spaces that contain Internet-facing apps, you can then search for them.</p>
+</li>
+<li>
+<p><strong>Annotations:</strong> Annotations allow you to add non-identifying metadata to Cloud Foundry resources. You cannot query based on annotations. Also, there are fewer restrictions for key-value pairs of annotations than there are for labels. For example, you can include contact information of persons responsible for the resource, or tool information for debugging purposes.</p>
+</li>
+</ul>
+<h4 id="annotations-sent-to-service-brokers"><a class="header" href="#annotations-sent-to-service-brokers"><a id="annotations"></a> Annotations sent to service brokers</a></h4>
+<p>For installations using CAPI v1.108.0 and later, Cloud Foundry sends annotations with key prefixes to service brokers when service instances and service bindings are created.</p>
+<p>When a service instance is created, Cloud Foundry sends the following annotations to service brokers:</p>
+<ul>
+<li><code>organization_annotations</code></li>
+<li><code>space_annotations</code></li>
+<li><code>instance_annotations</code></li>
+</ul>
+<p>When a service instance is bound to an app, Cloud Foundry also sends <code>app_annotations</code> to service brokers.</p>
+<p>For more information about the annotations listed above, see <a href="https://github.com/openservicebrokerapi/servicebroker/blob/master/profile.md#cloud-foundry-context-object">Cloud Foundry Context Object</a> in the Open Service Broker API Profile on GitHub.</p>
+<p>For more general information about annotations, see <a href="https://v3-apidocs.cloudfoundry.org/#annotations">Annotations</a> in the CAPI documentation.</p>
+<h3 id="metadata-requirements"><a class="header" href="#metadata-requirements"><a id="reqs"></a> Metadata Requirements</a></h3>
+<p>The following tables describe requirements for creating metadata.</p>
+<h4 id="requirements-for-labels"><a class="header" href="#requirements-for-labels"><a id="reqs-labels"></a> Requirements for labels</a></h4>
+<p>The following table describes the requirements for creating labels:</p>
+<table class="table">
+<thead>
+<tr>
+	<th colspan="4" style="text-align: center">Label requirements</th>
+</tr>
+
+</thead>
+
+<tr>
+	<th>Part of Label</th>
+	<th>Length in characters</th>
+	<th>Allowed characters</th>
+	<th>Other Requirements</th>
+</tr>
+
+<tr>
+	<td>(Optional) Key Prefix</td>
+	<td>0-253</td>
+	<td>
+		
+<ul>
+			
+<li>Alphanumeric  ( \[a-z0-9A-Z\] )</li>
+
+			
+<li><code>-</code></li>
+
+			
+<li><code>.</code></li>
+
+		</ul>
+
+	<td>
+		
+<ul>
+			
+<li>DNS subdomain format, with at least one <code>.</code></li>
+
+			
+<li>Must end with <code>/</code></li>
+
+		</ul>
+
+  </td>
+
+<tr>
+	<td>Key Name</td>
+	<td>1-63</td>
+	<td>
+    
+<ul>
+			
+<li>Alphanumeric  ( \[a-z0-9A-Z\] )</li>
+
+			
+<li><code>-</code></li>
+
+			
+<li><code>_</code></li>
+
+			
+<li><code>.</code></li>
+
+		</ul>
+
+  </td>
+	<td>Must begin and end with an alphanumeric character</td>
+</tr>
+
+<tr>
+	<td>Value</td>
+	<td>0-63</td>
+	<td>
+    
+<ul>
+      
+<li>Alphanumeric</li>
+
+			
+<li><code>-</code></li>
+
+			
+<li><code>_</code></li>
+
+			
+<li><code>.</code></li>
+
+    </ul>
+
+  </td>
+	<td>
+		
+<ul>
+			
+<li>Must begin and end with an alphanumeric character</li>
+
+			
+<li>Empty values allowed</li>
+
+    </ul>
+
+  </td>
+</tr>
+
+
+<h4 id="requirements-for-annotations"><a class="header" href="#requirements-for-annotations"><a id="reqs-annotations"></a> Requirements for annotations</a></h4>
+<p>The following table describes the requirements for creating annotations:</p>
+<table class="table">
+<thead>
+<tr>
+	<th colspan="4" style="text-align: center">Annotation Requirements</th>
+</tr>
+
+</thead>
+
+<tr>
+	<th>Part of Annotation</th>
+	<th>Length in characters</th>
+	<th>Allowed characters</th>
+	<th>Other Requirements</th>
+</tr>
+
+<tr>
+	<td>(Optional) Key Prefix</td>
+	<td>0-253</td>
+	<td>
+		
+<ul>
+			
+<li>Alphanumeric ( \[a-z0-9A-Z\] )</li>
+
+			
+<li><code>-</code></li>
+
+			
+<li><code>.</code></li>
+
+		</ul>
+
+	<td>
+		
+<ul>
+			
+<li>DNS subdomain format, with at least one <code>.</code></li>
+
+			
+<li>Must end with <code>/</code></li>
+
+		</ul>
+
+  </td>
+
+<tr>
+	<td>Key Name</td>
+	<td>1-63</td>
+	<td>
+    
+<ul>
+			
+<li>Alphanumeric ( \[a-z0-9A-Z\] )</li>
+
+			
+<li><code>-</code></li>
+
+			
+<li><code>_</code></li>
+
+			
+<li><code>.</code></li>
+
+		</ul>
+
+  </td>
+	<td>Must begin and end with an alphanumeric character</td>
+</tr>
+
+<tr>
+	<td>Value</td>
+	<td>0-5000</td>
+	<td>Any unicode character</td>
+	<td>n/a</td>
+</tr>
+
+
+<h3 id="metadata-key-prefixes"><a class="header" href="#metadata-key-prefixes"><a id="prefix"></a> Metadata key prefixes</a></h3>
+<p>You can ensure that a label or annotation key is easily differentiated from other keys by using a prefix. A prefix is a namespacing pattern that helps you more clearly identify resources. Prefixes are in DNS subdomain format. For example, <code>prefix.example.com</code>.</p>
+<p>Consider an example in which you have two scanner tools: one for security and one for compliance. Both tools use a <code>scanned</code> label or annotation. You can disambiguate between the two tools using a prefix. The security tool can prefix a label or annotation with <code>security.example.com/scanned</code> and the compliance tool can prefix a label or annotation with <code>compliance.example.com/scanned</code>.</p>
+<h2 id="cf-cli-procedures"><a class="header" href="#cf-cli-procedures"><a id="cf-cli-procedures"></a> cf CLI procedures</a></h2>
+<p>The following sections describe how to add, update, view, and list metadata using the cf CLI.</p>
+<p>To see which resources are supported for this feature, run <code>cf labels -h</code>.
+cf CLI supports adding labels to apps, orgs, spaces, buildpacks, stacks, routes, domains, and various service resources.</p>
+<h3 id="add-metadata-to-a-resource"><a class="header" href="#add-metadata-to-a-resource"><a id="add-cli"></a> Add metadata to a resource</a></h3>
+<p>This section describes how to add metadata using the cf CLI.</p>
+<h4 id="add-a-label"><a class="header" href="#add-a-label"><a id="add-label-cli"></a> Add a label</a></h4>
+<p>To add a label to a resource:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf set-label RESOURCE RESOURCE-NAME KEY=VALUE
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE</code> is the type of resource you want to label, such as <code>app</code> or <code>space</code>.</li>
+
+   
+<li><code>RESOURCE-NAME</code> is the name of the resource you want to label, such as <code>example-app</code>.</li>
+
+   
+<li><code>KEY</code> is the key for the label.</li>
+
+   
+<li><code>VALUE</code> is the corresponding value for the label key. You can enter multiple key-value pairs in the same command.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="update-metadata-for-a-resource"><a class="header" href="#update-metadata-for-a-resource"><a id="update-cli"></a> Update metadata for a resource</a></h3>
+<p>To update metadata for a resource, follow the procedure for adding metadata and provide a new value for an existing key. For more information, see <a href="#add-cli">Add metadata to a resource</a>.</p>
+<h3 id="remove-metadata-from-a-resource"><a class="header" href="#remove-metadata-from-a-resource"><a id="remove-cli"></a> Remove metadata from a resource</a></h3>
+<p>This section describes how to remove metadata using the cf CLI.</p>
+<h4 id="remove-a-label"><a class="header" href="#remove-a-label"><a id="remove-label-cli"></a> Remove a label</a></h4>
+<p>To remove a label from a resource:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf unset-label RESOURCE RESOURCE-NAME KEY
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE</code> is the type of resource you want to remove the label from, such as <code>app</code> or <code>space</code>.</li>
+
+   
+<li><code>RESOURCE-NAME</code> is the name of the resource you want to remove the label from , such as <code>example-app</code>.</li>
+
+   
+<li><code>KEY</code> is the key for the label.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="view-metadata-for-a-resource"><a class="header" href="#view-metadata-for-a-resource"><a id="view-cli"></a> View metadata for a resource</a></h3>
+<p>This section describes how to view metadata with the cf CLI.</p>
+<h4 id="view-labels"><a class="header" href="#view-labels"><a id="view-label-cli"></a> View labels</a></h4>
+<p>To view labels for a resource:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf labels RESOURCE RESOURCE-NAME
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE</code> is the type of resource you want to remove the label from, such as <code>app</code> or <code>space</code>.</li>
+
+   
+<li><code>RESOURCE-NAME</code> is the name of the resource you want to remove the label from , such as <code>example-app</code>.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h4 id="select-resources-by-labels"><a class="header" href="#select-resources-by-labels"><a id="select-resources-cli"></a> Select resources by labels</a></h4>
+<p>To select resources by labels:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf apps --labels 'environment in (production,staging),tier in (backend)'
+</code></pre>
+</li>
+</ol>
+<h2 id="api-procedures"><a class="header" href="#api-procedures"><a id="api-procedures"></a> API procedures</a></h2>
+<p>The following sections describe how to add, update, remove, list, and query metadata using CAPI.</p>
+<h3 id="add-metadata-to-a-resource-1"><a class="header" href="#add-metadata-to-a-resource-1"><a id="add"></a> Add metadata to a resource</a></h3>
+<p>The following sections describe how to add labels and annotations to resources.</p>
+<h4 id="add-a-label-1"><a class="header" href="#add-a-label-1"><a id="add-label"></a> Add a label</a></h4>
+<p>To add a label to a resource using CAPI:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf curl v3/RESOURCE-ENDPOINT/GUID \
+  -X PATCH \
+  -d '{
+    "metadata": {
+      "labels": {
+        "LABEL-KEY": "LABEL-VALUE"
+      }
+    }
+  }'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE-ENDPOINT</code> is the CAPI endpoint for the type of resource you want to label, such as <code>apps</code> or <code>organizations</code>.</li>
+
+   
+<li><code>GUID</code> is the GUID of the resource you want to label.</li>
+
+   
+<li><code>LABEL-KEY</code> is the key for the label.</li>
+
+   
+<li><code>LABEL-VALUE</code> is the corresponding value for the label key.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h4 id="add-an-annotation"><a class="header" href="#add-an-annotation"><a id="annotation"></a> Add an annotation</a></h4>
+<p>To add an annotation:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf curl v3/RESOURCE-ENDPOINT/GUID \
+  -X PATCH \
+  -d '{
+    "metadata": {
+      "annotations": {
+        "ANNOTATION-KEY": "ANNOTATION-VALUE"
+      }
+    }
+  }'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE-ENDPOINT</code> is the CAPI endpoint for the type of resource you want to label, such as <code>apps</code> or <code>organizations</code>.</li>
+
+   
+<li><code>GUID</code> is the GUID of the resource you want to label.</li>
+
+   
+<li><code>ANNOTATION-KEY</code> is the key for the label.</li>
+
+   
+<li><code>ANNOTATION-VALUE</code> is the corresponding value for the annotation key.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="update-metadata-for-a-resource-1"><a class="header" href="#update-metadata-for-a-resource-1"><a id="update"></a> Update metadata for a resource</a></h3>
+<p>To update metadata for a resource, follow the procedure for adding metadata and provide a new value for an existing key. For more information, see <a href="#add">Add metadata to a resource</a>.</p>
+<h3 id="remove-metadata-from-a-resource-1"><a class="header" href="#remove-metadata-from-a-resource-1"><a id="remove"></a> Remove metadata from a resource</a></h3>
+<p>To remove metadata from a resource, follow the procedure for adding metadata and provide a <code>null</code> value for an existing key. For more information, see <a href="#add">Add metadata to a resource</a>.</p>
+<h3 id="view-metadata-for-a-resource-1"><a class="header" href="#view-metadata-for-a-resource-1"><a id="view"></a> View metadata for a resource</a></h3>
+<p>To view metadata using the list endpoint of a resource:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf curl /v3/RESOURCE-ENDPOINT/GUID
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE-ENDPOINT</code> is the CAPI endpoint for the type of resource you want to view, such as <code>apps</code> or <code>organizations</code>.</li>
+
+   
+<li><code>GUID</code> is the GUID of the resource you want to view.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="list-resources-by-querying-labels"><a class="header" href="#list-resources-by-querying-labels"><a id="query"></a> List resources by querying labels</a></h3>
+<p>To list resources by querying label metadata:</p>
+<ol>
+<li>
+<p>To query a resource by using the <code>label_selector</code> parameter on its list endpoint, run:</p>
+<pre><code>cf curl /v3/RESOURCE-ENDPOINT/?label_selector=SELECTOR-REQUIREMENTS
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>RESOURCE-ENDPOINT</code> is the CAPI endpoint for the type of resource you want to view, such as <code>apps</code> or <code>organizations</code>.</li>
+
+   
+<li>
+     <code>SELECTOR-REQUIREMENTS</code> is one of requirement types specified in <a href="#requirements-reference">Selector Requirement Reference</a>. You can add multiple selector requirements using a comma-separated list.
+     <br>Ensure that this part of the URL is appropriately escaped.
+   </li>
+
+ </ul>
+
+</li>
+</ol>
+<h4 id="selector-requirement-reference"><a class="header" href="#selector-requirement-reference"><a id="requirements-reference"></a> Selector requirement reference</a></h4>
+<p>The following table describes how to form selector requirements:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Requirement</th><th>Format</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>existence</td><td><code>KEY</code></td><td>Returns all resources labeled with the given key</td></tr>
+<tr><td>inexistence</td><td><code>!KEY</code></td><td>Returns all resources not labeled with the given key</td></tr>
+<tr><td>equality</td><td><code>KEY==VALUE</code> or <code>KEY=VALUE</code></td><td>Returns all resources labeled with the given key and value</td></tr>
+<tr><td>inequality</td><td><code>KEY!=VALUE</code></td><td>Returns all resources not labeled with the given key and value</td></tr>
+<tr><td>set inclusion</td><td><code>KEY in (VALUE1,VALUE2...)</code></td><td>Returns all resources labeled with the given key and one of the specified values</td></tr>
+<tr><td>set exclusion</td><td><code>KEY notin (VALUE1,VALUE2...)</code></td><td>Returns all resources not labeled with the given key and one of the specified values</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="example-label-resources-with-a-git-commit"><a class="header" href="#example-label-resources-with-a-git-commit"><a id="example"></a> Example: Label resources with a git commit</a></h2>
+<p>This section provides the following:</p>
+<ul>
+<li>
+<p>A procedure for labeling an app, package, and droplet with a Git commit SHA. For more information, see <a href="#manual">Manually Label Resources</a>.</p>
+</li>
+<li>
+<p>A script that automates the procedure. For more information, see <a href="#example-script">Automate Labeling Resources</a>.</p>
+</li>
+</ul>
+<p>Labeling your app and related resources with a Git commit SHA allows you to track which version of your code is running on Cloud Foundry.</p>
+<p>For more information about app packages and droplets, see the <a href="https://v3-apidocs.cloudfoundry.org/version/3.68.0/index.html">CAPI documentation</a>.</p>
+<h3 id="manually-label-resources"><a class="header" href="#manually-label-resources"><a id="manual"></a> Manually label resources</a></h3>
+<p>To label an app, droplet, and package with a Git commit SHA:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf app APP-NAME --guid
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of the app.</p>
+</li>
+<li>
+<p>Record the app GUID you retrieved in the previous step,</p>
+</li>
+<li>
+<p>Return the GUID of the droplet and package associated with the app by running:</p>
+<pre><code>cf curl /v3/apps/APP-GUID/droplets/current
+</code></pre>
+<p>Where <code>APP-GUID</code> is the GUID of the app.</p>
+</li>
+<li>
+<p>Record the GUID of the droplet and package:</p>
+<ul>
+<li>The droplet GUID is the value for the <code>"guid"</code> key.</li>
+<li>The package GUID is the end of the <code>"href"</code> URL for the <code>"package"</code> key.</li>
+</ul>
+<p>For example, the droplet and package GUIDs are highlighted in blue in the following output:</p>
+ 
+<pre class="terminal">
+ {
+   "guid": "<span class="guid">fd35633f-5c5c-4e4e-a5a9-0722c970a9d2</span>",
+   ...
+   "links": {
+     "package": {
+       "href": "https<span>:</span>//api.run.pivotal.io/v3/packages/<span class="guid">fd35633f-5c5c-4e4e-a5a9-0722c970a9d2</span>"
+     }
+   }
+ </pre>
+
+</li>
+<li>
+<p>Label the app with a Git commit SHA by running:</p>
+<pre><code>cf curl /v3/apps/APP-GUID -X PATCH -d '{"metadata": { "labels": { "commit": COMMIT-SHA } } }'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>APP-GUID</code> is the GUID of the app.</li>
+
+   
+<li><code>COMMIT-SHA</code> is the SHA of the Git commit.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Label the app droplet with the same Git commit SHA by running:</p>
+<pre><code>cf curl /v3/droplets/DROPLET-GUID -X PATCH -d '{"metadata": { "labels": { "commit": COMMIT-SHA } } }'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>DROPLET-GUID</code> is the GUID of the droplet.</li>
+
+   
+<li><code>COMMIT-SHA</code> is the SHA of the Git commit.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Label the app package with the same Git commit SHA by running:</p>
+<pre><code>cf curl /v3/packages/PACKAGE-GUID -X PATCH -d '{"metadata": { "labels": { "commit": COMMIT-SHA } } }'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>PACKAGE-GUID</code> is the GUID of the package.</li>
+
+   
+<li><code>COMMIT-SHA</code> is the SHA of the Git commit.</li>
+
+ </ul>
+
+</li>
+</ol>
+<h3 id="automate-labeling-resources"><a class="header" href="#automate-labeling-resources"><a id="example-script"></a> Automate labeling resources</a></h3>
+<p>You can automate labeling resources by running a script either programmatically or manually in the app repository.</p>
+<h4 id="prerequisite"><a class="header" href="#prerequisite"><a id="example-prerequisite"></a> Prerequisite</a></h4>
+<p>To run the following example script, you must install <code>jq</code>. To download <code>jq</code>, see <a href="https://stedolan.github.io/jq/">jq</a>.</p>
+<h4 id="example-script"><a class="header" href="#example-script"><a id="script"></a> Example script</a></h4>
+<p>The following script retrieves the GUID of the app, droplet, and package. It then <code>curls</code> CAPI to label each resource with the current Git commit SHA.</p>
+<p>Replace <code>APP-NAME</code> with the name of your app.</p>
+<pre><code>#!/usr/bin/env bash
+
+set -ex
+
+APP_GUID="$(cf app APP-NAME --guid)"
+APP_URI="/v3/apps/${APP_GUID}"
+
+DROPLET_GUID="$(cf curl "/v3/apps/${APP_GUID}/droplets/current" | jq -r .guid)"
+DROPLET_URI="/v3/droplets/${DROPLET_GUID}"
+
+PACKAGE_GUID="$(cf curl "/v3/droplets/${DROPLET_GUID}" | jq -r .links.package.href | xargs basename)"
+PACKAGE_URI="/v3/packages/${PACKAGE_GUID}"
+
+COMMIT_SHA="$(git rev-parse --short HEAD)"
+REQUEST_BODY="$(jq -nc --arg commit "${COMMIT_SHA}" '{"metadata": { "labels": { "commit": $commit } } }')"
+
+cf curl "${APP_URI}" -X PATCH -d "${REQUEST_BODY}"
+cf curl "${PACKAGE_URI}" -X PATCH -d "${REQUEST_BODY}"
+cf curl "${DROPLET_URI}" -X PATCH -d "${REQUEST_BODY}"
+</code></pre>
+<h2 id="example-add-custom-tags-to-log-and-metric-envelopes"><a class="header" href="#example-add-custom-tags-to-log-and-metric-envelopes"><a id="example-custom-tags"></a> Example: Add custom tags to log and metric envelopes</a></h2>
+<p>Log and metric envelopes emitted by applications are tagged with information about the application, such as the
+application name, for example.</p>
+<p>You can define additional custom log and metric tags by adding a label with a specific prefix. The default prefix
+is <code>metric.tag.cloudfoundry.org</code>. Following a restart of the application, the custom metric tag is
+visible in the logs and metrics emitted for processes associated with that application.</p>
+<p>The following commands add a tag named <code>custom_tag</code> with the value <code>some_value</code> for logs and metrics emitted for the
+application <code>sample-app</code>:</p>
+<pre><code>$ cf set-label app sample-app metric.tag.cloudfoundry.org/custom_tag=some_value
+$ cf restart sample-app
+</code></pre>
+<p>You can verify that the custom tag has been applied by querying Log Cache with the log-cache cf CLI plug-in. The
+following commands assume that you have the <code>jq</code> command line utility.</p>
+<pre><code>$ cf install-plugin -r CF-Community 'log-cache'
+
+$ cf tail sample-app --json --follow | jq -r '.tags.custom_tag'
+some_value
+some_value
+some_value
+</code></pre>
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../adminguide/examining_grootfs_disk.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../adminguide/buildpacks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../adminguide/examining_grootfs_disk.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../adminguide/buildpacks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

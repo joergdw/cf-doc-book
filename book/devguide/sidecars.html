@@ -1,0 +1,670 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Pushing apps with sidecar processes - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-pushing-apps-with-sidecar-processes-owner-capi"><a class="header" href="#title-pushing-apps-with-sidecar-processes-owner-capi">title: Pushing apps with sidecar processes
+owner: CAPI</a></h2>
+<p>You can run additional processes in the same container as your app. These additional processes
+are called sidecar processes, or sidecars. An example of a sidecar is an Application Performance
+Monitoring (APM) tool.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The latest supported cf CLI release is cf CLI v8. To upgrade to cf CLI v8, see <a href="https://docs.cloudfoundry.org/cf-cli/v8.html">Upgrading to cf CLI v8</a>.
+</p>
+
+<p class="note"><span class="note__title"><strong>Note</strong></span> This feature requires that your Cloud Foundry deployment uses capi-release 1.790 or later.</p>
+
+<h2 id="about-sidecars"><a class="header" href="#about-sidecars"><a id="overview"></a> About sidecars</a></h2>
+<p>When you provide a sidecar for your app,
+Cloud Foundry packages the required code and
+configuration needed to run the sidecar and app in the same droplet. It deploys this droplet in a
+single container on Diego. Both processes within the container undergo health checks independently.</p>
+<p>You can push sidecar processes with your app by using an app manifest. For instructions, see <a href="#create">Push an app with a sidecar Using an app manifest</a>.</p>
+<p>For additional information about sidecars, see <a href="http://v3-apidocs.cloudfoundry.org/version/release-candidate/#sidecars">Sidecars</a> in the
+Cloud Foundry API (CAPI) documentation.</p>
+<p>For sample apps that use sidecars, see the
+<a href="https://github.com/cloudfoundry-samples/capi-sidecar-samples">capi-sidecar-samples</a> repository on
+GitHub. These sample apps use an app manifest.</p>
+<h2 id="use-cases"><a class="header" href="#use-cases"><a id="use-case"></a> Use cases</a></h2>
+<p>You can use sidecars for processes that depend on each other or must run in the same container.</p>
+<p>For example, you can use sidecars for processes that must:</p>
+<ul>
+<li>Communicate over a UNIX socket or through localhost</li>
+<li>Share the same file system</li>
+<li>Be scaled and placed together</li>
+<li>Have fast interprocess communication</li>
+</ul>
+<h2 id="limitations"><a class="header" href="#limitations"><a id="limitations"></a> Limitations</a></h2>
+<p>Sidecars have these limitations:</p>
+<ul>
+<li>
+<p>The start and stop order of app processes and their sidecars is undefined.</p>
+</li>
+<li>
+<p>App processes and sidecars are codependent. If either fails or exits, the other does also.</p>
+</li>
+<li>
+<p>Sidecars are not independently scalable. Sidecars share resources with the main app process and other sidecars within the container.</p>
+</li>
+<li>
+<p>Sidecars only support PID-based health checks. HTTP health checks for sidecars are not supported.</p>
+</li>
+</ul>
+<h2 id="requirements-for-java-apps"><a class="header" href="#requirements-for-java-apps"><a id="java"></a> Requirements for Java apps</a></h2>
+<p>These sections describe several requirements that are specific to pushing sidecars with Java apps.</p>
+<h3 id="reserving-memory"><a class="header" href="#reserving-memory"><a id="java-sidecar-memory"></a> Reserving memory</a></h3>
+<p>You must allocate memory to the sidecar. If you do not, the Java buildpack allocates all of the
+available memory to the app. As a result, the sidecar does not have enough memory and the app fails
+to start.</p>
+<p>To allocate memory to the sidecar, use the <code>memory</code> property in the app manifest. For example:</p>
+<pre><code>sidecars:
+- name: SIDECAR-NAME
+	process_types: [ 'PROCESS-TYPES' ]
+	command: START-COMMAND
+	memory: 256MB
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code>SIDECAR-NAME</code> is a name you give your sidecar.</p>
+</li>
+<li>
+<p><code>PROCESS-TYPES</code> is a list of app processes for the sidecar to attach to, such as <code>web</code> or <code>worker</code>. You can attach multiple sidecars to each process type your app uses.</p>
+</li>
+<li>
+<p><code>START-COMMAND</code> is the command used to start the sidecar. For example, <code>./binary</code> or <code>java -jar java-file.jar</code>.</p>
+</li>
+</ul>
+<p>You must also allocate memory to sidecars that you push with a custom buildpack.</p>
+<h3 id="packaging-binaries"><a class="header" href="#packaging-binaries"><a id="java-sidecar-packaging"></a> Packaging binaries</a></h3>
+<p>If your sidecar is a binary file rather than a set of buildable source files, then you must package the binary file with your Java app.</p>
+<p>In some cases, the Java buildpack requires you to push a <code>.jar</code> file. If this is the case with your app, you must include the sidecar binary in the <code>.jar</code> file.</p>
+<p>To package the sidecar binary with the <code>.jar</code> file, run:</p>
+<pre><code>zip JAR -u SIDECAR-BINARY
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>
+<p><code>JAR</code> is your <code>.jar</code> file.</p>
+</li>
+<li>
+<p><code>SIDECAR-BINARY</code> is your sidecar binary.</p>
+</li>
+</ul>
+<p>For more information about packaging assets with your Java app, see <a href="https://docs.cloudfoundry.org/buildpacks/java/java-tips.html">Cloud Foundry documentation</a>.</p>
+<h2 id="push-an-app-with-a-sidecar-using-an-app-manifest"><a class="header" href="#push-an-app-with-a-sidecar-using-an-app-manifest"><a id="create"></a> Push an app with a sidecar using an app manifest</a></h2>
+<p>These sections explain how to push an app with a sidecar using an app manifest. For an example that you can try yourself, see <a href="#tutorial">Sidecar tutorial</a>.</p>
+<p>When pushing a Java app, follow the requirements listed in <a href="#java">Requirements for Java Apps</a>.</p>
+<h3 id="prerequisites"><a class="header" href="#prerequisites"><a id="prerequisite"></a> Prerequisites</a></h3>
+<p>Before you can push an app with a sidecar with an app manifest, you must have:</p>
+<ul>
+<li>
+<p>An app that is running or ready to be pushed.</p>
+</li>
+<li>
+<p>A file that Cloud Foundry can run inside the application container as a sidecar process. For example, an executable binary, a Java .jar file, or Ruby scripts.</p>
+</li>
+</ul>
+<h3 id="procedure"><a class="header" href="#procedure"><a id="create"></a> Procedure</a></h3>
+<p>To push an app with a sidecar:</p>
+<ol>
+<li>
+<p>Create an app or use an existing app. To create an app:</p>
+<pre><code>cf create-app APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name you give your app.</p>
+</li>
+<li>
+<p>Create a manifest file in the root directory of your app, such as <code>manifest.yml</code>. Otherwise, use an existing manifest file for your app. For more information, see <a href="./deploy-apps/manifest.html">Deploying with app manifests</a>.</p>
+</li>
+<li>
+<p>Add the following values to your app manifest file under the <code>applications</code> key:</p>
+<pre><code>  sidecars:
+    - name: SIDECAR-NAME
+      process_types: [ 'PROCESS-TYPES' ]
+      command: START-COMMAND
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>SIDECAR-NAME</code> is a name you give your sidecar.</li>
+
+   
+<li><code>PROCESS-TYPES</code> is a list of app processes for the sidecar to attach to, such as <code>web</code> or <code>worker</code>. You can attach multiple sidecars to each process type your app uses.</li>
+
+   
+<li><code>START-COMMAND</code> is the command used to start the sidecar. For example, <code>./binary</code> or <code>java -jar java-file.jar</code>.</li>
+
+ </ul>
+
+<p>This example manifest file includes multiple sidecars:</p>
+<pre><code>---
+applications:
+- name: my-app
+  sidecars:
+     - name: authenticator
+       process_types: [ 'web', 'worker' ]
+       command: bundle exec run-authenticator
+     - name: performance monitor
+       process_types: [ 'web' ]
+       command: bundle exec run-performance-monitor
+</code></pre>
+</li>
+<li>
+<p>To apply the manifest file to your app:</p>
+<pre><code>cf apply-manifest -f PATH-TO-MANIFEST
+</code></pre>
+<p>Where <code>PATH-TO-MANIFEST</code> is the path to your manifest file.</p>
+</li>
+<li>
+<p>To push your app:</p>
+<pre><code>cf push APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+</ol>
+<h2 id="sidecar-tutorial"><a class="header" href="#sidecar-tutorial"><a id="tutorial"></a> Sidecar tutorial</a></h2>
+<p>You can explore sidecars using the app in the <a href="https://github.com/cloudfoundry-samples/capi-sidecar-samples">capi-sidecar-samples</a> repository on GitHub. The following sections describe the app, how to build and push the app, and some ways to observe the app and its processes after pushing.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+In this tutorial, you are pushing the Ruby sample app. You can also follow this tutorial for a Java app using the <code>sidecar-dependent-java-app</code> and <code>push_java_app_with_binary_sidecar.sh</code> in the samples repository. When pushing a Java app, follow the requirements listed in <a href="#java">Requirements for Java apps</a>.
+</p>
+
+<h3 id="about-the-sample-app"><a class="header" href="#about-the-sample-app"><a id="about"></a> About the sample app</a></h3>
+<p>The <a href="https://github.com/cloudfoundry-samples/capi-sidecar-samples">capi-sidecar-samples</a> repository contains:</p>
+<ul>
+<li>
+<p><strong>A simple Ruby app</strong>: This app is named <code>sidecar-dependent-app</code>. It includes a <code>/config</code> endpoint that calls to the sidecar and prints the response, as shown in this code snippet:</p>
+<pre><code>get '/config' do
+puts "Sending a request to the config-server sidecar at localhost:#{ENV['CONFIG_SERVER_PORT']}/config/"
+response = Typhoeus.get("localhost:#{ENV['CONFIG_SERVER_PORT']}/config/")
+puts "Received #{response.body} from the config-server sidecar"
+response.body
+end
+</code></pre>
+</li>
+<li>
+<p><strong>A Golang sidecar</strong>: The <code>config-server-sidecar</code> produces a <code>config-server</code> binary. It provides apps with their required configuration over its <code>/config</code> endpoint. It also accepts connections only over localhost on the <code>CONFIG_SERVER_PORT</code> port. This means the sidecar must be co-located in the same container as the app, so that it shares the same network namespace as the main app.</p>
+</li>
+</ul>
+<p>The following diagram illustrates the app architecture:</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/sidecar-diagram.png" alt="App Process and Sidecar Process are inside an App Container, which is inside a Diego cell."><span class="img-wrapper"><img src="./images/sidecar-diagram.png" alt="App Process and Sidecar Process are inside an App Container, which is inside a Diego cell."></span></label></p>
+<h3 id="push-the-app-and-sidecar"><a class="header" href="#push-the-app-and-sidecar"><a id="push"></a> Push the app and sidecar</a></h3>
+<p>If you do not have Go installed, download the <code>config-server_linux_x86-64</code> binary from <a href="https://github.com/cloudfoundry-samples/capi-sidecar-samples/releases">CAPI Sidecar sample releases</a> in the <code>capi-sidecar-samples</code> repository in GitHub.</p>
+<p>To push the app and sidecar:</p>
+<ol>
+<li>
+<p>In a terminal window, clone the Git repository to your workspace by running:</p>
+<pre><code>git clone https://github.com/cloudfoundry-samples/capi-sidecar-samples.git
+</code></pre>
+</li>
+<li>
+<p>Go to the <code>config-server-sidecar</code> directory.</p>
+</li>
+<li>
+<p>Build the binary for the sidecar by running:</p>
+<pre><code>GOOS=linux GOARCH=amd64 go build -o config-server .
+</code></pre>
+</li>
+<li>
+<p>To create the app:</p>
+<pre><code>cf create-app sidecar-dependent-app
+</code></pre>
+</li>
+<li>
+<p>Go to the <code>sidecar-dependent-app</code> directory.</p>
+</li>
+<li>
+<p>Open and review the <code>manifest.yml</code> file. Under <code>sidecars</code>, the sidecar is specified with a name, process type, and start command. Under <code>env</code>, an environment variable defines the port on which the app and sidecar communicate.</p>
+</li>
+<li>
+<p>To apply the manifest to the app:</p>
+<pre><code>cf apply-manifest
+</code></pre>
+</li>
+<li>
+<p>To push the app:</p>
+<pre><code>cf push sidecar-dependent-app
+</code></pre>
+</li>
+</ol>
+<p>After you push the app, you can further explore it as described in the sections below:</p>
+<ul>
+<li><a href="#view-processes-ssh">View processes running in the app container via SSH</a></li>
+<li><a href="#view-logs">View the web URL and app logs via SSH</a></li>
+<li><a href="#debug-processes-http">View and debug processes running in the app container via HTTP</a></li>
+</ul>
+<h3 id="view-processes-running-in-the-app-container-via-ssh"><a class="header" href="#view-processes-running-in-the-app-container-via-ssh"><a id="view-processes-ssh"></a> View processes running in the app container via SSH</a></h3>
+<p>To view the app and sidecar process running in the container:</p>
+<ol>
+<li>
+<p>SSH into the application container by running:</p>
+<pre><code>cf ssh sidecar-dependent-app
+</code></pre>
+</li>
+<li>
+<p>To see both the <code>rackup</code> process for the main app and <code>config-server</code> process for the sidecar, run:</p>
+<pre><code>ps aux
+</code></pre>
+<p>The output you might see resembles this example output:</p>
+ 
+<pre class="terminal">
+ vcap@f00949bd-6601-4731-6f7e-e859:~$ ps aux
+ USER         PID %CPU %MEM    VSZ      RSS   TTY   STAT   START TIME  COMMAND
+ root           1 0.0  0.0     1120     0     ?     S      22:17 0:00  /tmp/garden-init
+ vcap           7 0.0  0.0     106716   4508  ?     S      22:17 0:00  ./config-server
+ vcap          13 0.0  0.1     519688   35412 ?     S      22:17 0:00  /home/vcap/deps/0/vendor_bundle/ruby/2.4.0/bin/rackup config.ru -p 8080
+ vcap          24 0.0  0.0     116344   10792 ?     S      22:17 0:00  /tmp/lifecycle/diego-sshd --allowedKeyExchanges= --address=0.0.0.0:2222 --allowUnauthenticatedClients=false --inhe
+ root          82 0.0  0.0     108012   4548  ?     S      22:17 0:00  /etc/cf-assets/healthcheck/healthcheck -port=8080 -timeout=1000ms -liveness-interval=30s
+ vcap         215 0.3  0.0     70376    3756  pts/0 S      23:12 0:00  /bin/bash
+ vcap         227 0.0  0.0     86268    3116  pts/0 R      23:12 0:00  ps aux
+ </pre>
+
+</li>
+<li>
+<p>To see that the sidecar is listening on the port specified by <code>CONFIG_SERVER_PORT</code> and that the main <code>ruby</code> process is connected to it, run:</p>
+<pre><code>lsof -i | grep $CONFIG_SERVER_PORT
+</code></pre>
+<p>The output you see might resemble this example output:</p>
+ 
+<pre class="terminal">
+ vcap@f00949bd-6601-4731-6f7e-e859:~$ lsof -i | grep $CONFIG_SERVER_PORT
+ config-se   7 vcap 3u  IPv4 17265901     0t0 TCP *:8082 (LISTEN)
+ config-se   7 vcap 5u  IPv4 17265992     0t0 TCP localhost:8082-&gt;localhost:42266 (ESTABLISHED)
+ ruby       13 vcap 11u  IPv4 17274965    0t0 TCP localhost:42266-&gt;localhost:8082 (ESTABLISHED)
+ </pre>
+
+</li>
+</ol>
+<h3 id="view-the-web-url-and-app-logs-via-ssh"><a class="header" href="#view-the-web-url-and-app-logs-via-ssh"><a id="view-logs"></a> View the web URL and app logs via SSH</a></h3>
+<p>To view the web URL and logs for the app:</p>
+<ol>
+<li>
+<p>In a browser, go to the <code>config</code> endpoint of the <code>sidecar-dependent-app</code>. For example: <code>https://sidecar-dependent-app.example.com/config</code>.</p>
+</li>
+<li>
+<p>See that the browser displays <code>Scope</code> and <code>Password</code> information. This is the configuration that the app fetches from the <code>config-server</code> sidecar.</p>
+</li>
+<li>
+<p>Begin streaming logs for the app by running:</p>
+<pre><code>cf logs sidecar-dependent-app
+</code></pre>
+</li>
+<li>
+<p>In your browser, refresh the <code>/config</code> endpoint page and observe that the log stream in your terminal displays logs for both the sidecar and the main app process.</p>
+</li>
+<li>
+<p>In a separate terminal from your log stream, SSH into the application container by running:</p>
+<pre><code>cf ssh sidecar-dependent-app
+</code></pre>
+</li>
+<li>
+<p>Stop the sidecar process by running:</p>
+<pre><code>kill -9 $(pgrep config-server)
+</code></pre>
+</li>
+<li>
+<p>View the output in the terminal where you are streaming the app logs. The app logs indicate that the sidecar process failed and that Diego restarted the application container. For example:</p>
+ 
+<pre class="terminal">
+ 2019-04-17T16:48:55.41-0700 [API/0] OUT App instance exited with guid
+ 21df1eb8-f25d-43b2-990b-c1a417310553 payload:
+ {"instance"=&gt;"a8db0eed-7371-4805-5ad3-4596", "index"=&gt;0,
+ "cell_id"=&gt;"86808ce7-afc2-47da-9e79-522a62a48cff", "reason"=&gt;"CRASHED",
+ "exit_description"=&gt;"APP/PROC/WEB/SIDECAR/CONFIG-SERVER: Exited with status 137",
+ "crash_count"=&gt;1, "crash_timestamp"=&gt;1555544935367052708,
+ "version"=&gt;"50892dcb-274d-4cf6-b944-3eda1e000283"}
+ </pre>
+
+</li>
+</ol>
+<h3 id="view-and-debug-processes-running-in-the-app-container-via-http"><a class="header" href="#view-and-debug-processes-running-in-the-app-container-via-http"><a id="debug-processes-http"></a>View and debug processes running in the app container via HTTP</a></h3>
+<p>Sidecars can be used to collect debug information (e.g. thread dumps) from
+another process running in the same container. This is especially useful if you
+want to debug a running process using an HTTP request, for instance if you do
+not have ssh access to the application container.</p>
+<p>This is an example of a simple routable debug sidecar for java applications,
+but the same concept can be adapted to more advanced debug tooling and other
+languages or frameworks.</p>
+<h4 id="prerequisites-1"><a class="header" href="#prerequisites-1"><a id="debug-prerequisites"></a> Prerequisites</a></h4>
+<p>Before you begin, you must have:</p>
+<ul>
+<li>
+<p>A java app with <a href="./deploy-apps/manifest.html">a manifest</a> that is ready to be
+pushed. For example, the <a href="https://github.com/cloudfoundry/cf-acceptance-tests/tree/main/assets/java">java sample
+app</a>
+from CF Acceptance Tests.</p>
+</li>
+<li>
+<p>A route to map to the debug sidecar</p>
+</li>
+</ul>
+<h4 id="procedure-1"><a class="header" href="#procedure-1"><a id="debug-procedure"></a> Procedure</a></h4>
+<p>To add a debug sidecar to the java app:</p>
+<ol>
+<li>
+<p>Create a sidecar that responds to HTTP requests and calls <code>kill -3</code> on the
+java process. When a java process receives the resulting SIGQUIT signal, it
+will print a thread dump to STDOUT. For an example, see the
+<a href="https://github.com/Gerg/java-debug-buildpack/blob/main/java_debug_sidecar.go">java_debug_sidecar</a>
+on GitHub.</p>
+</li>
+<li>
+<p>Place the sidecar binary in the root directory of your java app</p>
+</li>
+<li>
+<p>Add the following to your app manifest:</p>
+<pre><code>sidecars:
+- name: debug-sidecar
+  process_types: [ 'web' ]
+  command: START-COMMAND
+  memory: 256MB
+</code></pre>
+<p>Where <code>START-COMMAND</code> is the command used to start the sidecar. For the above
+example sidecar, <code>./java_debug_sidecar</code>.</p>
+</li>
+<li>
+<p>Push the java application. For example:</p>
+<pre><code>cf push APP-NAME -f manifest.yml -m 1G
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+<li>
+<p>Map a route to the sidecar process’s port. For detailed steps, see
+<a href="./custom-ports.html">Configuring Cloud Foundry to route traffic to apps on custom ports</a>.</p>
+<pre><code>cf curl -X PATCH /v3/routes/ROUTE-GUID/destinations -d '{
+"destinations": [
+    {
+      "app": {
+        "guid": "APP-GUID",
+        "process": {
+          "type": "web"
+        }
+      },
+      "port": PORT,
+      "protocol": "http1"
+    }
+  ]
+}'
+</code></pre>
+<p>Where:</p>
+ 
+<ul>
+   
+<li><code>APP-GUID</code> is the GUID of your app.</li>
+
+   
+<li><code>ROUTE-GUID</code> is the GUID of the route to map to the sidecar.</li>
+
+   
+<li><code>PORT</code> is a custom port on which your app is configured to
+   receive requests. This is <code>8081</code> for the above example.</li>
+
+ </ul>
+
+</li>
+<li>
+<p>Restart the app to complete the port mapping</p>
+<pre><code>cf restart APP_NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+<li>
+<p>Tail the app logs:</p>
+<pre><code>cf logs APP_NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+<li>
+<p>In another terminal, make a HTTP request to the sidecar, to trigger the
+thread dump. For example:</p>
+<pre><code>curl https://debug-sidecar.example.com/threaddump
+</code></pre>
+</li>
+<li>
+<p>Observe the thread dump in the app logs</p>
+</li>
+</ol>
+<h3 id="next-steps"><a class="header" href="#next-steps"><a id="debug-next-steps"></a> Next Steps</a></h3>
+<p>Now that you have a simple debugging sidecar working, here are some ideas for
+next steps:</p>
+<ul>
+<li>Use more sophisticated debugging tools</li>
+<li>Return the debug information in the HTTP response, rather than logging to STDOUT</li>
+<li>Inject the debug sidecar via a custom buildpack. For example:
+<a href="https://github.com/Gerg/java-debug-buildpack">java-debug-buildpack</a> on GitHub.</li>
+<li>Add authentication for the debug sidecar’s HTTP route, for instance using an
+authentication <a href="../services/route-services.html">Route Service</a>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../devguide/deploy-apps/rolling-deploy.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../devguide/deploy-apps/blue-green.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../devguide/deploy-apps/rolling-deploy.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../devguide/deploy-apps/blue-green.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

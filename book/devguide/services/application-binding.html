@@ -1,0 +1,530 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Delivering service credentials to an app - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-delivering-service-credentials-to-an-app-owner-core-services"><a class="header" href="#title-delivering-service-credentials-to-an-app-owner-core-services">title: Delivering service credentials to an app
+owner: Core Services</a></h2>
+<p>You can bind your apps to service instances for the purpose of generating credentials and delivering them to apps. For an overview of services, and documentation about other service management operations, see <a href="index.html">Using services</a>. If you are interested in building services for Cloud Foundry and making them available to end users, see <a href="http://docs.cloudfoundry.org/services/index.html">Services</a>.</p>
+<h2 id="bind-a-service-instance"><a class="header" href="#bind-a-service-instance"><a id="bind"></a>Bind a service instance</a></h2>
+<p>Binding a service instance to your app triggers credentials to be provisioned for the service instance and delivered to the app runtime. CloudFoundry offers 3 different methods to deliver those credentials to the app.</p>
+<p>For details about the different delivery methods and consumption of these credentials with your app, see <a href="#credential-delivery-methods">Credential Delivery Methods</a>.</p>
+<p>Not all services support binding, as some services deliver value to users directly without integration with an app. In many cases, binding credentials are unique to an app, and another app bound to the same service instance receives different credentials, but this depends on the service.</p>
+<pre class="terminal">
+$ cf bind-service my-app mydb
+Binding service mydb to my-app in org my-org / space test as me@example.com...
+OK
+TIP: Use 'cf push' to ensure your env variable changes take effect
+
+$ cf restart my-app
+</pre>
+
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+You must restart or in some cases re-push your app for changes to be applied to the <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a> environment variable and for the app to recognize these changes.
+</p>
+
+<h3> <a id="credential-delivery-methods"></a> Credential Delivery Methods</h3>
+
+<p>After your service instance is created and bound to your app, the credentials, along with some metadata, are available in the app container and can be consumed by your app.
+There are three delivery methods, which are mutually exclusive. The developer can choose which one to use and then must adjust the consumption in the app accordingly.
+For details about consuming credentials specific to your development framework, see the Service Binding section in the documentation for your framework’s
+<a href="../../buildpacks/index.html">buildpack</a>.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If the application is unable to consume the credentials through the selected delivery method, it may cause downtime for the application. This is because the application won't be able to connect to the services it is bound to.
+</p>
+
+<h4 id="default-vcap_services-environment-variable"><a class="header" href="#default-vcap_services-environment-variable"><a id="vcap-services"></a> Default VCAP_SERVICES environment variable</a></h4>
+<p>By default, credentials and additional metadata for all bound service instances are stored in the <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a> environment variable.</p>
+<p>There are two methods developers can use to have their apps consume binding credentials.</p>
+<ul>
+<li><strong>Parse the JSON yourself:</strong> See the documentation for <a href="../deploy-apps/environment-variable.html#VCAP-SERVICES">VCAP_SERVICES</a>. Helper libraries are available for some frameworks.</li>
+<li><strong>Auto-configuration:</strong> Some buildpacks create a service connection for you by creating additional environment variables, updating config files, or passing system parameters to the JVM.</li>
+</ul>
+<p>For checking the binding data manually app developers can use <code>cf env</code>. See <a href="../deploy-apps/environment-variable.html#view-env">View Env</a>.</p>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The maximum size of content of the VCAP_SERVICES environment variable is 130 KB. If you want to bind more services to the app or the services you want to bind provide lots of data, you can use one of the other methods.
+</p>
+
+<h4 id="file-based-vcap-services"><a class="header" href="#file-based-vcap-services"><a id="file-based-vcap-services"></a> File-based VCAP services</a></h4>
+<p>This delivery method is used when the app feature <a href="https://v3-apidocs.cloudfoundry.org/index.html#app-features">file-based-vcap-services</a> is enabled.
+The environment variable <a href="../deploy-apps/environment-variable.html#VCAP-SERVICES-FILE-PATH">VCAP_SERVICES_FILE_PATH</a> will be made available in the app container and contains the path to a file containing the same content as the VCAP_SERVICES environment variable above.</p>
+<p>The binding data can be viewed like this:</p>
+<pre><code>cf ssh &lt;app_name&gt; -c 'cat $VCAP_SERVICES_FILE_PATH'
+</code></pre>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The vcap_services file content cannot exceed 1 MB, otherwise an <code>IncompatibleBindings</code> error is raised.
+</p>
+
+<h4 id="service-binding-k8s"><a class="header" href="#service-binding-k8s"><a id="service-binding-k8s"></a> Service Binding K8s</a></h4>
+<p>This delivery method is used when the app feature <a href="https://v3-apidocs.cloudfoundry.org/index.html#app-features">service-binding-k8s</a> is enabled.
+The environment variable <a href="../deploy-apps/environment-variable.html#SERVICE-BINDING-ROOT">SERVICE_BINDING_ROOT</a> is made available in the app container. It contains the path to the root folder of a file structure containing binding information.
+This method is fully compatible with the specification on <a href="https://servicebinding.io/">servicebinding.io</a>, which is used by Kubernetes as well.</p>
+<p>The binding data can be viewed like this:</p>
+<pre><code>cf ssh &lt;app_name&gt; -c 'find $SERVICE_BINDING_ROOT -type f -exec bash -c "echo {}: \$(cat {})" \;'
+</code></pre>
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+The bytesize of all files and their content combined cannot exceed 1 MB, otherwise an <code>IncompatibleBindings</code> error is raised.
+</p>
+
+<p>Here are some examples outlining the transformation of VCAP_SERVICES to the file structure:</p>
+<p>Nested structures inside their value will be serialized as JSON objects. The same applies if the value is a list.</p>
+<pre><code>VCAP_SERVICES= {
+  "foo": [
+    {
+      "name": "foo",
+      "credentials": {
+        "simple": "value",
+        "deeply": {
+          "nested": "value"
+        },
+        "list": ["v", "a", "l", "u", "e"]
+      }
+    }
+  ]
+}
+
+Service Binding Files:
+  foo/name: foo
+  foo/simple: value
+  foo/deeply: {"nested":"value"}
+  foo/list: ["v","a","l","u","e"]
+</code></pre>
+<p>Existing credential keys can be overwritten by other attributes – <a href="../deploy-apps/environment-variable.html#VCAP-SERVICES">VCAP_SERVICES</a> attributes plus type and provider. The full list of reserved file names is: binding-guid, binding-name, instance-guid, instance-name, name, label, tags, plan, syslog-drain-url, volume-mounts, type, and provider. Overwriting an existing key does not result in an error.</p>
+<pre><code>VCAP_SERVICES= {
+  "foo": [
+    {
+      "name": "foo",
+      "credentials": {
+        "name": "user",
+        "secret": "password"
+      }
+    }
+  ]
+}
+
+Service Binding Files:
+  foo/name: foo
+  foo/secret: password
+</code></pre>
+<p>Empty lists or null values are omitted; that is, no file will be created.</p>
+<pre><code>VCAP_SERVICES= {
+  "foo": [
+    {
+      "name": "foo",
+      "binding_guid": "45436ca8-0a7c-45e3-9439-ca1b44db7a2b",
+      "syslog_drain_url": null,
+      "volume_mounts": []
+    }
+  ]
+}
+
+Service Binding Files:
+  foo/name: foo
+  foo/binding-guid: 45436ca8-0a7c-45e3-9439-ca1b44db7a2b
+</code></pre>
+<p>Binding names must match <code>[a-z0-9\-.]{1,253}</code>. Keys resulting in filenames must match <code>[a-z0-9\-._]{1,253}</code>. Invalid binding names and keys result in an <code>IncompatibleBindings</code> error.</p>
+<h3 id="arbitrary-parameters"><a class="header" href="#arbitrary-parameters"><a id="arbitrary-params-binding"></a> Arbitrary parameters</a></h3>
+<p>Some services support additional configuration parameters with the bind request. These parameters are passed in a valid JSON object containing service-specific configuration parameters, provided either in-line or in a file. For a list of supported configuration parameters, see documentation for the particular service offering.</p>
+<p>See the following examples:</p>
+<pre class="terminal">
+$ cf bind-service rails-sample my-db -c '{"role":"read-only"}'
+
+Binding service my-db to app rails-sample in org console / space development as user@example.com...
+OK
+</pre>
+
+<pre class="terminal">
+$ cf bind-service rails-sample my-db -c /tmp/config.json
+
+Binding service my-db to app rails-sample in org console / space development as user@example.com... OK
+</pre>
+
+<h3 id="binding-with-app-manifest"><a class="header" href="#binding-with-app-manifest"><a id="bind-with-manifest"></a> Binding with app manifest</a></h3>
+<p>As an alternative to binding a service instance after pushing an app, you can use the app manifest to bind the service instance during <code>cf push</code>.</p>
+<p>The following excerpt from an app manifest binds a service instance called <code>test-mysql-01</code> to the app on push.</p>
+<pre><code>services:
+ - test-mysql-01
+</code></pre>
+<p>The following excerpt from an app manifest binds a service instance called <code>db-test</code> with arbitrary parameters to the app on push. Arbitrary parameters used in this example are available in cf CLI 7.0 and later.</p>
+<pre><code>services:
+  - name: db-test
+    parameters:
+      schema: customschema
+</code></pre>
+<p>The following excerpt from the <code>cf push</code> command and response demonstrates that the cf CLI reads the manifest and binds the service instance to an app called <code>test-msg-app</code>.</p>
+<pre class="terminal">
+$ cf push
+Using manifest file /Users/Bob/test-apps/test-msg-app/manifest.yml
+
+...
+
+Binding service test-mysql-01 to test-msg-app in org My-Org / space development as Bob@shared-domain.example.com
+OK
+</pre>
+
+<p>For more information about app manifests, see <a href="../deploy-apps/manifest.html#services-block">Deploying with app manifests</a>.</p>
+<h3 id="named-service-bindings"><a class="header" href="#named-service-bindings"><a id="service-binding-names"></a>Named service bindings</a></h3>
+<p>Service offering and service instance names vary across environments. App authors can discover the service instances their apps require, without having to know environment-specific service names. Developers can specify a service binding name to include in <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a>.</p>
+<p>To specify the service binding name, provide the <code>--binding-name</code> flag when binding an app to a service instance:</p>
+<pre class="terminal">
+$ cf bind-service my-app my-service --binding-name postgres-database
+OK
+</pre>
+
+<p>The provided name is available in the <code>name</code> and <code>binding_name</code> properties in the <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a> environment variable:</p>
+<pre><code>"VCAP_SERVICES": {
+  "service-name": [
+    {
+      "name": "postgres-database",
+      "binding_name": "postgres-database",
+      ...
+    }
+  ]
+}
+</code></pre>
+<h2 id="update-service-credentials"><a class="header" href="#update-service-credentials"><a id="update-credentials"></a>Update service credentials</a></h2>
+<p>This section describes how to update service instance credentials.
+When updating the credentials, you can restage the app immediately and experience app downtime.
+If your app uses blue-green deployment, you can update service instance credentials with no downtime.</p>
+<p>For more information about user-provided services, see <a href="user-provided.html#update">Update a user-provided service instance</a> in <em>User-Provided Service Instances</em>.</p>
+<h3 id="with-downtime"><a class="header" href="#with-downtime"><a id="update-credentials-with-downtime"></a>With downtime</a></h3>
+<p>To update your service credentials:</p>
+<ol>
+<li><a href="#unbind">Unbind the service instance</a> using the credentials you are updating by running:</li>
+</ol>
+<pre><code>&lt;pre class="terminal"&gt;
+$ cf unbind-service YOUR-APP YOUR-SERVICE-INSTANCE
+&lt;/pre&gt;
+</code></pre>
+<ol start="2">
+<li><a href="#bind">Bind the service instance</a>. This command adds your credentials to the <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a> environment variable.</li>
+</ol>
+<pre><code>&lt;pre class="terminal"&gt;
+$ cf bind-service YOUR-APP YOUR-SERVICE-INSTANCE
+&lt;/pre&gt;
+</code></pre>
+<ol start="3">
+<li>Restart or re-push the app bound to the service instance so that the app recognizes your environment variable updates.</li>
+</ol>
+<h3 id="without-downtime"><a class="header" href="#without-downtime"><a id="update-credentials-without-downtime"></a>Without downtime</a></h3>
+<p>To update your service credentials without experiencing app downtime you can either employ a blue-green update scheme or use the new service credential binding rotation feature in combination with <code>--strategy rolling</code>.</p>
+<h4 id="blue-green-update"><a class="header" href="#blue-green-update"><a id="blue-green-update"></a>Blue-green update</a></h4>
+<ol>
+<li>Start a blue-green update of the app. For more information, see <a href="../deploy-apps/blue-green.html">Using blue-green deployment to reduce downtime and risk</a>. Push the “Green” version of the app with the <code>--no-start</code> parameter to prevent the app from starting right away:</li>
+</ol>
+  
+<pre class="terminal">
+  $ cf push YOUR-APP --no-start
+  </pre>
+
+<ol>
+<li>Bind the service instances to the newly-deployed “Green” app by running:</li>
+</ol>
+  
+<pre class="terminal">
+  $ cf bind-service YOUR-APP YOUR-SERVICE-INSTANCE
+  </pre>
+
+<ol>
+<li>Start the “Green” app with <code>cf start</code>:</li>
+</ol>
+  
+<pre class="terminal">
+  $ cf start YOUR-APP
+  </pre>
+
+<ol>
+<li>Unbind the service instances from the <code>Blue</code> app:</li>
+</ol>
+  
+<pre class="terminal">
+  $ cf unbind-service YOUR-APP YOUR-SERVICE-INSTANCE
+  </pre>
+
+<h4 id="service-credential-binding-rotation-experimental"><a class="header" href="#service-credential-binding-rotation-experimental"><a id="service-credential-binding-rotation"></a>Service credential binding rotation (experimental)</a></h4>
+<p>The service credential binding rotation feature allows you to rotate credentials for a service instance using a rolling re-binding. This feature requires the following prerequisites:</p>
+<ul>
+<li>The Cloud Foundry platform must support at least 2 bindings per service instance. This is configured by the platform operator with the <code>cc.max_service_credential_bindings_per_app_service_instance</code> property in the Cloud Controller configuration.</li>
+<li>The service broker must support multiple bindings per service instance and application.</li>
+<li>You must use at least cf CLI v8.18.0.</li>
+<li>You must use the <code>--strategy rolling</code> update feature.</li>
+</ul>
+<p>To rotate credentials for an already bound service instance with no downtime:</p>
+<ol>
+<li>
+<p>Create an additional service binding to your service instance by running:</p>
+ 
+<pre class="terminal">
+ $ cf bind-service YOUR-APP YOUR-SERVICE-INSTANCE --strategy multiple
+ </pre>
+
+</li>
+<li>
+<p>Trigger a rolling update of your application. The updated application instances will only see the new credentials:</p>
+ 
+<pre class="terminal">
+ $ cf restage YOUR-APP --strategy rolling
+ </pre>
+
+</li>
+<li>
+<p>After the update has been completed, you can delete the old service bindings with the <code>cleanup-outdated-service-bindings</code> command. It only keeps the newest binding and deletes the old bindings:</p>
+ 
+<pre class="terminal">
+ $ cf cleanup-outdated-service-bindings YOUR-APP
+ </pre>
+
+</li>
+</ol>
+<h2 id="unbind-a-service-instance"><a class="header" href="#unbind-a-service-instance"><a id="unbind"></a>Unbind a service instance</a></h2>
+<p>Unbinding a service removes the credentials created for your app from the <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a> environment variable.</p>
+<pre class="terminal">
+$ cf unbind-service my-app mydb
+Unbinding app my-app from service mydb in org my-org / space test as me@example.com...
+OK
+</pre>
+
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+You must restart or in some cases re-push your app for changes to be applied to the <a href="../deploy-apps/environment-variable.html">VCAP_SERVICES</a> environment variable and for the app to recognize these changes.
+</p>
+
+<p class="note important">
+<span class="note__title"><strong>Important</strong></span>
+If there are multiple service bindings as described in <a href="#service-credential-binding-rotation">Service credential binding rotation</a>, make sure to use cf CLI v8.18.0 or later to unbind all service bindings.
+</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../devguide/services/sharing-instances.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../devguide/services/service-keys.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../devguide/services/sharing-instances.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../devguide/services/service-keys.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

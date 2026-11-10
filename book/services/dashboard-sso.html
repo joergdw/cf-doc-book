@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Dashboard Single Sign-on - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-dashboard-single-sign-on-owner-core-services"><a class="header" href="#title-dashboard-single-sign-on-owner-core-services">title: Dashboard Single Sign-on
+owner: Core Services</a></h2>
+<p>Single sign-on (SSO) allows Cloud Foundry you to authenticate with third party service
+dashboards
+using your Cloud Foundry credentials.
+Service dashboards are web interfaces which allow you to interact with some or all of the features the
+service offers.
+SSO provides a streamlined experience that limits repeated logins and multiple accounts across managed services.
+Your credentials are never directly transmitted to the service because the OAuth protocol handles authentication.</p>
+<p>Dashboard SSO was introduced in <a href="https://github.com/cloudfoundry/cf-release/tree/v169">cf-release v169</a> so
+this or a newer version is required to support the feature.</p>
+<h2 id="enabling-sso"><a class="header" href="#enabling-sso"><a id="enabling-the-feature"></a>Enabling SSO</a></h2>
+<p>To activate the SSO feature, Cloud Controller requires a UAA client with sufficient permissions to
+create and delete clients for the service brokers that request them.</p>
+<p>You can configure the client by including the following snippet in the <code>cf-release</code> manifest:</p>
+<pre><code>properties:
+  uaa:
+    clients:
+      cc-service-dashboards:
+        secret: cc-broker-secret
+        scope: openid,cloud_controller_service_permissions.read
+        authorities: clients.read,clients.write,clients.admin
+        authorized-grant-types: authorization_code,client_credentials
+</code></pre>
+<p>When this client is not present in the <code>cf-release manifest</code>, Cloud Controller cannot manage UAA clients
+and you receive a warning when creating or updating service brokers that advertise the <code>dashboard_client</code>
+properties.</p>
+<h2 id="service-broker-responsibilities"><a class="header" href="#service-broker-responsibilities"><a id="broker-responsibilities"></a>Service Broker responsibilities</a></h2>
+<h3 id="registering-the-dashboard-client"><a class="header" href="#registering-the-dashboard-client"><a id="registering-dashboard-client"></a>Registering the dashboard client</a></h3>
+<ol>
+<li>
+<p>A service broker must include the <code>dashboard_client</code> line in the JSON response from
+its <a href="https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md#catalog-management">catalog endpoint</a> for each service that implements this feature. A valid response appears.</p>
+<pre><code>{
+  "services": [
+    {
+      "id": "44b26033-1f54-4087-b7bc-da9652c2a539",
+      ...
+      "dashboard_client": {
+        "id": "p-mysql-client",
+        "secret": "p-mysql-secret",
+        "redirect_uri": "http://p-mysql.example.com"
+      }
+    }
+  ]
+}
+</code></pre>
+<p>The <code>dashboard_client</code> line is a hash containing three lines:</p>
+<ul>
+  
+<li><code>id</code> is the unique identifier for the OAuth client that creates your service dashboard on the token server (UAA), and is used by your dashboard to authenticate with the token server (UAA). If the client id is already taken, Cloud Foundry returns an error when registering or updating the broker.</li>
+
+  
+<li><code>secret</code> is the shared secret your dashboard uses to authenticate with the token server (UAA).</li>
+
+  
+<li><code>redirect_uri</code> is used by the token server as an additional security precaution. UAA does not provide a token if the callback URL declared by the service dashboard does not match the domain name in <code>redirect_uri</code>. The token server matches on the domain name. Any paths also match. For example, a service dashboard requesting a token and declaring a callback URL of <code>http://p-mysql.example.com/manage/auth</code> is approved if <code>redirect_uri</code> for its client is <code>http://p-mysql.example.com/</code>.</li>
+
+</ul>
+
+</li>
+<li>
+<p>When a service broker advertises the <code>dashboard_client</code> property for any of its services is <a href="managing-service-brokers.html">added or updated</a>, Cloud Controller creates or update UAA clients as necessary. This client is used by the service dashboard to authenticate users.</p>
+</li>
+</ol>
+<h3 id="dashboard-url"><a class="header" href="#dashboard-url"><a id="dashboard-url"></a>Dashboard URL</a></h3>
+<p>A service broker must return a URL for <code>dashboard_url</code>  in response to a <a href="https://github.com/openservicebrokerapi/servicebroker/blob/v2.13/spec.md#provisioning">provision request</a>. Cloud Controller clients expose this URL to users. <code>dashboard_url</code> can be found in the response from Cloud Controller to create a service instance, enumerate service instances, space summary, and other endpoints.</p>
+<p>You can go to the service dashboard at the URL provided by <code>dashboard_url</code>, initiating the OAuth login flow.</p>
+<h2 id="service-dashboard-responsibilities"><a class="header" href="#service-dashboard-responsibilities"><a id="dashboard-responsibilities"></a>Service dashboard responsibilities</a></h2>
+<h3 id="oauth-flow"><a class="header" href="#oauth-flow"><a id="oauth2-flow"></a>OAuth flow</a></h3>
+<p>When you go to the URL from <code>dashboard_url</code>, the service dashboard initiates the OAuth login flow. A summary of the flow can be found in <a href="http://tools.ietf.org/html/rfc6749#section-1.2">section 1.2 of the OAuth RFC</a>. OAuth expects the presence of an <a href="http://tools.ietf.org/html/rfc6749#section-3.1">Authorization Endpoint</a> and a <a href="http://tools.ietf.org/html/rfc6749#section-3.2">Token Endpoint</a>. In Cloud Foundry, these endpoints are provided by the UAA. Clients can discover the location of UAA from Cloud Controller’s info endpoint; in the <code>token_endpoint</code> field of the response.</p>
+<pre><code>$ curl api.example.com/info
+{"name":"vcap","build":"2222","support":"http://support.example.com","version
+":2,"description":"Cloud Foundry sponsored by Example Company","authorization_endpoint":
+"https://login.example.com","token_endpoint":"https://uaa.example.com",
+"allow_debug":true}
+</code></pre>
+<p>To activate service dashboards to support SSO for service instances created from different Cloud Foundry instances, the <code>/v2/info</code> URL is sent to service brokers in the <code>X-Api-Info-Location</code> header of every API call.</p>
+<p>A service dashboard can discover this URL from the broker, which activates the dashboard
+to contact the appropriate UAA for a particular service instance. Although the Cloud Foundry API (CAPI) V2 is now deprecated, the Cloud Controller still communicates its <code>/v2/info URL</code> through this header. <code>/v2/info</code> is the sole CAPI V2 endpoint that continues to be served even where a Cloud Controller has been configured, through the CAPI BOSH release, to deactivate the V2 API.</p>
+<p>A service dashboard must implement the OAuth Authorization Code Grant type. See:</p>
+<ul>
+<li><a href="https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst#authorization-code-grant">UAA documentation</a></li>
+<li><a href="http://tools.ietf.org/html/rfc6749#section-4.1">RFC documentation</a></li>
+</ul>
+<p>Here are the steps:</p>
+<ol>
+<li>
+<p>When you visit the service dashboard at the value of <code>dashboard_url</code>, the dashboard redirects you to a browser for the Authorization Endpoint and includes <code>client_id</code>, a <code>redirect_uri</code> (callback URL with domain matching the value of <code>dashboard_client.redirect_uri</code>), and a list of requested scopes.</p>
+<p>Scopes are permissions that are included in the token for a dashboard client that are received from UAA. Cloud Controller uses scopes to enforce access. A client must request the minimum scopes it requires. The minimum scopes required for this workflow are:
+<code>cloud_controller_service_permissions.read</code> and <code>openid</code>.</p>
+<p>For an explanation of the scopes available to dashboard clients, see <a href="#on-scopes">On Scopes</a>.</p>
+</li>
+<li>
+<p>You are authenticated by UAA and redirected to the Login Server, where you approve or deny the scopes requested by the service dashboard. You are presented with a description for permissions that represent each scope. After authentication, your browser is redirected back to the Authorization endpoint on UAA with an authentication cookie for the UAA.</p>
+</li>
+<li>
+<p>Assuming you grant access, UAA redirects your browser back to the value of <code>redirect_uri</code> that the dashboard provided in the request for the Authorization Endpoint. The <code>Location</code> header in the response includes an authorization code:</p>
+<pre><code class="language-console">HTTP/1.1 302 Found
+Location: https://p-mysql.example.com/manage/auth?code=F45jH
+</code></pre>
+</li>
+<li>
+<p>The dashboard UI then requests an access token from the Token Endpoint by including the authorization code that you received in the previous step.  When you make the request, the dashboard must authenticate with UAA by passing the client <code>id</code> and <code>secret</code> lines in a basic auth header. UAA verifies that the client ID matches the client that issued the code. The dashboard also includes the <code>redirect_uri</code> used to obtain the authorization code for verification.</p>
+</li>
+<li>
+<p>UAA authenticates the dashboard client, validates the authorization code, and makes sure that the redirect URI that was received matches the URI used to redirect the client.  If valid, UAA responds back with an access token and a refresh token.</p>
+</li>
+</ol>
+<h3 id="checking-user-permissions"><a class="header" href="#checking-user-permissions"><a id="checking-user-permissions"></a>Checking user permissions</a></h3>
+<p>UAA is responsible for your authentication and provides the service with an access token with the requested permissions. However, after you have  been logged in, it is the responsibility of the service dashboard to verify that you make the request to manage an instance and have access to that service instance.</p>
+<p>The service uses a GET to the <code>/v3/service_instances/:guid/permissions</code> endpoint on the Cloud Controller. The request must include a token for an authenticated user and the service instance GUID. The token is the same one obtained from the UAA in response to a request to the Token Endpoint described earlier.</p>
+<h4 id="request-example"><a class="header" href="#request-example">Request example</a></h4>
+<pre><code class="language-json">curl -H 'Content-Type: application/json' \
+     -H 'Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoid' \
+     http://api.cloudfoundry.com/v3/service_instances/44b26033-1f54-4087-b7bc-da9652c2a539/permissions
+
+</code></pre>
+<h4 id="response"><a class="header" href="#response">Response</a></h4>
+<pre><code>{
+  "manage": true,
+  "read": true
+}
+</code></pre>
+<p>The response includes the following strings which indicate the various permissions for a given service instance:</p>
+<ul>
+<li><code>manage</code>: if <code>true</code>, you have sufficient permissions to make changes and update the service instance. <code>false</code> indicates insufficient permissions.</li>
+<li><code>read</code>: if <code>true</code>, you have permission to access read-only diagnostic and monitoring information for a given service instance. For example, permission to view a read-only dashboard. <code>false</code> indicates insufficient permissions.</li>
+</ul>
+<p>Since administrators might change the permissions of users at any time, the service checks this endpoint whenever a user uses the SSO flow to access the service UI.</p>
+<h3 id="scopes"><a class="header" href="#scopes"><a id="on-scopes"></a> Scopes</a></h3>
+<p>With scopes, you can specify exactly what type of access you need. Scopes limit access for OAuth tokens. They do not grant any additional permission beyond what you already have.</p>
+<h4 id="minimum-scopes"><a class="header" href="#minimum-scopes">Minimum scopes</a></h4>
+<p>The following scopes are necessary to implement the integration. Dashboards might not need more permissions than to have the scopes activated.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Scope</th><th>Permissions</th></tr>
+</thead>
+<tbody>
+<tr><td><code>openid</code></td><td>Allows access to basic data; for example, email addresses</td></tr>
+<tr><td><code>cloud_controller_service_permissions.read</code></td><td>Allows access to the Cloud Controller endpoint that specifies whether you can manage a given service instance</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="additional-scopes"><a class="header" href="#additional-scopes">Additional scopes</a></h4>
+<p>Dashboards with extended capabilities might need to request the following additional scopes.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Scope</th><th>Permissions</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cloud_controller.read</code></td><td>Allows read access to all resources you are authorized to read</td></tr>
+<tr><td><code>cloud_controller.write</code></td><td>Allows write access to all resources you are authorized to update / create / delete</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="reference-implementation"><a class="header" href="#reference-implementation"><a id="reference-implementation"></a>Reference implementation</a></h2>
+<p>The <a href="https://github.com/cloudfoundry/cf-mysql-broker">MySQL Service Broker</a> is an example of a broker that implements a SSO dashboard.</p>
+<p>The login flow is implemented using the <a href="https://github.com/intridea/omniauth">OmniAuth library</a> and a custom <a href="https://github.com/cloudfoundry/omniauth-uaa-oauth2">UAA OmniAuth Strategy</a>.</p>
+<p>See the <a href="https://github.com/intridea/omniauth/wiki/Strategy-Contribution-Guide">OmniAuth wiki page</a> for instructions on how to create your own strategy.</p>
+<p>The UAA OmniAuth strategy is used to get an authorization code.</p>
+<p>For more information on authorization codes, see <a href="https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst#authorization-code-grant">this section</a> of the UAA documentation.</p>
+<p>You are redirected back to the service (as specified by the <code>callback_path</code> option or the default <code>auth/cloudfoundry/callback</code> path) with the authorization code. Before the application action is dispatched, the OmniAuth strategy uses the authorization code to <a href="https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst#client-obtains-token-post-oauth-token">get a token</a> and uses the token to request information from UAA to fill the <code>omniauth.auth</code> environment variable. When OmniAuth returns control to the application, the <code>omniauth.auth</code> environment variable hash is filled with the token and user information obtained from UAA.</p>
+<p>For more information, see <a href="https://github.com/cloudfoundry/cf-mysql-broker/blob/master/app/controllers/manage/auth_controller.rb">Auth Controller</a>.</p>
+<h2 id="restrictions"><a class="header" href="#restrictions"><a id="restrictions"></a>Restrictions</a></h2>
+<ul>
+<li>UAA clients are scoped to services.  There must be a <code>dashboard_client</code> entry for each service that uses SSO integration.</li>
+<li>Each <code>dashboard_client id</code> must be unique across the Cloud Foundry deployment.</li>
+</ul>
+<h2 id="resources"><a class="header" href="#resources"><a id="resources"></a>Resources</a></h2>
+<ul>
+<li><a href="http://oauth.net/2/">OAuth</a></li>
+<li><a href="https://github.com/cloudfoundry/cf-mysql-broker">Example broker with SSO implementation (MySQL)</a></li>
+<li><a href="https://v3-apidocs.cloudfoundry.org/version/3.147.0/#introduction">Cloud Controller API docs</a></li>
+<li><a href="https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst">User Account and Authentication (UAA) Service APIs</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../credhub/troubleshooting-credhub.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../services/enable-sharing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../credhub/troubleshooting-credhub.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../services/enable-sharing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

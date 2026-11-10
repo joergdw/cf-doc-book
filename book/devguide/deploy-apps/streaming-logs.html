@@ -1,0 +1,456 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>App logging in Cloud Foundry - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-app-logging-in-cloud-foundry-owner-pcf-metrics"><a class="header" href="#title-app-logging-in-cloud-foundry-owner-pcf-metrics">title: App logging in Cloud Foundry
+owner: PCF Metrics</a></h2>
+<p>Loggregator, the Cloud Foundry (Cloud Foundry) component responsible for logging, provides a stream of log output from your app and from Cloud Foundry system components that interact with your app during updates and execution.</p>
+<h2 id="overview"><a class="header" href="#overview"><a id="overview"></a> Overview</a></h2>
+<p>By default, Loggregator streams logs to your terminal. To persist more than the limited amount of logging information that Loggregator can buffer, you can drain logs to a third-party log management service. For more information, see <a href="../services/log-management.html">Third-party log management services</a>.</p>
+<p>Cloud Foundry gathers and stores logs in a best-effort manner. If a client cannot consume log entries quickly enough, the Loggregator buffer might need to overwrite some lines before the client has consumed them. A syslog drain or a command-line interface (CLI) tail can usually keep up with the flow of app logs.</p>
+<h2 id="contents-of-a-log-entry"><a class="header" href="#contents-of-a-log-entry"><a id="types"></a> Contents of a log entry</a></h2>
+<p>Every log entry contains four fields:</p>
+<ul>
+<li>
+<p>Timestamp</p>
+</li>
+<li>
+<p>Log type, or origin code</p>
+</li>
+<li>
+<p>Channel: either <code>OUT</code>, for logs emitted on <code>stdout</code>, or <code>ERR</code>, for logs emitted on <code>stderr</code></p>
+</li>
+<li>
+<p>Message</p>
+</li>
+</ul>
+<p>Loggregator assigns the timestamp when it receives log data. The log data is opaque to Loggregator, which only puts it
+in the message field of the log entry. Apps or system components sending log data to Loggregator might include their own
+timestamps, which then appear in the message field.</p>
+<p>Origin codes distinguish the different log types. Origin codes from system components have three letters. The app origin code is <code>APP</code>, followed by slash and
+a digit that indicates the app instance.</p>
+<p>Many frameworks write to an app log that is separate from <code>stdout</code> and <code>stderr</code>. This is not supported by Loggregator. Your app must write to <code>stdout</code> or
+<code>stderr</code> for its logs to be in the Loggregator stream. Ensure that the buildpack your app uses
+writes logs to <code>stdout</code> and <code>stderr</code> only. Some buildpacks do this, and some do not.</p>
+<h2 id="log-types-and-their-messages"><a class="header" href="#log-types-and-their-messages"><a id="format"></a> Log types and their messages</a></h2>
+<p>Different types of logs have different message formats, as shown in the following examples. The digit appended to the code
+indicates the instance index: 0 is the first instance, 1 is the second, and so on.</p>
+<h3 id="api"><a class="header" href="#api"><a id="api"></a> API</a></h3>
+<p>Users make API calls to request changes in app state. The Cloud Controller, the Cloud Foundry component responsible for the API, logs the
+actions that the Cloud Controller takes in response.</p>
+<p>For example:</p>
+<pre class="terminal">
+2016-06-14T14:10:05.36-0700 [API/0]      OUT Updated app with guid cdabc600-0b73-48e1-b7d2-26af2c63f933 ({"name"=&gt;"spring-music", "instances"=&gt;1, "memory"=&gt;512, "environment_json"=&gt;"PRIVATE DATA HIDDEN"})
+</pre>
+
+<h3 id="stg"><a class="header" href="#stg"><a id="stg"></a> STG</a></h3>
+<p>The Diego Cell or the Droplet Execution Agent emits <code>STG</code> logs when staging or restaging an app. These actions implement the state requested by the user. After the droplet is uploaded, <code>STG</code> messages end and <code>CELL</code> messages begin. For <code>STG</code>, the instance index is almost always <code>0</code>.</p>
+<p>For example:</p>
+<pre class="terminal">
+2016-06-14T14:10:27.91-0700 [STG/0]      OUT Staging...
+</pre>
+
+<h3 id="rtr"><a class="header" href="#rtr"><a id="rtr"></a> RTR</a></h3>
+<p>The Gorouter emits <code>RTR</code> logs when it routes HTTP requests to the app. Gorouter messages include the app name followed by a Gorouter timestamp and selections from the HTTP request.</p>
+<p>For example:</p>
+<pre class="terminal">
+2016-06-14T10:51:32.51-0700 [RTR/1]      OUT www.example.com - [14/06/2016:17:51:32.459 +0000] "GET /user/ HTTP/1.1" 200 0 103455 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.123 Safari/537.30" 192.0.2.132:46359 x_forwarded_for:"198.51.100.120" x_forwarded_proto:"http" vcap_request_id:9365d216-623a-45cb-6ef6-eba495c19fa8 response_time:0.059468637 app_id:79cc58aa-3737-43ae-ac71-39a2843b5178
+</pre>
+
+<h4 id="zipkin-trace-logging"><a class="header" href="#zipkin-trace-logging"><a id="traceid"></a> Zipkin trace logging</a></h4>
+<p>If Zipkin trace logging is allowed in Cloud Foundry, Gorouter access log entries contain Zipkin HTTP headers.</p>
+<p>Here is an example access log entry containing Zipkin headers:</p>
+<pre class="terminal">
+2016-11-23T16:04:01.49-0800 [RTR/0]      OUT www.example.com - [24/11/2016:00:04:01.227 +0000] "GET / HTTP/1.1" 200 0 109 "-" "curl/7.43.0" 10.0.2.150:4070 10.0.48.66:60815 x_forwarded_for:"198.51.100.120" x_forwarded_proto:"http" vcap_request_id:87f9d899-c7a4-46cd-7b76-4ec35ce9921b response_time:0.263000966 app_id:8e5d6451-b369-4423-bce8-3a7a9e479dbb app_index:0 x_b3_traceid:"2d5610bf5e0f7241" x_b3_spanid:"2d5610bf5e0f7241" x_b3_parentspanid:"-"
+</pre>
+
+<p>For more information about Zipkin tracing, see <a href="../../concepts/http-routing.html#zipkin-headers">Zipkin tracking in HTTP headers</a> in <em>HTTP Routing</em>.</p>
+<h3 id="lgr"><a class="header" href="#lgr"><a id="lgr"></a> LGR</a></h3>
+<p>Loggregator emits <code>LGR</code> logs to indicate problems with logging. Examples include <code>can't reach syslog drain url</code> and <code>dropped log messages due to high rate</code>.</p>
+<h3 id="app"><a class="header" href="#app"><a id="app"></a> APP</a></h3>
+<p>Every app emits <code>APP</code> logs to Loggregator.</p>
+<p>For example:</p>
+<pre class="terminal">
+2016-06-14T14:10:15.18-0700 [APP/0]      OUT Exit status 0
+</pre>
+
+<p>The logs allow you to determine the particular revision and process of the application instance logging.</p>
+<p>For example, below shows the log line from two different revisions and web instances.</p>
+<pre class="terminal">
+2022-09-15T01:59:33.99+0000 [APP/REV/2/PROC/WEB/0] OUT hello world from new
+2022-09-15T01:59:34.99+0000 [APP/REV/1/PROC/WEB/1] OUT hello world from old
+</pre>
+
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+Logs with revision id are only available if the application uses revisions and it is enabled in the platform
+</p>
+
+<p>Each app might have a configured log rate limit. If the app logs exceed the configured log rate limit, you see a log entry indicating that the limit was exceeded.</p>
+<p>For example:</p>
+<pre class="terminal">
+2022-09-15T01:59:33.99+0000 [APP/PROC/WEB/0] OUT app instance exceeded log rate limit (16384 bytes/sec)
+</pre>
+
+<h3 id="ssh"><a class="header" href="#ssh"><a id="ssh"></a> SSH</a></h3>
+<p>The Diego Cell emits <code>SSH</code> logs when a user accesses an application container through SSH by using the Cloud Foundry Command Line Interface (cf CLI) <code>cf ssh</code> command.</p>
+<p>For example:</p>
+<pre class="terminal">
+2016-06-14T14:16:11.49-0700 [SSH/0]      OUT Successful remote access by 192.0.2.33:7856
+</pre>
+
+<p>For more information about the <code>cf ssh</code> command, enter <code>cf ssh --help</code>.</p>
+<h3 id="cell"><a class="header" href="#cell"><a id="cell"></a> CELL</a></h3>
+<p>The Diego Cell emits <code>CELL</code> logs when it starts or stops the app. These actions implement the state requested by the user. The Diego Cell also emits messages when an app fails.</p>
+<p>For example:</p>
+<pre class="terminal">
+2016-06-14T13:44:38.14-0700 [CELL/0]     OUT Successfully created container
+</pre>
+
+<h3 id="health"><a class="header" href="#health"><a id="health"></a> HEALTH</a></h3>
+<p>The Diego Cell emits <code>HEALTH</code> logs for health check activity of an app. This inlcudes lifecycle events and monitoring start and health-state transitions. By default, the per-probe output of the health check is not logged; the Diego Cell logs health-check lifecycle events such as monitoring start and health-state transitions.</p>
+<p>For example:</p>
+<pre class="terminal">
+2026-01-26T13:49:18.72+0000 [HEALTH/0]   OUT Container passed the readiness health check. Container marked ready and added to route pool.
+</pre>
+
+<h3 id="proxy"><a class="header" href="#proxy"><a id="proxy"></a> PROXY</a></h3>
+<p>Every app container includes an Envoy sidecar proxy that handles the mTLS handshake with the Gorouter and proxies traffic to the app process. The Envoy sidecar emits <code>PROXY</code> logs. By default, Envoy runs with a critical log level, so you rarely see <code>PROXY</code> logs. They mainly appear when Envoy encounters a critical error or is killed, such as when the container runs out of memory.</p>
+<p>For example:</p>
+<pre class="terminal">
+2026-01-26T13:49:18.72+0000 [PROXY/0]     OUT Exit status 137
+</pre>
+
+<p class="note">
+<span class="note__title"><strong>Note</strong></span>
+You might also see <code>STATS</code> entries in a syslog drain. These are container metrics, not a log type, and only appear when the drain is configured with <code>drain-data=metrics</code> or <code>drain-data=all</code>. Because they are metrics, <code>STATS</code> entries cannot be filtered by source type.
+</p>
+
+<h2 id="writing-to-the-log-from-your-app"><a class="header" href="#writing-to-the-log-from-your-app"><a id="writing"></a> Writing to the log from your app</a></h2>
+<p>Your app must write logs to <code>stderr</code> or <code>stdout</code>. Both are typically buffered, and you can flush the buffer before
+delivering the message to Loggregator.</p>
+<p>Alternatively, you can write log entries to <code>stderr</code> or <code>stdout</code> synchronously. This approach is mainly used for
+debugging because it might affect app performance.</p>
+<h2 id="viewing-logs"><a class="header" href="#viewing-logs"><a id="view"></a> Viewing Logs</a></h2>
+<p>To view logs, run the <code>cf logs</code> command. You can tail, dump, or filter log output. For more information about the  <code>cf logs</code> command, enter <code>cf logs --help</code>.</p>
+<h3 id="tailing-logs"><a class="header" href="#tailing-logs"><a id="tail-log"></a> Tailing logs</a></h3>
+<p>To stream Loggregator output to the terminal:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf logs APP-NAME
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app. The command returns output similar to this example:</p>
+ 
+<pre class="terminal">
+ Connected, tailing logs for app spring-music in org example / space development as admin@example.com...
+
+ 2016-06-14T15:16:12.70-0700 [RTR/4]      OUT www.example.com - [14/06/2016:22:16:12.582 +0000] "GET / HTTP/1.1" 200 0 103455 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36" 192.0.2.206:27743 x_forwarded_for:"203.0.113.222" x_forwarded_proto:"http" vcap_request_id:bd3e6ed1-5dd0-43ab-70ed-5d232b577b09 response_time:0.12050583 app_id:79bb58ab-3737-43be-ac70-39a2843b5177
+ 2016-06-14T15:16:20.06-0700 [RTR/4]      OUT www.example.com - [14/06/2016:22:16:20.034 +0000] "GET /test/ HTTP/1.1" 200 0 6879 "http://www.example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36" 192.0.2.206:2228 x_forwarded_for:"203.0.113.222" x_forwarded_proto:"http" vcap_request_id:a31f0b1d-3827-4b8f-57e3-6f42d189f025 response_time:0.033311281 app_id:79bb58aa-3747-43be-ac70-39a3843b5178
+ 2016-06-14T15:16:22.44-0700 [RTR/4]      OUT www.example.com - [14/06/2016:22:17:22.415 +0000] "GET /test5/ HTTP/1.1" 200 0 5461 "http://www.example.com/test5" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36" 192.0.2.206:2228 x_forwarded_for:"203.0.113.322" x_forwarded_proto:"http" vcap_request_id:5d6855a2-4a79-4432-7927-de8215f5a2c7 response_time:0.029211609 app_id:79bb58aa-3737-43bb-ac70-39a2943b5178
+     ...
+ </pre>
+
+</li>
+</ol>
+<p>Press <strong>Ctrl+C</strong> or <strong>Command+C</strong> on your keyboard to exit the real-time stream.</p>
+<h3 id="dump-logs"><a class="header" href="#dump-logs"><a id="dump-log"></a> Dump logs</a></h3>
+<p>To display all of the lines in the Loggregator buffer:</p>
+<ol>
+<li>
+<p>Run:</p>
+<pre><code>cf logs APP-NAME --recent
+</code></pre>
+<p>Where <code>APP-NAME</code> is the name of your app.</p>
+</li>
+</ol>
+<h3 id="filter-logs"><a class="header" href="#filter-logs"><a id="filter"></a> Filter logs</a></h3>
+<p>To view some subset of log output, run <code>cf logs APP-NAME</code> in conjunction with filtering commands of your choice, where <code>APP-NAME</code> is the name of your app. In the following example, run <code>cf logs spring-music --recent | grep -v RTR</code> to exclude all Gorouter logs:</p>
+<pre class="terminal">
+$ cf logs spring-music
+Connected, tailing logs for app spring-music in org example / space development as admin@example.com...
+
+2016-06-14T15:16:12.70-0700 [RTR/4]      OUT www.example.com - [14/06/2016:22:16:12.582 +0000] "GET / HTTP/1.1" 200 0 103455 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36" 192.0.2.206:27743 x_forwarded_for:"203.0.113.222" x_forwarded_proto:"http" vcap_request_id:bd3e6ed1-5dd0-43ab-70ed-5d232b577b09 response_time:0.12050583 app_id:79bb58ab-3737-43be-ac70-39a2843b5177
+2016-06-14T15:16:20.06-0700 [RTR/4]      OUT www.example.com - [14/06/2016:22:16:20.034 +0000] "GET /test/ HTTP/1.1" 200 0 6879 "http://www.example.com/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36" 192.0.2.206:2228 x_forwarded_for:"203.0.113.222" x_forwarded_proto:"http" vcap_request_id:a31f0b1d-3827-4b8f-57e3-6f42d189f025 response_time:0.033311281 app_id:79bb58aa-3747-43be-ac70-39a3843b5178
+2016-06-14T15:16:22.44-0700 [RTR/4]      OUT www.example.com - [14/06/2016:22:17:22.415 +0000] "GET /test5/ HTTP/1.1" 200 0 5461 "http://www.example.com/test5" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36" 192.0.2.206:2228 x_forwarded_for:"203.0.113.322" x_forwarded_proto:"http" vcap_request_id:5d6855a2-4a79-4432-7927-de8215f5a2c7 response_time:0.029211609 app_id:79bb58aa-3737-43bb-ac70-39a2943b5178
+    ...
+</pre>
+
+<p>Use <strong>Ctrl-C</strong> (^C) to exit the real-time stream.</p>
+<h3 id="dumping-logs"><a class="header" href="#dumping-logs"><a id="dump-log"></a> Dumping logs</a></h3>
+<p>To display all of the lines in the Loggregator buffer, run <code>cf logs APP-NAME --recent</code>, where <code>APP-NAME</code> is the name of
+your app.</p>
+<h3 id="filtering-logs"><a class="header" href="#filtering-logs"><a id="filter"></a> Filtering logs</a></h3>
+<p>To view some subset of log output, run <code>cf logs APP-NAME</code> in conjunction with filtering commands of your choice.
+Replace <code>APP-NAME</code> with the name of your app. In the following example, <code>grep -v RTR</code> excludes all Gorouter logs:</p>
+<pre class="terminal">
+$ cf logs spring-music --recent | grep -v RTR
+2016-06-14T14:10:05.36-0700 [API/0]      OUT Updated app with guid cdabc604-0b73-47e1-a7d5-24af2c63f723 ({"name"=&gt;"spring-music", "instances"=&gt;1, "memory"=&gt;512, "environment_json"=&gt;"PRIVATE DATA HIDDEN"})
+2016-06-14T14:10:14.52-0700 [APP/0]      OUT - Gracefully stopping, waiting for requests to finish
+2016-06-14T14:10:14.52-0700 [CELL/0]     OUT Exit status 0
+2016-06-14T14:10:14.54-0700 [APP/0]      OUT === puma shutdown: 2016-06-14 21:10:14 +0000 ===
+2016-06-14T14:10:14.54-0700 [APP/0]      OUT - Goodbye!
+2016-06-14T14:10:14.56-0700 [CELL/0]     OUT Creating container
+    ...
+</pre>
+
+<h3 id="log-ordering"><a class="header" href="#log-ordering"><a id="log-ordering"></a> Log ordering</a></h3>
+<p>Both operators and developers must ensure log ordering in drains.</p>
+<ul>
+<li>
+<p>Diego uses a nanosecond-based timestamp that can be ingested properly by Splunk. For more information, see the <a href="https://answers.splunk.com/answers/1946/time-format-and-subseconds.html">Splunk
+documentation</a>.</p>
+</li>
+<li>
+<p>The Elastic Stack can ingest the nanosecond timestamps but only supports millisecond precision, so timestamps are truncated. For more information, see the <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/date.html">Elasticsearch documentation</a> and <a href="https://github.com/elastic/elasticsearch/issues/10005">Date type has not enough precision for the logging use case</a> on GitHub.</p>
+</li>
+</ul>
+<p>If you are developing a client that displays a stream of Cloud Foundry logs to users, you can order the logs to improve the debugging experience for your user. Here are some general tips for ordering logs:</p>
+<ul>
+<li>
+<p>For CLIs, batch the logs and display the logs you have in that timeframe, sorted by timestamp.</p>
+</li>
+<li>
+<p>For web clients, use dynamic HTML to insert older logs into the sorting as they appear. This creates complete, ordered logs.</p>
+</li>
+<li>
+<p>Java app developers might want to convert stack traces into a single log entity. To simplify log ordering for Java
+apps, use the multi-line Java message workaround to convert your multi-line stack traces into a single log entity.
+For more information, see <a href="https://github.com/cloudfoundry/java-buildpack/issues/544">Multi-line Java message workaround</a>.
+<br><br>
+By changing the Java log output, you can force your app to reformat stack trace messages, replacing newline
+characters with a token. Set your log parsing code to replace that token with newline characters again to display the
+logs properly in Kibana.</p>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../loggregator/cc-uaa-logging.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../loggregator/app-log-rate-limits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../loggregator/cc-uaa-logging.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../loggregator/app-log-rate-limits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
+
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

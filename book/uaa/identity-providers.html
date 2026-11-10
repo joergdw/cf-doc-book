@@ -1,0 +1,559 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Identity Providers in UAA - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<h2 id="title-identity-providers-in-uaa-owner-uaa"><a class="header" href="#title-identity-providers-in-uaa-owner-uaa">title: Identity providers in UAA
+owner: UAA</a></h2>
+<p>You can configure identity providers (IDPs) with your Cloud Foundry User Account and Authentication (UAA)
+server.</p>
+<h2 id="ldap-providers"><a class="header" href="#ldap-providers"><a id="ldap"></a> LDAP providers</a></h2>
+<p>The <a href="https://tools.ietf.org/html/rfc4511">Lightweight Directory Access Protocol</a> communicates with directory servers. Compared with the other external IDPs, LDAP is a very simple integration. It only requires configuration on UAA. Other types of provider require that you make configuration changes on both UAA and on the external provider.</p>
+<p>LDAP supports three different connection types:</p>
+<ul>
+<li>
+<p><code>ldap://</code>: Cleartext LDAP, typically over port 389</p>
+</li>
+<li>
+<p><code>ldaps://</code>: An SSL/TLS connection, typically over port 636</p>
+</li>
+<li>
+<p><code>ldap://</code> with StartTLS: A TLS handshake performed on a cleartext LDAP connection, typically over port 389</p>
+</li>
+</ul>
+<p>For more information, see <a href="https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-LDAP.md">User Account and Authentication LDAP Integration</a> in the UAA repository on GitHub.</p>
+<h2 id="saml-providers"><a class="header" href="#saml-providers"><a id="saml"></a> SAML providers</a></h2>
+<p>The <a href="http://saml.xml.org/saml-specifications">SAML v2 standard</a> is a dominant player in the federated authentication space. It is one of the harder integrations to configure. When configuring SAML integration on UAA, you must configure both UAA and the SAML IDP. A mistake on either side causes assertions to be rejected and authentication to fail.</p>
+<h2 id="openid-connect-providers"><a class="header" href="#openid-connect-providers"><a id="oidc"></a> OpenID Connect providers</a></h2>
+<p>The <a href="https://openid.net/developers/specs/">OpenID Connect standard</a> is a simple identity layer on top of the OAuth 2.0 protocol. Clients can verify the identity of the end-user based on the authentication performed by the OIDC IDP, as well as to obtain basic profile information about the end-User in an interoperable and REST-like manner. When configuring OIDC integration on UAA, you must configure both UAA and the OIDC IDP. A mistake on either side causes tokens to be rejected and authentication to fail.</p>
+<h2 id="service-provider-versus-identity-provider"><a class="header" href="#service-provider-versus-identity-provider"><a id="service-identity"></a> Service provider versus identity provider</a></h2>
+<p>The SAML and OIDC specifications define two players in their protocol interaction:</p>
+<ul>
+<li>
+<p><strong>Service provider (SP)</strong>, the server that receives the assertion. This is UAA.</p>
+</li>
+<li>
+<p><strong>Identity provider (IDP)</strong>, the server that receives the authentication request, authenticates the user and sends the assertion or token to the SP.</p>
+</li>
+</ul>
+<p>UAA can only be configured to act as an SP. An external provider, such as Okta or Azure Directory or SAP Cloud Identity Services, is the IDP.</p>
+<h3 id="view-metadata"><a class="header" href="#view-metadata"><a id="metadata"></a> View metadata</a></h3>
+<p>A SAML provider, either the SP or the IDP, presents a set of metadata. This metadata contains information about the server and is used to configure the opposing provider.</p>
+<p>To use UAA as an SP, you can download metadata through the <code>/saml/metadata</code> endpoint of your SAML provider. For example, http://login.example.com/saml/metadata. Metadata is in XML format. Using this information, you can configure the IDP.</p>
+<h2 id="saml-idp-workflow"><a class="header" href="#saml-idp-workflow"><a id="id-flow"></a> SAML IDP workflow</a></h2>
+<p>SAML provides two commonly used workflows:</p>
+<ul>
+<li>SP-initiated</li>
+<li>IDP-initiated.</li>
+</ul>
+<p>The following sections describe each workflow.</p>
+<h3 id="saml-sp-initiated"><a class="header" href="#saml-sp-initiated"><a id="sp-initiated"></a> SAML SP-initiated</a></h3>
+<p>If you go to the UAA login page and click a link to authenticate using your organization’s SAML provider,
+you are using an SP-initiated flow.</p>
+<p>The SP sends an authentication request to the IDP. See the following example:</p>
+<pre class="terminal">
+<!--?<span-->xml version="1.0" encoding="UTF-8"?&gt;
+&lt;<span>s<span>aml2p:AuthnRequest
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    AssertionConsumerServiceURL="https://..host../saml/SSO/alias/login.identity.cf-app.com"
+    Destination="http://simplesamlphp.identity.cf-app.com/saml2/idp/SSOService.php"
+    ForceAuthn="false"
+    ID="a17j41337a9835i93h78hihc9a89j4b"
+    IsPassive="false" IssueInstant="2017-05-03T21:16:15.989Z"
+    ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+    Version="2.0"
+&gt;
+  &lt;<span>s</span>aml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"&gt;
+      Login.identity.cf-app.com
+  <!--<span-->s</span>aml2:Issuer&gt;
+  &lt;<span>s</span>aml2p:NameIDPolicy Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress" /&gt;
+&lt;<span>/s</span>aml2p:AuthnRequest&gt;
+
+<p>After the IDP has authenticated the user, it sends an assertion back to the user. This step takes place in both
+SP-initiated and IDP-initiated flows. For information about the SAML response, see <a href="#idp-initiated">IDP-Initiated</a>.</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="./images/sp-flow.png" alt="Data flows between Service Provider and User Agent, and between User Agent and Identity Provider. "><span class="img-wrapper"><img src="./images/sp-flow.png" alt="Data flows between Service Provider and User Agent, and between User Agent and Identity Provider. "></span></label></p>
+<h3 id="saml-idp-initiated"><a class="header" href="#saml-idp-initiated"><a id="idp-initiated"></a> SAML IDP-initiated</a></h3>
+<p>You can start your authentication process with the IDP.</p>
+<p>The IDP sends a SAML assertion to the SP, which in this case is UAA, similar to the following example:</p>
+<pre class="terminal">
+&lt;<span>?x</span>ml version="1.0" encoding="UTF-8"?&gt;
+&lt;<span>s</span>amlp:Response
+    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+    Destination="https://...url.../saml/SSO/alias/login.identity.cf-app.com"
+    ID="_de497bc8a79e5f17202a30112181ea7c99325f8827"
+    InResponseTo="a17j41337a9835i93h78hihc9a89j4b"
+    IssueInstant="2017-05-03T21:51:01Z" Version="2.0"&gt;
+  &lt;<span>s</span>aml:Issuer&gt;
+    http://simplesamlphp.identity.cf-app.com/saml2/idp/metadata.php
+  &lt;<span>/s</span>aml:Issuer&gt;
+  &lt;<span>d</span>s:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"&gt;
+    &lt;<span>d</span>s:SignedInfo&gt;
+      &lt;<span>d</span>s:CanonicalizationMethod
+        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /&gt;
+      &lt;<span>d</span>s:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /&gt;
+      &lt;<span>d</span>s:Reference URI="#_de497bc8a79e5f17202a30112181ea7c99325f8827"&gt;
+        &lt;<span>d</span>s:Transforms&gt;
+          &lt;<span>d</span>s:Transform
+            Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /&gt;
+          &lt;<span>d</span>s:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /&gt;
+        <!--<span-->ds:Transforms&gt;
+        &lt;<span>d</span>s:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /&gt;
+        &lt;<span>d</span>s:DigestValue&gt;QQZHHBC4KDxZ0H4FrbTGFOnNR1E=&lt;\/ds:DigestValue&gt;
+      &lt;<span>/d</span>s:Reference&gt;
+    &lt;<span>/d</span>s:SignedInfo&gt;
+    &lt;<span>d</span>s:SignatureValue&gt;...signature value...&lt;\/ds:SignatureValue&gt;
+    &lt;<span>d</span>s:KeyInfo&gt;
+      &lt;<span>d</span>s:X509Data&gt;
+        &lt;<span>d</span>s:X509Certificate&gt;...x509 certificate value&lt;\/ds:X509Certificate&gt;
+      &lt;<span>/d</span>s:X509Data&gt;
+    &lt;<span>/</span>ds:KeyInfo&gt;
+  &lt;<span>/</span>ds:Signature&gt;
+  &lt;<span>s</span>amlp:Status&gt;
+    &lt;<span>s</span>amlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success" /&gt;
+  &lt;<span>/</span>samlp:Status&gt;
+  &lt;<span>s</span>aml:Assertion
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    ID="_ec6adc4fca9e3dc72fff4a1fd99561007777ac7afd"
+    IssueInstant="2017-05-03T21:51:01Z"
+    Version="2.0"&gt;
+&lt;<span>s</span>aml:Issuer&gt;http://simplesamlphp.identity.cf-app.com/saml2/idp/metadata.php&lt;\/saml:Issuer&gt;
+    &lt;<span>d</span>s:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"&gt;
+      &lt;<span>d</span>s:SignedInfo&gt;
+        &lt;<span>d</span>s:CanonicalizationMethod
+          Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /&gt;
+        &lt;<span>d</span>s:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /&gt;
+        &lt;<span>d</span>s:Reference URI="#_ec6adc4fca9e3dc72fff4a1fd99561007777ac7afd"&gt;
+          &lt;<span>d</span>s:Transforms&gt;
+            &lt;<span>d</span>s:Transform
+              Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /&gt;
+            &lt;<span>d</span>s:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /&gt;
+          &lt;<span>/d</span>s:Transforms&gt;
+          &lt;<span>d</span>s:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /&gt;
+          &lt;<span>d</span>s:DigestValue&gt;dxt7OSy1/Xf6+BHgDU4YOi4ogMg=&lt;\/ds:DigestValue&gt;
+        &lt;<span>/d</span>s:Reference&gt;
+      &lt;<span>/d</span>s:SignedInfo&gt;
+      &lt;<span>ds</span>:SignatureValue&gt;...signature value...&lt;\/ds:SignatureValue&gt;
+      &lt;<span>d</span>s:KeyInfo&gt;
+        &lt;<span>d</span>s:X509Data&gt;
+          &lt;<span>d</span>s:X509Certificate&gt;...x509 certificate value&lt;\/ds:X509Certificate&gt;
+        &lt;<span>/d</span>s:X509Data&gt;
+      &lt;<span>/d</span>s:KeyInfo&gt;
+    &lt;<span>/d</span>s:Signature&gt;
+    &lt;<span>s</span>aml:Subject&gt;
+      &lt;<span>s</span>aml:NameID
+        Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+        SPNameQualifier="login.identity.cf-app.com"&gt;
+          marissa@test.org
+      &lt;<span>/s</span>aml:NameID&gt;
+      &lt;<span>s</span>aml:SubjectConfirmation
+          Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"&gt;
+        &lt;<span>sa</span>ml:SubjectConfirmationData
+            InResponseTo="a9e378fia1g38da5503ahgih430fah"
+            NotOnOrAfter="2017-05-03T21:56:01Z"
+            Recipient="https://..url../saml/SSO/alias/login.identity.cf-app.com" /&gt;
+      &lt;<span>/sa</span>ml:SubjectConfirmation&gt;
+    &lt;<span>/s</span>aml:Subject&gt;
+    &lt;<span>sa</span>ml:Conditions
+        NotBefore="2017-05-03T21:50:31Z"
+        NotOnOrAfter="2017-05-03T21:56:01Z"&gt;
+      &lt;<span>sa</span>ml:AudienceRestriction&gt;
+        &lt;<span>s</span>aml:Audience&gt;login.identity.cf-app.com&lt;\/saml:Audience&gt;
+      &lt;<span>/s</span>aml:AudienceRestriction&gt;
+    &lt;<span>/sa</span>ml:Conditions&gt;
+    &lt;<span>sa</span>ml:AuthnStatement
+        AuthnInstant="2017-05-03T21:16:21Z"
+        SessionIndex="_a3ab48bcfbb76ad78d4ac28231240af256be171c9f"
+        SessionNotOnOrAfter="2017-05-04T05:51:01Z"&gt;
+      &lt;<span>sa</span>ml:AuthnContext&gt;
+        &lt;<span>sa</span>ml:AuthnContextClassRef&gt;
+           urn:oasis:names:tc:SAML:2.0:ac:classes:Password
+        &lt;<span>/sa</span>ml:AuthnContextClassRef&gt;
+      &lt;<span>/sa</span>ml:AuthnContext&gt;
+    &lt;<span>/sa</span>ml:AuthnStatement&gt;
+    &lt;<span>sa</span>ml:AttributeStatement&gt;
+      &lt;<span>sa</span>ml:Attribute
+          Name="uid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"&gt;
+        &lt;<span>sa</span>ml:AttributeValue xsi:type="xs:string"&gt;
+            marissa@test.org
+        &lt;<span>/sam</span>l:AttributeValue&gt;
+      &lt;<span>/sam</span>l:Attribute&gt;
+      &lt;<span>sam</span>l:Attribute Name="eduPersonAffiliation"
+          NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"&gt;
+        &lt;<span>sa</span>ml:AttributeValue xsi:type="xs:string"&gt;member&lt;\/saml:AttributeValue&gt;
+        &lt;<span>sa</span>ml:AttributeValue xsi:type="xs:string"&gt;marissa&lt;\/saml:AttributeValue&gt;
+      &lt;<span>/sa</span>ml:Attribute&gt;
+      &lt;<span>sam</span>l:Attribute Name="emailAddress"
+          NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic"&gt;
+        &lt;<span>sam</span>l:AttributeValue xsi:type="xs:string"&gt;
+            marissa@test.org
+        &lt;<span>/sa</span>ml:AttributeValue&gt;
+      &lt;<span>/sam</span>l:Attribute&gt;
+    &lt;<span>/sa</span>ml:AttributeStatement&gt;
+  &lt;<span>/sa</span>ml:Assertion&gt;
+&lt;<span>/sa</span>mlp:Response&gt;
+</pre>
+
+<h2 id="saml-configuration"><a class="header" href="#saml-configuration"><a id="config"></a> SAML configuration</a></h2>
+<p>UAA provides a limited set of attributes to configure when setting up an external IDP. You configure these attributes for each individual SAML IDP you set up in UAA.</p>
+<p>A SAML IDP responds to requests from UAA with signed SAML assertions. These signatures are validated using a public key provided by the SAML provider.
+This public key can be provided as a raw RSA public key or encapsulated in an X.509 certificate. When dealing with the X.509 certificate, as per the
+<a href="https://docs.oasis-open.org/security/saml/Post2.0/sstc-metadata-iop-os.html#__RefHeading___Toc7851_782679371">SAML V2.0 Metadata Interoperability Profile</a>,
+UAA will not validate the certificate (including validating its expiry date), but will only get the public key from it.</p>
+<h3 id="nameid"><a class="header" href="#nameid"><a id="nameid"></a> nameID</a></h3>
+<p>The <code>nameID</code> attribute is the element that provides the username in the SAML assertion. This is sometimes called the <em>subject</em> of the assertion. UAA links the external user to the internal shadow user record by matching the <code>nameID</code> to the <code>user.username</code>.</p>
+<p>For example:</p>
+<ul>
+<li>
+<p><code>nameID: urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</code></p>
+</li>
+<li>
+<p><code>nameID: urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</code></p>
+</li>
+<li>
+<p><code>nameID: urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</code></p>
+</li>
+</ul>
+<p>The most common configuration is <code>unspecified</code>, where the IDP decides which attribute is the username.</p>
+<p>The following example is what the subject element looks like in an assertion, with the username <code>EXAMPLE@test.org</code>:</p>
+<pre class="terminal">
+&lt;<span>s</span>aml:Subject&gt;
+  &lt;<span>s</span>aml:NameID
+      Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+      SPNameQualifier="login.identity.cf-app.com"&gt;
+    EXAMPLE@test.org
+  &lt;<span>/s</span>aml:NameID&gt;
+  &lt;<span>s</span>aml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"&gt;
+    &lt;<span>s</span>aml:SubjectConfirmationData InResponseTo="a17j41337a9835i93h78hihc9a89j4b"
+      NotOnOrAfter="2017-05-03T21:21:21Z"
+      Recipient="https://..url../saml/SSO/alias/login.identity.cf-app.com"
+    /&gt;
+  <!--<span-->saml:SubjectConfirmation&gt;
+<!--<span-->saml:Subject&gt;
+</pre>
+
+<h3 id="assertionconsumerservice"><a class="header" href="#assertionconsumerservice"><a id="assertionconsumerservice"></a> AssertionConsumerService</a></h3>
+<p>The <code>AssertionConsumerService</code> attribute indicates which assertion consumer service URL the external IDP uses. This is used by the SP when
+it sends a SAML request for authentication to the IDP. The SP metadata contains one assertion consumer service by default, but can contain more.</p>
+<p>The following examples are of assertion consumer services in SP metadata, organized by index:</p>
+<pre class="terminal">
+&lt;<span>md</span>:AssertionConsumerService
+  Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+  Location="https://login.identity.cf-app.com/saml/SSO/alias/login.identity.cf-app.com"
+  index="0"
+  isDefault="true"/&gt;
+&lt;<span>m</span>d:AssertionConsumerService
+  Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
+  Location="https://login.identity.cf-app.com/saml/SSO/alias/login.identity.cf-app.com"
+  index="1"/&gt;
+&lt;<span>m</span>d:AssertionConsumerService
+  Binding="urn:oasis:names:tc:SAML:2.0:bindings:URI"
+  Location="https://login.identity.cf-app.com/oauth/token/alias/login.identity.cf-app.com"
+  index="2"/&gt;
+</pre>
+
+<p>The following example is a SAML request to the IDP with the correct assertion consumer service selected:</p>
+<pre class="terminal">
+&lt;<span>?x</span>ml version="1.0" encoding="UTF-8"?&gt;
+&lt;<span>s</span>aml2p:AuthnRequest
+    AssertionConsumerServiceURL="https://..../saml/SSO/alias/login.identity.cf-app.com"
+    Destination="http://simplesamlphp.identity.cf-app.com/saml2/idp/SSOService.php"
+    ForceAuthn="false"
+    ID="a17j41337a9835i93h78hihc9a89j4b"
+    IsPassive="false"
+    IssueInstant="2017-05-03T21:16:15.989Z"
+    ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+    Version="2.0"
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"&gt;
+  &lt;<span>s</span>aml2:Issuer
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"&gt;
+      Login.identity.cf-app.com
+  &lt;<span>/s</span>aml2:Issuer&gt;
+  &lt;<span>s</span>aml2p:NameIDPolicy
+    Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"/&gt;
+&lt;<span>/s</span>aml2p:AuthnRequest&gt;
+</pre>
+
+<h3 id="idpmetadata"><a class="header" href="#idpmetadata"><a id="idpmetadata"></a> idpMetadata</a></h3>
+<p>The <code>idpMetadata</code> attribute holds either an XML string or an URL.</p>
+<p>This is an example of IDP metadata configuration in UAA:</p>
+<pre class="terminal">idpMetadata: \http://simplesamlphp.identity.cf-app.com/saml2/idp/metadata.php</pre>
+
+<p>If the IDP is configured using a URL, UAA refreshes the metadata content from that URL every 10 minutes. This is useful for providers that rotate their keys frequently.</p>
+<p>If the IDP is configured using metadata as an XML string, the metadata remains static. Rotating keys on the IDP requires you to reconfigure UAA with the new data.</p>
+<p>This is an example of the XML metadata configuration:</p>
+<pre class="terminal">
+&lt;<span>?x</span>ml version="1.0" encoding="UTF-8"?&gt;
+&lt;<span>md</span>:EntityDescriptor
+    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    entityID="http://www.okta.com/k2lw4l5bPODCMIIDBRYZ"&gt;
+  &lt;<span>md</span>:IDPSSODescriptor
+      WantAuthnRequestsSigned="true"
+      protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"&gt;
+    &lt;<span>md</span>:KeyDescriptor use="signing"&gt;
+      &lt;<span>ds</span>:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"&gt;
+        &lt;<span>ds</span>:X509Data&gt;
+          &lt;<span>ds</span>:X509Certificate&gt;..x509 certificate<!--<span-->ds:X509Certificate&gt;
+        &lt;<span>/ds</span>:X509Data&gt;
+      &lt;<span>/ds</span>:KeyInfo&gt;
+    &lt;<span>/md</span>:KeyDescriptor&gt;
+    &lt;<span>md</span>:NameIDFormat&gt;urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress<!--<span-->md:NameIDFormat&gt;
+    &lt;<span>md</span>:NameIDFormat&gt;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified<!--<span-->md:NameIDFormat&gt;
+    &lt;<span>md</span>:SingleSignOnService
+      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+      Location="https://s.okta.com/app/env_1/k2lw4l5bPODCMIIDBRYZ/sso/saml" /&gt;
+    &lt;<span>md</span>:SingleSignOnService
+        Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+        Location="https://s.okta.com/app/env_1/k2lw4l5bPODCMIIDBRYZ/sso/saml" /&gt;
+  &lt;<span>/md:IDPSSODescriptor&gt;
+&lt;<span>/md:EntityDescriptor&gt;
+
+<h3 id="showsamlloginlink"><a class="header" href="#showsamlloginlink"><a id="showsamlloginlink"></a> showSamlLoginLink</a></h3>
+<p>The <code>showSamlLoginLink</code> shows the login link on the UAA home page. This appears when <code>showSamlLoginLink</code> is set to <code>true</code>. When you click this link,
+it starts the SP-initiated flow. This is frequently set to <code>false</code> when you use the IDP-initiated flow.</p>
+<p>This is an example of a SAML login link text configuration:</p>
+<pre class="terminal">showSamlLoginLink: true</pre>
+
+<h3 id="linktext"><a class="header" href="#linktext"><a id="linktext"></a> linkText</a></h3>
+<p>You can use the <code>linkText</code> attribute to specify the text on a link on the UAA home page. This appears when <code>showSamlLoginLink</code> is set to <code>true</code>.</p>
+<p>This is an example of a link text configuration:</p>
+<pre class="terminal">linkText: Log in with SSO</pre>
+
+<h3 id="metadatatrustcheck"><a class="header" href="#metadatatrustcheck"><a id="metadatatrustcheck"></a> metadataTrustCheck</a></h3>
+<p>The <code>metadataTrustCheck</code> attribute requires UAA to verify signatures of incoming messages. This requirement exists when <code>metadataTrustCheck</code> is set to <code>true</code>.</p>
+<p>This is an example of a metadata trust check configuration:</p>
+<pre class="terminal">metadataTrustCheck: true</pre>
+
+</span></span></pre>
+</span></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../uaa/uaa-concepts.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../group-8.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../uaa/uaa-concepts.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../group-8.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

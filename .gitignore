@@ -1,6 +1,5 @@
-# ================================================================================
-# 🖋️📖 Results and indermediate results
-# ================================================================================
-
-book/*
-build/*
+# GitHub Pages branch: publish only the generated mdBook.
+/*
+!/.gitignore
+!/book/
+!/book/**

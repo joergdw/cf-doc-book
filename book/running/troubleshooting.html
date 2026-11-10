@@ -1,0 +1,672 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Troubleshooting Cloud Foundry - Cloud Foundry Documentation</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex-13bf6b5f.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc-9df8efb6.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Foundry Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <hr>
+<p>title: Troubleshooting Cloud Foundry
+owner:</p>
+<ul>
+<li>CAPI</li>
+<li>Release Integration</li>
+</ul>
+<hr>
+<p>This guide provides help with diagnosing and resolving issues encountered when
+installing and running Cloud Foundry.</p>
+<p>This topic assumes you are using <a href="https://bosh.io/docs/cli-v2.html">BOSH CLI v2</a>.</p>
+<p>##<a id="issues-installing"></a>Troubleshoot Cloud Foundry installation issues</p>
+<p>An installation or update can fail for reasons that have nothing to do with the
+software that you are installing.
+If an installation or update fails once, start over and try again.
+If it fails a second time, use the following information to troubleshoot the
+issue.</p>
+<p>###<a id="bound-timeout"></a>Timeouts in “creating bound missing vms” phase</p>
+<p>When deploying Cloud Foundry with BOSH, the “creating bound missing vms” phase
+occurs after package compilation.
+A process in the “creating bound missing vms” phase can time out if a BOSH Agent
+fails to start correctly or if the Agent cannot connect to the NATS message bus.</p>
+<pre class="terminal">
+. . .
+Started preparing package compilation &gt; Finding packages to compile. Done (00:00:00)
+
+Started creating bound missing vms
+Started creating bound missing vms &gt; api_worker_z1/0. Failed: Timed out pinging to 1da06ba3de2f after 600 seconds (00:12:45)
+
+Error 450002: Timed out pinging to 1da06ba3de2f after 600 seconds
+</pre>
+
+<p>Perform the following steps to determine the cause of the time out:</p>
+<ul>
+<li><a href="#boot-check">Use your IaaS console</a> to make sure the timed-out virtual machine (VM) is booting correctly</li>
+<li><a href="#handshake">Check the agent log</a> on the VM that timed out for a handshake connection
+between the BOSH Director and the Agent</li>
+<li><a href="#netcat">Use the Netcat networking utility</a> to test for routing
+issues to the NATS IP and port from the VM that timed out</li>
+</ul>
+<p>####<a id="boot-check"></a>Use your IaaS console to make sure the timed-out VM is booting correctly</p>
+<p>For details on how to use your IaaS console to make sure the timed out VM is
+booting correctly, see your IaaS documentation.</p>
+<p>####<a id="handshake"></a>Check the agent log on the VM that timed out for a handshake connection between the BOSH Director and the agent</p>
+<ol>
+<li>
+<p>Use your IaaS virtualization console to open a terminal window on the VM that
+timed out and log in as root.</p>
+</li>
+<li>
+<p>Open the <code>/var/vcap/bosh/log/current</code> log file in a text editor.</p>
+</li>
+<li>
+<p>Search the log file for a “handshake” between the BOSH Director and the BOSH
+Agent.
+This connection is represented in the log as a <code>ping</code> and a <code>pong</code>:</p>
+ 
+<pre class="terminal">
+ . . .
+ 2013-10-03_14:35:48.58456 #[608] INFO: Message: {"method"=&gt;"<strong>ping</strong>", "arguments"=&gt;[], reply_to"=&gt;"director.b668-1660944090e4"}
+ 2013-10-03_14:35:48.60182 #[608] INFO: reply_to:director.b668-1660944090e4: payload: {:value=&gt;"<strong>pong</strong>"}
+ </pre>
+
+</li>
+<li>
+<p>If the handshake does not complete, the Agent cannot communicate with the
+Director.</p>
+</li>
+</ol>
+<p>####<a id="netcat"></a>Use Netcat to test for routing issues to the NATS IP</p>
+<ol>
+<li>
+<p>Use your IaaS virtualization console to open a terminal window on the VM that
+timed out and log in as root.</p>
+</li>
+<li>
+<p>Open the <code>/var/vcap/bosh/log/current</code> log file in a text editor.</p>
+</li>
+<li>
+<p>Search the beginning of the log file for a line labeled <strong>INFO: loaded
+new infrastructure settings</strong>.
+This line contains a JSON blob of key/value pairs representing the expected
+infrastructure for the BOSH Agent.</p>
+<p>In this line, locate the IP address and port following
+<strong>nats://nats:nats@</strong>.</p>
+ 
+<pre class="terminal">
+ . . .
+ 2013-10-03_14:35:21.83222 #[608] INFO: loaded new infrastructure settings:  {"vm"=&gt;{"name"=&gt;"vm-4d80ede4-b0a5", "id"=&gt;"vm-360"}, {"user"=&gt;"agent", "password"=&gt;"agent"}}, "mbus"=&gt;"nats://nats:nats@<strong>192.0.2.17:4222</strong>", "env"=&gt;{"bosh"}}}}}
+ </pre>
+
+</li>
+<li>
+<p>Run the <a href="http://nmap.org/ncat/">Netcat</a> command <code>nc -v IP-ADDRESS PORT</code> to
+determine whether it is possible to establish a connection between the NATS
+message bus and this VM.</p>
+ 
+<pre class="terminal">
+ $ nc -v 192.0.2.17 4222
+ Connection to 192.0.2.17 4222 port [tcp/*] succeeded!
+ </pre>
+
+</li>
+</ol>
+<p>###<a id="out-of-space"></a>Out of Disk Space error</p>
+<p>If, during installation, log files fill all available disk space on a computer,
+the operating system reports an “Out of Disk Space” error.</p>
+<p>To resolve this issue, delete these log files from the <code>tmp</code> directory of the
+affected computer manually or by rebooting.</p>
+<p>##<a id="issues-running"></a>Troubleshoot Cloud Foundry operation issues</p>
+<p>If you have not done so already, set an alias for the BOSH Director of the environment you are
+troubleshooting. You need this alias to run the BOSH CLI commands in this section.</p>
+<p>Run the following command to create a local alias for the BOSH Director using the BOSH CLI:</p>
+<pre>bosh alias-env MY-ENV -e DIRECTOR-IP-ADDRESS --ca-cert PATH/TO/CERT</pre>
+
+<p>Replace the placeholder text with the following:</p>
+<ul>
+<li><code>MY-ENV</code>: Enter an alias for the BOSH Director, such as <code>dev</code> or <code>prod</code>.</li>
+<li><code>DIRECTOR-IP-ADDRESS</code>: Enter the IP address of your BOSH Director VM.</li>
+<li><code>PATH/TO/CERT</code>: Enter the path to the Director CA certificate.</li>
+</ul>
+<p>For example:</p>
+<pre class="terminal">
+$ bosh alias-env dev -e 10.0.0.3 --ca-cert /var/workspaces/default/ca_certificate
+</pre>
+
+<p>###<a id="bosh-cli"></a>Use the BOSH CLI for troubleshooting</p>
+<ol>
+<li>
+<p>Run <code>bosh -e MY-ENV login</code> and provide your credentials to log in to the BOSH Director.
+Replace <code>MY-ENV</code> with the alias you set for your BOSH Director.</p>
+ 
+<pre class="terminal">
+ $ bosh -e dev login
+ User ():
+ Password ():
+ </pre>
+
+</li>
+<li>
+<p>Use the following BOSH commands to troubleshoot your deployment:</p>
+<ul>
+<li><a href="#vms">VMs</a>: Lists all VMs in a deployment</li>
+<li><a href="#cloudcheck">Cloud check</a>: Cloud consistency check and interactive repair</li>
+<li><a href="#ssh">SSH</a>: Start an interactive session or execute commands with a VM</li>
+</ul>
+</li>
+</ol>
+<p>####<a id="vms"></a>BOSH VMs</p>
+<p><code>bosh vms</code> provides an overview of the virtual machines (VMs) BOSH is managing as part of the current deployment.</p>
+<p>To use this command, run <code>bosh -e MY-ENV -d MY-DEPLOYMENT vms</code>.
+Replace <code>MY-ENV</code> with your environment, and <code>MY-DEPLOYMENT</code> with a deployment. <code>-d MY-DEPLOYMENT</code> is optional.</p>
+<pre class="terminal">
+$ bosh -e prod -d cf vms
+</pre>
+
+<p><code>bosh vms</code> may show a VM in an <strong>unknown</strong> state.
+Run <code>bosh cloud-check</code> on VMs in an unknown state to have BOSH attempt to
+diagnose the problem.</p>
+<p>You can also use <code>bosh vms</code> to identify VMs in your deployment, then use
+<code>bosh ssh</code> to SSH into an identified VM for further troubleshooting.</p>
+<p><code>bosh vms</code> supports the following arguments:</p>
+<ul>
+<li><code>--vitals</code>: Overview also includes load, CPU, memory usage,
+swap usage, system disk usage, ephemeral disk usage, and persistent disk usage
+for each VM</li>
+<li><code>--dns</code>: Overview also includes the DNS A record for each VM</li>
+</ul>
+<p>####<a id="cloudcheck"></a>BOSH cloud check</p>
+<p><code>bosh cloud-check</code> attempts to detect differences between the VM state database
+that the BOSH Director maintains and the actual state of the VMs.</p>
+<p>To use this command, run <code>bosh -e MY -d MY-DEPLOYMENT cloud-check</code>.
+You can also use the alias <code>bosh cck</code>.
+Replace <code>MY-ENV</code> with your environment, and <code>MY-DEPLOYMENT</code> with a deployment. <code>-d MY-DEPLOYMENT</code> is optional.</p>
+<pre class="terminal">
+$ bosh -e dev -d mysql cck
+</pre>
+
+<p>For each difference detected, <code>bosh cloud-check</code> offers repair options:</p>
+<ul>
+<li><code>Reboot VM</code>: Instructs BOSH to reboot a VM. Rebooting can resolve many
+transient errors.</li>
+<li><code>Ignore problem</code>: Instructs <code>bosh cloud-check</code> to do nothing.
+You might want to instruct <code>bosh cloud-check</code> to ignore a problem in order to run
+<code>bosh ssh</code> and attempt troubleshooting directly on the machine.</li>
+<li><code>Reassociate VM with corresponding instance</code>: Updates the BOSH Director state
+database.
+Use this option if you believe that the BOSH Director state database is in error
+and that a VM is correctly associated with a job.</li>
+<li><code>Recreate VM using last known apply spec</code>: Instructs BOSH to destroy a VM and
+recreate it from the deployment manifest the installer provides.
+Use this option if a VM is corrupted.</li>
+<li><code>Delete VM reference</code>: Instructs BOSH to delete a VM reference in the Director
+state database.
+If a VM reference exists in the state database, BOSH expects to find an agent
+running on the VM.
+Select this option only if you know this reference is in error.
+Once you delete the VM reference, BOSH can no longer control the VM.</li>
+</ul>
+<h5 id="example-scenarios"><a class="header" href="#example-scenarios">Example scenarios</a></h5>
+<p><strong>Unresponsive Agent</strong></p>
+<pre class="terminal">
+$ bosh -e prod -d example-deployment cck
+ccdb/0 (vm-3e37133c-bc33-450e-98b1-f86d5b63502a) is not responding:
+- Ignore problem
+- Reboot VM
+- Recreate VM using last known apply spec
+- Delete VM reference (DANGEROUS!)
+</pre>
+
+<p><strong>Missing VM</strong></p>
+<pre class="terminal">
+$ bosh -e prod -d example-deployment cck
+VM with cloud ID `vm-3e37133c-bc33-450e-98b1-f86d5b63502a' missing:
+- Ignore problem
+- Recreate VM using last known apply spec
+- Delete VM reference (DANGEROUS!)
+</pre>
+
+<p><strong>Unbound Instance VM</strong></p>
+<pre class="terminal">
+$ bosh -e prod -d example-deployment cck
+VM `vm-3e37133c-bc33-450e-98b1-f86d5b63502a' reports itself as `ccdb/0' but does not have a bound instance:
+- Ignore problem
+- Delete VM (unless it has persistent disk)
+- Reassociate VM with corresponding instance
+</pre>
+
+<p><strong>Out of Sync VM</strong></p>
+<pre class="terminal">
+$ bosh -e prod -d example-deployment cck
+VM `vm-3e37133c-bc33-450e-98b1-f86d5b63502a' is out of sync: expected `cf-d7293430724a2c421061: ccdb/0', got `cf-d7293430724a2c421061: nats/0':
+- Ignore problem
+- Delete VM (unless it has persistent disk)
+</pre>
+
+<p>####<a id="ssh"></a>BOSH SSH</p>
+<p>Use <code>bosh ssh</code> to open secure shells into the VMs in your deployment.</p>
+<p>To use <code>bosh ssh</code>:</p>
+<ol>
+<li>Run <code>ssh-keygen -t rsa</code> to provide BOSH with the correct public key.</li>
+<li>Accept the defaults.</li>
+<li>Identify a VM to SSH into. Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT vms</code> to list the VMs in the given deployment. Replace <code>MY-ENV</code> with your environment alias and <code>MY-DEPLOYMENT</code> with the deployment name.</li>
+<li>Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT ssh VM-NAME/GUID</code>. For example:</li>
+</ol>
+  
+<pre class="terminal">$ bosh -e dev -d cf-deployment ssh diego-cell/abcd0123-a012-b345-c678-9def01234567</pre>
+
+<p>###<a id="viewing-logs"></a>View BOSH logs</p>
+<p>You can access BOSH logs by two methods:</p>
+<ul>
+<li>Using the <code>bosh ssh</code> command to access the log location</li>
+<li>Using the <code>bosh logs</code> command to output the logs to standard output or to a
+file</li>
+</ul>
+<p>####<a id="view-ssh"></a>Using the BOSH SSH command</p>
+<p>Use <code>bosh ssh</code> to open secure shells into the VMs in your deployment, then
+access the logs on the VM.</p>
+<p>To use <code>bosh ssh</code>:</p>
+<ol>
+<li>Run <code>ssh-keygen -t rsa</code> to provide BOSH with the correct public key.</li>
+<li>Accept the defaults.</li>
+<li>Identify a VM to SSH into. Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT vms</code> to list the VMs in the given deployment. Replace <code>MY-ENV</code> with your environment alias and <code>MY-DEPLOYMENT</code> with the deployment name.</li>
+<li>Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT ssh VM-NAME/GUID</code>. For example:</li>
+</ol>
+  
+<pre class="terminal">$ bosh -e dev -d cf-deployment ssh diego-cell/abcd0123-a012-b345-c678-9def01234567</pre>
+
+<ol>
+<li>Review the <code>/var/vcap/bosh/log/current</code> log file.</li>
+</ol>
+<p>####<a id="view-logs"></a>Using the BOSH logs command</p>
+<p>Use <code>bosh logs</code> to output BOSH logs to standard output or to a file.</p>
+<p>To use <code>bosh logs</code>:</p>
+<ol>
+<li>Identify a VM. Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT vms</code> to list the VMs in the given deployment. Replace <code>MY-ENV</code> with your environment alias and <code>MY-DEPLOYMENT</code> with the deployment name.</li>
+<li>Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT logs VM-NAME/GUID</code> to view the logs from the identified VM. For example:</li>
+</ol>
+  
+<pre class="terminal">$ bosh -e dev -d cf-deployment logs diego-cell/abcd0123-a012-b345-c678-9def01234567</pre>
+
+<p>###<a id="non-responsive"></a>Log in to a non-responsive BOSH VM</p>
+<p>A VM under heavy system load can stop responding to some commands but still
+function in a limited way.
+If the VM does not respond to <code>bosh ssh</code>, use the following steps to open a
+secure shell in a more direct manner:</p>
+<ol>
+<li>Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT vms</code> and note the IP address of the non-responsive VM. 
+<pre class="terminal">$ bosh -e prod -d cf-deployment vms</pre>
+
+</li>
+<li>Run <code>ssh -t vcap@IP-ADDRESS 'sh'</code> where IP-ADDRESS is the IP address of the
+non-responsive VM. 
+<pre class="terminal">$ ssh -t vcap<span>@</span>192.0.2.53 'sh'</pre>
+
+</li>
+</ol>
+<p>###<a id="terminate"></a>Terminate a BOSH SSH session</p>
+<p>Use <code>~.</code>, entered at the beginning of a new line, to terminate a <code>bosh ssh</code> or
+<code>ssh</code> session.</p>
+<p>To terminate a <code>bosh ssh</code> or <code>ssh</code> initiated from the jumpbox or other server,
+use <code>~~.</code>, entered at the beginning of a new line.
+The outermost secure shell session consumes the second <code>~</code> and passes the
+remaining <code>~.</code> command to the inner <code>ssh</code> session.</p>
+<p>###<a id="failing-job"></a>Debug a failing job</p>
+<ol>
+<li>Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT vms</code> to determine which job VMs in your deployment are failing.
+Note the job name and index of the failing VM.</li>
+<li>Run <code>bosh -e MY-ENV -d MY-DEPLOYMENT ssh VM-NAME/GUID</code> to open a secure shell into the failing VM.</li>
+<li>Run <code>sudo su -</code> to enter the root environment with root privileges.</li>
+<li>Run <code>monit summary</code> to determine which processes are not running.</li>
+<li>Review the log files found in <code>/var/vcap/sys/log/</code> to determine the root
+cause of the process failures.
+Some of these logs are formatted using steno with timestamps instead of human-formatted dates.
+You can use <code>steno-prettify</code> to make the logs more human-readable.</li>
+<li>Use <code>monit restart all</code> or <code>monit restart PROCESS</code> to start the processes.</li>
+</ol>
+<p>Execute the following commands to set up steno-prettify in the cloudcontroller:</p>
+<pre class="terminal">
+export CC_JOB_DIR=/var/vcap/jobs/cloud_controller_ng
+source $CC_JOB_DIR/bin/ruby_version.sh
+
+CC_PACKAGE_DIR=/var/vcap/packages/cloud_controller_ng
+export BUNDLE_GEMFILE=$CC_PACKAGE_DIR/cloud_controller_ng/Gemfile
+export HOME=/home/vcap # rake needs it to be set to run tasks
+
+if [ -f $BUNDLE_GEMFILE ]; then
+    alias  steno-prettify="bundle exec steno-prettify"
+    echo "ready to use steno-prettify alias, try steno-prettify on one of the following files:"
+    find /var/vcap/sys/log/ -name "*.log" | egrep  -v "err|out|ctl" | xargs ls -al
+else
+    echo "could not find Gemfile into ${STENO_DIR}:" `ls -al ${BUNDLE_GEMFILE}`
+fi
+</pre>
+
+<p>###<a id="debugging-cc-diagnostics"></a>View Cloud Controller diagnostics</p>
+<p>If your BOSH deployment experiences a resource spike, an infinite loop, or another undesirable performance issue, see the Cloud Controller (CC) diagnostics JSON file for debugging.
+The file contains data that are unavailable in the output from <a href="./managing-cf/logging.html">Cloud Foundry logging</a>, including stack traces for running threads.</p>
+<p>Follow the instructions below to SSH into the Cloud Controller VM and populate the diagnostics file with updated information.</p>
+<ol>
+<li>Provide BOSH with the correct public key.</li>
+</ol>
+<pre class="terminal">
+$ ssh-keygen -t rsa
+</pre>
+
+<ol>
+<li>Accept the defaults.</li>
+<li>Begin an SSH session to the deployment.</li>
+</ol>
+<pre class="terminal">$ bosh -e prod -d cf-deployment ssh diego-cell/abcd0123-a012-b345-c678-9def01234567</pre>
+
+<ol>
+<li>Enter the number corresponding to the <code>cloud_controller</code> from the list of VMs.</li>
+<li>Retrieve the PID of the CC process.</li>
+</ol>
+<pre class="terminal">$ cat /var/vcap/sys/run/cloud\_controller\_ng/cloud\_controller\_ng.pid </pre>
+
+<ol>
+<li>Send the user defined <code>USR1</code> signal to the CC process to populate the JSON log file for reference. This command does not terminate the CC process.</li>
+</ol>
+<pre class="terminal">
+$ kill -USR1 CLOUD-CONTROLLER-PID
+</pre>
+
+<ol>
+<li>Navigate to the JSON file in the diagnostics directory to see the record of the <code>USR1</code> signal passed to your CC VM.
+The value of the <code>cc.directories.diagnostics</code> property in <code>/var/vcap/jobs/cloud_controller_ng/config/cloud_controller_ng.yml</code> contains the location of the diagnostics directory.
+The default location of the diagnostics directory is <code>/var/vcap/data/cloud_controller_ng/diagnostics</code>.</li>
+</ol>
+<p>###<a id="debugging-cloudcontroller"></a>Use the interactive Cloud Controller shell</p>
+<p>The Cloud Controller jobs embeds a <a href="http://pryrepl.org/">pry shell</a>. This may allow users to interact with
+cc_ng classes, such as scripting some operations, or to access the cc_db using model classes.</p>
+<pre class="terminal">
+$ cd /var/vcap/jobs/cloud_controller_ng
+$ bin/console
+[...]
+</pre>
+
+<p>###<a id="debugging-full-dbs"></a>Troubleshoot Cloud Foundry databases</p>
+<p>The <code>postgres</code> BOSH job hosts the different databases used by Cloud Foundry, such as <code>diego</code>, <code>ccng</code>, and <code>uaadb</code>. If the <code>postgres</code> job reaches 100% persistent disk usage, it can impact performance. Perform the following steps to diagnose your <code>postgres</code> job:</p>
+<ol>
+<li>
+<p>Retrieve the credentials for the <code>postgres</code> job from your BOSH manifest.</p>
+</li>
+<li>
+<p>Connect to the database using the PostgreSQL client of your choice. Alternatively, you can connect to the database using a PostgreSQL web interface such as <a href="https://github.com/cloudfoundry-community/phppgadmin-cf/">phppgadmin-cf</a> or open an SSH tunnel to the database using <code>cf ssh</code>.</p>
+</li>
+<li>
+<p>Use the following SQL query to identify the largest schema:</p>
+<pre><code>SELECT schema_name,
+       pg_size_pretty(sum(table_size)::bigint),
+       (sum(table_size) / pg_database_size(current_database())) * 100
+FROM (
+  SELECT pg_catalog.pg_namespace.nspname as schema_name,
+         pg_relation_size(pg_catalog.pg_class.oid) as table_size
+  FROM   pg_catalog.pg_class
+     JOIN pg_catalog.pg_namespace ON relnamespace = pg_catalog.pg_namespace.oid
+) t
+GROUP BY schema_name
+ORDER BY schema_name
+</code></pre>
+</li>
+<li>
+<p>Using the output from the above query, identify the largest table.</p>
+</li>
+</ol>
+<p>###<a id="force-recreate"></a>Force a VM recreate</p>
+<p>If BOSH or an operator identifies a VM as corrupted, BOSH can recreate the VM.
+This recreation function can fail if a drain script on the VM is broken or times
+out.
+To resolve this issue:</p>
+<ol>
+<li>
+<p>SSH into the VM and use the <code>sv stop agent</code> command to stop the BOSH Agent.</p>
+ 
+<pre class="terminal">
+ $ bosh -e dev -d cf-deployment ssh diego-cell/abcd0123-a012-b345-c678-9def01234567
+ $ sv stop agent
+ </pre>
+
+</li>
+<li>
+<p>Let the BOSH Health Monitor automatically restart the VM.
+To follow the status of this process:</p>
+</li>
+</ol>
+<ul>
+<li>Run <code>bosh -e MY-ENV tasks</code> to determine the task ID of the “scan and fix” task.
+Add <code>-d MY-DEPLOYMENT</code> to view tasks for a specific deployment.  
+<pre class="terminal">$ bosh -e dev -d cf-deployment tasks</pre>
+
+</li>
+<li>Run <code>bosh -e MY-ENV task TASK-ID</code> with the task ID of the “scan and fix” task.  
+<pre class="terminal">$ bosh -e dev task 83</pre>
+
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../running/monitoring-test.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../running/uaa-performance.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../running/monitoring-test.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../running/uaa-performance.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
+
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
